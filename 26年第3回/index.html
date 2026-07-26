@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>自分のOPCを立ち上げる ── 作る×売る×繋ぐを、君の番に</title>
+<meta name="description" content="YCA 1年生向け 60分講義（第3回・実践編）｜第1回「作る」・第2回「売る」の続編。自分という会社（OPC）の設計図を4部品で描き、棚から逆算した"最初の1本"を90日で出すまでの立ち上げ工程を渡す。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#15151a;
+    --ink-soft:#3a3a44;
+    --paper:#fbfaf7;
+    --paper-2:#f3f1ea;
+    --line:#e3dfd4;
+    --accent:#ff4d2e;
+    --accent-2:#2b2bff;
+    --gold:#c79a3a;
+    --green:#1f7a4d;
+    --red:#c0392b;
+    --dark:#0e0e13;
+    --maxread:760px;
+    --sidebar:264px;
+    --shadow:0 18px 48px -24px rgba(20,20,30,.45);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-weight:400;line-height:1.95;letter-spacing:.01em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  h1,h2,h3,h4{font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif;line-height:1.4;letter-spacing:.02em}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* progress bar */
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--gold));z-index:200;transition:width .08s linear}
+
+  /* HERO */
+  .hero{position:relative;background:radial-gradient(1200px 600px at 80% -10%,rgba(255,77,46,.22),transparent 60%),radial-gradient(900px 500px at 0% 110%,rgba(43,43,255,.18),transparent 55%),linear-gradient(rgba(14,14,19,.72),rgba(14,14,19,.86)),url("hero_bg.png") center/cover no-repeat,var(--dark);color:#fff;padding:88px 24px 72px;overflow:hidden}
+  .hero-inner{max-width:920px;margin:0 auto;position:relative;z-index:2}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;letter-spacing:.18em;color:#ffd9cf;border:1px solid rgba(255,255,255,.22);padding:7px 14px;border-radius:999px;text-transform:uppercase;margin-bottom:26px}
+  .eyebrow b{color:#fff;font-weight:700}
+  .hero h1{font-weight:900;font-size:clamp(1.85rem,4.6vw,3rem);margin:.1em 0 .25em;color:#fff;letter-spacing:.01em}
+  .hero h1 .q{color:var(--accent)}
+  .hero .sub{font-size:clamp(1rem,2.1vw,1.25rem);color:#cfcfd8;font-weight:500;margin:0 0 30px;line-height:1.65}
+  .hero .sub b{color:#fff}
+  .hero .sub .hot{color:var(--accent);font-weight:700}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#eee;font-size:.82rem;padding:8px 14px;border-radius:999px;font-weight:500}
+  .chip b{color:#fff}
+  .hero-msg{margin-top:30px;padding:18px 22px;border-left:4px solid var(--accent);background:rgba(255,255,255,.06);border-radius:0 12px 12px 0;color:#e9e9f0;font-size:clamp(.98rem,2vw,1.08rem);line-height:1.9;max-width:730px}
+  .hero-msg b{color:#fff;font-weight:700}
+  .hero-msg .hot{color:var(--accent);font-weight:700}
+  .scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#777;font-size:.72rem;letter-spacing:.2em;z-index:2}
+  .prev-link{display:inline-flex;align-items:center;gap:7px;margin-top:18px;margin-right:10px;font-size:.82rem;color:#9a9aa6;background:rgba(255,255,255,.06);padding:7px 13px;border-radius:999px;text-decoration:none;border:1px solid rgba(255,255,255,.14)}
+  .prev-link:hover{color:#fff;background:rgba(255,255,255,.12);text-decoration:none}
+  .prev-link .arr{color:var(--accent)}
+
+  /* LAYOUT */
+  .layout{max-width:1180px;margin:0 auto;display:block;padding:0 20px}
+  .sidebar{display:none}
+  .content{min-width:0;padding:0 0 120px}
+  .reading{max-width:var(--maxread);margin:0 auto}
+  @media(min-width:1080px){
+    .layout{display:grid;grid-template-columns:var(--sidebar) minmax(0,1fr);gap:48px;padding:0 28px}
+    .sidebar{display:block;position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:48px 4px 48px 0;border-right:1px solid var(--line)}
+    .reading{margin:0;max-width:var(--maxread)}
+    .content{padding-top:8px}
+  }
+  .toc-title{font-size:.72rem;letter-spacing:.16em;color:#a39c8c;text-transform:uppercase;margin:0 0 14px;font-weight:700}
+  .toc a{display:block;color:var(--ink-soft);font-size:.86rem;padding:7px 12px 7px 14px;border-left:2px solid transparent;border-radius:0 6px 6px 0;line-height:1.45;transition:all .15s}
+  .toc a .n{color:#b9b1a0;font-weight:700;margin-right:8px;font-size:.78rem}
+  .toc a:hover{background:var(--paper-2);text-decoration:none;color:var(--ink)}
+  .toc a.active{border-left-color:var(--accent);background:var(--paper-2);color:var(--ink);font-weight:700}
+  .toc a.active .n{color:var(--accent)}
+
+  #mnav{position:sticky;top:0;z-index:120;background:rgba(251,250,247,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;gap:8px;overflow-x:auto;padding:11px 14px;scrollbar-width:none}
+  #mnav::-webkit-scrollbar{display:none}
+  #mnav a{flex:0 0 auto;font-size:.78rem;color:var(--ink-soft);background:var(--paper-2);padding:6px 13px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
+  #mnav a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  @media(min-width:1080px){#mnav{display:none}}
+
+  /* sections */
+  section{padding-top:64px;scroll-margin-top:70px}
+  @media(min-width:1080px){section{scroll-margin-top:24px}}
+  .kicker{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+  .num{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1.05rem;color:#fff;background:var(--ink);width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .num.acc{background:var(--accent)}
+  .time-pill{font-size:.74rem;letter-spacing:.08em;color:#8a8475;background:var(--paper-2);border:1px solid var(--line);padding:4px 11px;border-radius:999px;font-weight:700}
+  h2.sec{font-size:clamp(1.5rem,3.4vw,2.05rem);font-weight:900;margin:.15em 0 .1em;letter-spacing:.01em}
+  .sec-aim{color:var(--ink-soft);font-size:.95rem;border-left:3px solid var(--gold);padding:2px 0 2px 14px;margin:14px 0 26px;background:linear-gradient(90deg,rgba(199,154,58,.07),transparent)}
+  h3.sub3{font-size:1.18rem;font-weight:700;margin:38px 0 12px;padding-top:4px}
+  h3.sub3 .tag{font-size:.72rem;color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px;margin-right:9px;vertical-align:middle;font-family:"Noto Sans JP";letter-spacing:.04em}
+  p{margin:0 0 16px}
+  .content ul{margin:0 0 18px;padding-left:1.25em}
+  .content li{margin-bottom:9px}
+  strong{font-weight:700;background:linear-gradient(transparent 62%,rgba(255,77,46,.22) 62%);padding:0 .05em}
+  .lead{font-size:1.06rem;color:var(--ink)}
+  .divider{height:1px;background:var(--line);border:0;margin:0}
+
+  .concept{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:24px 0}
+  .concept .ct{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.05rem;margin:0 0 6px;display:flex;align-items:center;gap:9px}
+  .concept .ct::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--accent-2);transform:rotate(45deg)}
+  .concept p:last-child{margin-bottom:0}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:24px 0}
+  .stat{background:var(--dark);color:#fff;border-radius:14px;padding:18px 18px 16px}
+  .stat .v{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.55rem;line-height:1.1;color:#fff}
+  .stat .v .u{font-size:.85rem;color:var(--accent);margin-left:2px}
+  .stat .l{font-size:.8rem;color:#b7b7c2;margin-top:7px}
+  .stat .src{font-size:.68rem;color:#7a7a86;margin-top:4px}
+  .stat.alt{background:var(--accent)}
+  .stat.alt .v,.stat.alt .v .u{color:#fff}
+  .stat.alt .l{color:#ffe2db}
+  .stat.win{background:linear-gradient(120deg,#1f7a4d,#2d9968)}
+  .stat.lose{background:linear-gradient(120deg,#7a1f1f,#9c2929)}
+
+  .message{background:linear-gradient(120deg,#15151a,#26262f);color:#fff;border-radius:16px;padding:24px 26px;margin:26px 0 0;box-shadow:var(--shadow)}
+  .message .msg-lab{font-size:.7rem;letter-spacing:.14em;color:var(--accent);font-weight:700;text-transform:uppercase;margin:0 0 9px}
+  .message p{margin:0 0 12px;font-size:1.05rem;line-height:1.95;color:#eaeaf0}
+  .message p:last-child{margin-bottom:0}
+  .message p strong{color:#fff;background:linear-gradient(transparent 58%,rgba(255,77,46,.5) 58%);padding:0 .05em}
+
+  .tt-wrap{overflow-x:auto;margin:22px 0}
+  table.tt{border-collapse:collapse;width:100%;font-size:.85rem;min-width:540px}
+  table.tt th,table.tt td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.tt thead th{background:var(--ink);color:#fff;font-weight:700;font-size:.8rem;letter-spacing:.04em}
+  table.tt tbody tr:hover{background:var(--paper-2)}
+  table.tt .tno{font-family:"Zen Kaku Gothic New";font-weight:900;color:var(--accent)}
+  table.tt .ttime{white-space:nowrap;color:var(--ink-soft);font-weight:700}
+  table.tt .tkw{color:#8a8475;font-size:.78rem}
+
+  /* component matrix */
+  .components{margin:24px 0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .components-row{display:grid;grid-template-columns:120px 1fr 1fr;border-bottom:1px solid var(--line);align-items:start}
+  .components-row:last-child{border-bottom:0}
+  .components-row.header{background:var(--ink);color:#fff;font-weight:700;font-size:.85rem}
+  .components-row.header > div{padding:11px 14px}
+  .components-row > div{padding:12px 14px;font-size:.88rem;line-height:1.65}
+  .components-row .lbl{font-weight:700;color:var(--accent-2);background:var(--paper-2);font-size:.88rem}
+  @media(max-width:680px){.components-row{grid-template-columns:1fr}.components-row.header{display:none}.components-row > div{padding:8px 14px}.components-row .lbl{padding-top:14px;font-weight:900;border-top:1px solid var(--line)}}
+
+  /* step workflow */
+  .workflow{margin:24px 0}
+  .step{background:#fff;border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:0 14px 14px 0;padding:18px 22px 18px 22px;margin:0 0 14px;box-shadow:var(--shadow);position:relative}
+  .step .step-head{display:flex;align-items:center;gap:12px;margin:0 0 10px}
+  .step .step-num{background:var(--accent);color:#fff;font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.1rem;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .step .step-t{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.08rem;color:var(--ink)}
+  .step .prompt{background:var(--dark);color:#fff;border-radius:10px;padding:14px 16px;font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.85rem;line-height:1.75;margin:10px 0 14px;border-left:3px solid var(--gold)}
+  .step .prompt .pl{display:block;color:var(--gold);font-size:.7rem;font-family:"Noto Sans JP";letter-spacing:.1em;margin-bottom:6px;text-transform:uppercase;font-weight:700}
+  .step .out{background:var(--paper-2);border:1px solid var(--line);border-radius:10px;padding:13px 16px;font-size:.88rem;line-height:1.7}
+  .step .out .ol{display:block;font-size:.7rem;color:#8a8475;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+  .step .out ol,.step .out ul{margin:0;padding-left:1.25em}
+  .step .out li{margin-bottom:4px}
+  .step .arrow-next{text-align:center;color:var(--accent);font-family:"Zen Kaku Gothic New";font-weight:900;margin:6px 0 0}
+  .step.final{border-left-color:var(--green)}
+  .step.final .step-num{background:var(--green)}
+
+  /* answer-reveal callout */
+  .reveal{background:linear-gradient(120deg,#15151a,#26262f);color:#fff;border-radius:18px;padding:28px;margin:28px 0;box-shadow:var(--shadow);position:relative}
+  .reveal .rv-lab{font-size:.74rem;letter-spacing:.18em;color:var(--gold);font-weight:900;text-transform:uppercase;margin:0 0 10px}
+  .reveal h4{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.3rem;color:#fff;margin:0 0 12px;line-height:1.4}
+  .reveal h4 .hot{color:var(--accent)}
+  .reveal p{color:#cfcfd8;font-size:.96rem;line-height:1.85;margin:0 0 10px}
+  .reveal p:last-child{margin:0}
+  .reveal p strong{color:#fff;background:linear-gradient(transparent 58%,rgba(255,77,46,.5) 58%);padding:0 .05em}
+
+  /* B2OPC structure diagram（4部品図に流用） */
+  .b2opc{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:24px 22px;margin:24px 0}
+  .b2opc h4{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.05rem;margin:0 0 16px;color:var(--ink);text-align:center}
+  .b2opc-flow{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+  .b2opc-node{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:13px 16px;font-size:.85rem;text-align:center;line-height:1.45;flex:1 1 180px;max-width:240px;font-weight:700}
+  .b2opc-node.you{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .b2opc-node.opc{background:#fff;border-color:var(--accent);color:var(--accent)}
+  .b2opc-node.agency{background:#fff;border-color:var(--accent-2);color:var(--accent-2)}
+  .b2opc-node small{display:block;font-size:.7rem;color:#8a8475;font-weight:500;margin-top:5px}
+  .b2opc-node.you small{color:#9a9aa6}
+  .b2opc-arrow{font-family:"Zen Kaku Gothic New";font-weight:900;color:var(--accent);font-size:1.3rem;flex:0 0 auto}
+
+  /* takeaway dark card */
+  .takeaway{background:var(--dark);color:#fff;border-radius:20px;padding:34px 30px;margin:30px 0}
+  .takeaway h3{color:#fff;font-size:1.35rem;font-weight:900;margin:0 0 6px}
+  .takeaway .ta-q{color:var(--accent);font-weight:700;margin:0 0 22px;font-size:.98rem}
+  .takeaway .ta-list{counter-reset:t;display:grid;gap:14px;margin:0 0 22px}
+  .takeaway .ta-list .ti{position:relative;padding-left:42px;color:#eaeaf0}
+  .takeaway .ta-list .ti::before{counter-increment:t;content:counter(t);position:absolute;left:0;top:-2px;width:28px;height:28px;border:2px solid var(--accent);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"Zen Kaku Gothic New";font-weight:900;font-size:.9rem}
+  .takeaway .ta-list .ti b{color:#fff}
+  .takeaway .ta-foot{border-top:1px solid rgba(255,255,255,.16);padding-top:16px;color:#bdbdc8;font-size:.92rem;line-height:1.85}
+  .takeaway .ta-foot b{color:#fff}
+
+  /* bridge line */
+  .bridge{margin:26px 0 0;font-family:"Zen Kaku Gothic New";font-weight:900;font-size:clamp(1.05rem,2.4vw,1.25rem);line-height:1.62;color:var(--ink)}
+  .bridge .arrow{color:var(--accent)}
+
+  /* lesson box */
+  .lesson{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:0 12px 12px 0;padding:14px 18px;margin:16px 0 22px;box-shadow:var(--shadow);font-size:.96rem}
+  .lesson .lt{font-family:"Zen Kaku Gothic New";font-weight:900;color:var(--gold);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;margin:0 0 5px}
+
+  /* closing question */
+  .closing-q{background:linear-gradient(120deg,var(--accent),#ff7a4d);color:#fff;border-radius:20px;padding:36px 30px;margin:34px 0;text-align:center;box-shadow:var(--shadow)}
+  .closing-q .lab{font-size:.74rem;letter-spacing:.2em;color:#ffd9cf;font-weight:700;text-transform:uppercase;margin:0 0 12px}
+  .closing-q h3{font-family:"Zen Kaku Gothic New";font-weight:900;color:#fff;font-size:clamp(1.3rem,3.8vw,1.9rem);margin:0 0 14px;line-height:1.45}
+  .closing-q p{color:#fff;margin:0;font-size:.96rem;opacity:.9}
+
+  /* FAQ */
+  details.faq{background:#fff;border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden}
+  details.faq summary{cursor:pointer;padding:16px 46px 16px 18px;font-weight:700;position:relative;list-style:none;font-size:.96rem}
+  details.faq summary::-webkit-details-marker{display:none}
+  details.faq summary::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:1.3rem;color:var(--accent);font-weight:700;transition:transform .2s}
+  details.faq[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+  details.faq summary .qm{color:var(--accent);font-weight:900;margin-right:8px}
+  details.faq .ans{padding:0 18px 18px;color:var(--ink-soft);font-size:.93rem;line-height:1.85}
+
+  /* references */
+  .refs{font-size:.82rem;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-top:20px;line-height:1.75}
+  .refs h4{margin:14px 0 10px;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:#a39c8c}
+  .refs h4:first-child{margin-top:0}
+  .refs ul{padding-left:1.1em;margin:0 0 14px}
+  .refs li{margin-bottom:7px}
+  .refs .note{color:#a39c8c;font-size:.78rem;margin-top:10px}
+
+  /* footer */
+  footer{background:var(--dark);color:#9a9aa6;text-align:center;padding:40px 20px;font-size:.82rem}
+  footer b{color:#fff}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+  .rv.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+  .backtop{position:fixed;right:18px;bottom:18px;z-index:120;background:var(--ink);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:1.1rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:var(--shadow)}
+  .backtop.show{opacity:1;pointer-events:auto}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow"><b>YCA</b> 1年生 ／ 60分講義 ／ 第3回・実践編</span>
+    <h1>自分の<span class="q">OPC</span>を立ち上げる</h1>
+    <p class="sub"><b>作る × 売る × 繋ぐ</b> ── <span class="hot">君の番だ。</span></p>
+    <div class="meta-row">
+      <span class="chip">⏱ <b>60分</b></span>
+      <span class="chip">📅 <b>2026年（日程調整中）</b></span>
+      <span class="chip">💻 オンライン</span>
+    </div>
+    <p class="hero-msg">第1回で見たのは<b>「作るコストが崩れた」</b>── AIで、一人でIPが作れる時代。<br/>第2回で見たのは<b>「売るには公式がある」</b>── 棚・盲点・分解。1本を10個のビジネスに。<br/>今日は答え合わせじゃない。<span class="hot">自分という会社の設計図</span>を、60分で持ち帰ってもらいます。</p>
+    <a href="../" class="prev-link"><span class="arr">←</span> 第2回「ショートドラマヒットの解剖学」を見る</a>
+    <a href="../26年5月第1回/" class="prev-link"><span class="arr">←</span> 第1回「AIイノベーションとOPC」を見る</a>
+  </div>
+  <div class="scroll-hint">SCROLL ↓</div>
+</header>
+
+<nav id="mnav" aria-label="セクション">
+  <a href="#aim">狙い</a>
+  <a href="#s1">1 振り返り＋問い</a>
+  <a href="#s2">2 OPCの設計図</a>
+  <a href="#s3">3 資産の棚卸し</a>
+  <a href="#s4">4 企画を組む</a>
+  <a href="#s5">5 90日プラン</a>
+  <a href="#s6">クロージング</a>
+  <a href="#summary">まとめ</a>
+  <a href="#faq">Q&amp;A</a>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="toc" aria-label="目次">
+      <p class="toc-title">目次 / Contents</p>
+      <a href="#aim">この講義の狙い</a>
+      <a href="#timetable">60分タイムテーブル</a>
+      <a href="#s1"><span class="n">1</span>振り返り＋今日の問い</a>
+      <a href="#s2"><span class="n">2</span>OPCの設計図（4部品）</a>
+      <a href="#s3"><span class="n">3</span>資産の棚卸し</a>
+      <a href="#s4"><span class="n">4</span>企画を組む（最初の1本）</a>
+      <a href="#s5"><span class="n">5</span>90日プラン</a>
+      <a href="#s6"><span class="n">6</span>クロージング</a>
+      <a href="#summary">まとめ（持ち帰り）</a>
+      <a href="#faq">よくある質問</a>
+      <a href="#refs">出典</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="reading">
+
+      <!-- AIM -->
+      <section id="aim" class="rv">
+        <div class="kicker"><span class="time-pill">この講義の狙い</span></div>
+        <h2 class="sec">覚えて帰って欲しい2つ</h2>
+        <ul class="lead">
+          <li><strong>OPCは"憧れ"じゃなく"設計図"</strong>：会社は「IP（何を持つか）× 制作（どう作るか）× 流通（どの棚に並べるか）× 顧客（誰が払うか）」の<strong>4部品</strong>。この4つを埋めれば、誰でも設計できます。</li>
+          <li><strong>最初の90日は「MVPの1本」</strong>：完璧な代表作ではなく、棚から逆算した<strong>検証用の1本</strong>を最小コストで出す。中国のAI短劇は60集を実写の1/3のコスト・1〜3人・1週間で回している ── 学生の「1人×AI×小予算」でも、その縮小版は組めます。</li>
+        </ul>
+        <div class="message">
+          <p class="msg-lab">この講義のメッセージ</p>
+          <p><strong>会社に入るか、自分が会社になるか ── どっちを選んでもいい。</strong></p>
+          <p>でもどっちを選ぶにしても、<strong>「自分という会社の設計図」を持っている人</strong>が強い。</p>
+          <p>今日の60分で、その設計図の<strong>下書き</strong>まで持ち帰ってもらう。</p>
+        </div>
+      </section>
+
+      <!-- TIMETABLE -->
+      <section id="timetable" class="rv">
+        <div class="kicker"><span class="time-pill">全体の流れ</span></div>
+        <h2 class="sec">60分タイムテーブル</h2>
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead>
+              <tr><th>区切り</th><th>時間</th><th>内容</th><th>キーワード</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="tno">1</td><td class="ttime">0–6分</td><td>振り返り＋今日の問い（作る→売る→立ち上げる）</td><td class="tkw">君のOPCは何を売る？</td></tr>
+              <tr><td class="tno">2</td><td class="ttime">6–16分</td><td>OPCの設計図 ── 会社は4つの部品でできている</td><td class="tkw">IP×制作×流通×顧客</td></tr>
+              <tr><td class="tno">3</td><td class="ttime">16–28分</td><td>資産の棚卸し ── コピーできないものから始める</td><td class="tkw">文脈・関係・センス／AIで棚卸し</td></tr>
+              <tr><td class="tno">4</td><td class="ttime">28–42分</td><td>★ 企画を組む ── 棚から逆算する「最初の1本」</td><td class="tkw">三原則の逆流・5ステップ立ち上げ版</td></tr>
+              <tr><td class="tno">5</td><td class="ttime">42–54分</td><td>90日プラン ── AIチームで回す立ち上げ工程</td><td class="tkw">30日設計・60日制作・90日配信</td></tr>
+              <tr><td class="tno">6</td><td class="ttime">54–60分</td><td>クロージング</td><td class="tkw">君の会社の、最初の商品は何？</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 1 -->
+      <section id="s1" class="rv">
+        <div class="kicker"><span class="num acc">1</span><span class="time-pill">0–6分</span></div>
+        <h2 class="sec">第1部：振り返り＋今日の問い</h2>
+        <p class="sec-aim">第1回「作る」、第2回「売る」。今日はその目を、自分自身に向ける ── 立ち上げる。</p>
+
+        <h3 class="sub3"><span class="tag">1-1</span>ここまでの2回を3行で</h3>
+        <ul>
+          <li><strong>第1回（作る）</strong>：AIで制作コストが崩壊（99.5%減／一人で一日一本）。個人がIP＝資産を作れる時代 ── それがOPC</li>
+          <li><strong>第2回（売る）</strong>：売れるには公式がある ── ①棚に並ぶか ②盲点を見直すか ③視聴者×PFを設計するか。そして<strong>1本は10個のビジネスに分解できる</strong></li>
+          <li>中国では既に実装済み：個人OPCが<strong>月営収300万元（≒6,000万円）</strong>、3人チーム×5日で75集、新規OPC登録は半年で<strong>286万社</strong></li>
+        </ul>
+
+        <div class="stats">
+          <div class="stat"><div class="v">99.5<span class="u">%減</span></div><p class="l">AIによる制作コスト削減（第1回より）</p><p class="src">上海微短劇大会 各社プレゼン</p></div>
+          <div class="stat alt"><div class="v">286<span class="u">万社</span></div><p class="l">中国の新規OPC登録（2025年上半期・前年比+47%）</p><p class="src">中関村人材協会</p></div>
+          <div class="stat"><div class="v">1,530<span class="u">億円</span></div><p class="l">日本ショートドラマ市場の2026年見通し</p><p class="src">上海微短劇大会（前回大会登壇）</p></div>
+        </div>
+
+        <h3 class="sub3"><span class="tag">1-2</span>今日の問い</h3>
+        <div class="message">
+          <p class="msg-lab">今日の問い</p>
+          <p><strong>じゃあ、君のOPCは何を売る？</strong></p>
+        </div>
+        <p>第2回のクロージングの問いは「君は1本を、いくつのビジネスに分解できる？」だった。今日はその続き。<strong>分解する目を、自分自身に向ける</strong>。</p>
+        <p class="bridge">→ <span class="arrow">他人の作品を解剖するのは練習。</span>自分という会社を設計するのが本番。</p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 2 -->
+      <section id="s2" class="rv">
+        <div class="kicker"><span class="num acc">2</span><span class="time-pill">6–16分</span></div>
+        <h2 class="sec">第2部：OPCの設計図 ── 会社は4つの部品でできている</h2>
+        <p class="sec-aim">どんな会社も、突き詰めれば4部品。この4つを埋める作業が「設計」。</p>
+
+        <h3 class="sub3"><span class="tag">2-1</span>4つの部品</h3>
+        <div class="b2opc">
+          <h4>OPCの設計図 ── 4部品モデル</h4>
+          <div class="b2opc-flow">
+            <div class="b2opc-node opc">① IP<small>何を持っているか</small></div>
+            <span class="b2opc-arrow">×</span>
+            <div class="b2opc-node you">② 制作<small>どう作るか（AIチーム）</small></div>
+            <span class="b2opc-arrow">×</span>
+            <div class="b2opc-node agency">③ 流通<small>どの棚に並べるか</small></div>
+            <span class="b2opc-arrow">×</span>
+            <div class="b2opc-node">④ 顧客<small>誰がお金を払うか</small></div>
+          </div>
+        </div>
+
+        <div class="components">
+          <div class="components-row header"><div>部品</div><div>問い</div><div>ショートドラマOPCなら</div></div>
+          <div class="components-row"><div class="lbl">① IP</div><div>何を持っているか</div><div>脚本・キャラ・世界観・AIキャラ資産</div></div>
+          <div class="components-row"><div class="lbl">② 制作</div><div>どう作るか</div><div>AIチーム（脚本AI・映像AI・編集AI）＋自分の演出判断</div></div>
+          <div class="components-row"><div class="lbl">③ 流通</div><div>どの棚に並べるか</div><div>22PFのどこか（FANY:D／TikTok／Renta!／ShortMax…）</div></div>
+          <div class="components-row"><div class="lbl">④ 顧客</div><div>誰がお金を払うか</div><div>課金視聴者／PF（MG）／ブランド（タイアップ）／他のOPC（素材ライセンス）</div></div>
+        </div>
+
+        <div class="concept">
+          <p class="ct">大事なこと：「作る」は4分の1でしかない</p>
+          <p>第1回・第2回で学んだのは主に①②③。今日ここに<strong>④顧客</strong>を足して、ぐるっと1周させる。誰が払うかを決めない設計図は、設計図じゃなくて願望。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">2-2</span>中国OPCを4部品で読み直す</h3>
+        <p>第2回で見た事例を、設計図として分解し直すと：</p>
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead><tr><th>事例</th><th>① IP</th><th>② 制作</th><th>③ 流通</th><th>④ 顧客</th></tr></thead>
+            <tbody>
+              <tr><td><b>韦先生工作室</b><br/><span class="tkw">月営収300万元</span></td><td>自社短劇『如意坊』</td><td>20人＋AI</td><td>短劇PF</td><td>課金視聴者</td></tr>
+              <tr><td><b>柯淳（短劇F4）</b><br/><span class="tkw">日薪2万元</span></td><td>自分のキャラ・人気</td><td>出演＋代言</td><td>抖音・ブランド店頭</td><td><b>ブランド企業</b>（FunnyElves 等）</td></tr>
+              <tr><td><b>陰キャAIキャラ転用</b><br/><span class="tkw">ドコモS&amp;L</span></td><td>AIキャラ資産</td><td>AI再配役</td><td><b>他作品</b></td><td><b>制作会社・他のOPC</b>（B2OPC）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="lesson">
+          <p class="lt">読み方</p>
+          <p>同じ「短劇で稼ぐ」でも、<strong>④顧客の置き方で全く違う会社になる</strong>。設計図とは、この4部品の組み合わせのこと。</p>
+        </div>
+        <p class="bridge">→ <span class="arrow">じゃあ、君の①IPの欄には何を書く？</span> それが第3部。</p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 3 -->
+      <section id="s3" class="rv">
+        <div class="kicker"><span class="num acc">3</span><span class="time-pill">16–28分</span></div>
+        <h2 class="sec">第3部：資産の棚卸し ── コピーできないものから始める</h2>
+        <p class="sec-aim">①IPの欄は「作品」からじゃなく「自分」から埋める。ただし、自分の資産は自分では見えない。</p>
+
+        <h3 class="sub3"><span class="tag">3-1</span>コピーできない3つの資産</h3>
+        <p>AIで「それっぽいもの」は誰でも作れる時代。だから設計図の起点は、<strong>コピーできない資産</strong>：</p>
+        <ul>
+          <li><strong>文脈</strong>：どんな現場・界隈・ジャンルを浴びてきたか（推し活歴も、バイト先も、地元も資産）</li>
+          <li><strong>関係</strong>：誰と信頼があるか（同級生の演者・バンド仲間・フォロワー100人でも資産）</li>
+          <li><strong>センス</strong>：何を「面白い」と感じるか（自分の当たり前は、他人の盲点）</li>
+        </ul>
+
+        <h3 class="sub3"><span class="tag">3-2</span>自分の資産は、自分では見えない（盲点の再演）</h3>
+        <p>第2回の教訓②を思い出す ──「陰キャ」チームは、自分たちが<strong>何を作っていたか</strong>（二面性物語）を分かっていなかった。<strong>自分の資産も同じ</strong>。自分では「普通」に見える。だからAIに棚卸しさせる：</p>
+
+        <div class="workflow">
+          <div class="step">
+            <div class="step-head"><span class="step-num">🔍</span><span class="step-t">棚卸しプロンプト</span></div>
+            <div class="prompt"><span class="pl">Prompt</span>「私の経歴・好きな作品・SNS・日常を渡す。ショートドラマOPCの資産として使える『文脈・関係・センス』を10個リストアップして。それぞれ、<b>どの題材ジャンル（棚）と相性が良いか</b>もセットで。」</div>
+            <div class="out"><span class="ol">Output</span>出てきた10個が、<b>君の会社の①IP欄の候補</b>になる。</div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <p class="rv-lab">Point</p>
+          <h4>棚卸しに<span class="hot">「すごい経歴」</span>は要らない</h4>
+          <p>「陰キャ」が当たった理由は、BLという派手な題材じゃなく<strong>「学校での自分 vs 本当の自分」という誰にでもある二面性</strong>だった。君の"普通"の中に、視聴者が共感する種がある。それを見つけるのがAIの仕事、選ぶのが君の仕事。</p>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 4 -->
+      <section id="s4" class="rv">
+        <div class="kicker"><span class="num acc">4</span><span class="time-pill">28–42分</span></div>
+        <h2 class="sec">第4部：★ 企画を組む ── 棚から逆算する「最初の1本」</h2>
+        <p class="sec-aim">第2回の三原則を"逆流"させて、売れる前提から企画を始める。ここが今日の目玉。</p>
+
+        <h3 class="sub3"><span class="tag">4-1</span>三原則を"逆流"させる</h3>
+        <p>第2回の三原則は「できた作品を売る」ための公式だった。立ち上げでは<strong>逆から使う</strong>：</p>
+        <ul>
+          <li><strong>① 棚から逆算する</strong>：作りたいものからじゃなく、「どのPFのどの棚が空いているか」から企画を始める（極道の教訓：<strong>外しは作る前に始まっている</strong>）</li>
+          <li><strong>② 自分の文脈と重ねる</strong>：棚だけ見ると誰でも作れる企画になる → AIに模倣される。<strong>棚 × 自分のコピーできない資産</strong>の交点だけが、君にしか作れない企画</li>
+          <li><strong>③ 分解前提で設計する</strong>：最初から「この企画は何個のビジネスに分解できるか」を企画書に書く。キャラ・音楽・衣装・テーマ ── <strong>部品が立つ企画は、外しても部品が残る</strong></li>
+        </ul>
+
+        <h3 class="sub3"><span class="tag">4-2</span>5ステップ・立ち上げ版（プロンプト連鎖）</h3>
+        <p>第2回の「分解→絞込→検証→繋ぐ→実行」を、立ち上げ用に組み替える。<strong>AIへの問いかけは単発じゃなく連鎖</strong> ── これは前回と同じ。</p>
+
+        <div class="workflow">
+          <div class="step">
+            <div class="step-head"><span class="step-num">1</span><span class="step-t">棚リサーチ ── 22PFの棚の分布を見える化</span></div>
+            <div class="prompt"><span class="pl">Prompt ①</span>「主要ショートドラマPF（FANY:D／TikTok／Renta!／ShortMax／DramaBox…）のジャンル別配信傾向を整理して。<b>空いている棚・過密な棚</b>を分類して。」</div>
+            <div class="out"><span class="ol">Output</span>棚の地図ができる。極道の失敗（棚がない題材）を、作る前に回避できる。</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step">
+            <div class="step-head"><span class="step-num">2</span><span class="step-t">マッチング ── 資産×棚の交点を探す</span></div>
+            <div class="prompt"><span class="pl">Prompt ②</span>「私の資産10個（第3部の棚卸し結果）と、空いている棚を掛け合わせて、<b>私にしか作れない題材</b>を5つ提案して。」</div>
+            <div class="out"><span class="ol">Output</span>「誰でも作れる企画」が「君にしか作れない企画」に変わる交点が出る。</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step">
+            <div class="step-head"><span class="step-num">3</span><span class="step-t">企画3案 ── 交点から企画に落とす</span></div>
+            <div class="prompt"><span class="pl">Prompt ③</span>「上位3案について、<b>ターゲット視聴者 × 想定PF × 冒頭3話のフック</b>をセットで企画書にして。」</div>
+            <div class="out"><span class="ol">Output</span>三原則③（視聴者×PFをセットで設計）が、企画段階で織り込まれる。</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step">
+            <div class="step-head"><span class="step-num">4</span><span class="step-t">分解テスト ── 部品の数を数える</span></div>
+            <div class="prompt"><span class="pl">Prompt ④</span>「各企画は<b>何個のビジネスに分解できる？</b> キャラ・音楽・衣装・テーマ…部品リストと、単独商売の仮説を出して。」</div>
+            <div class="out"><span class="ol">Output</span>部品が立たない企画はここで落とす。外しても部品が残る企画だけが残る。</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step final">
+            <div class="step-head"><span class="step-num">5</span><span class="step-t">MVP仕様 ── 最初の1本を定義する</span></div>
+            <div class="prompt"><span class="pl">Prompt ⑤</span>「最有望案を、<b>話数・尺・制作コスト上限・配信先・成功判定の数字</b>つきでMVP仕様書（A4 1枚）にして。」</div>
+            <div class="out"><span class="ol">Output</span>企画書1枚＋MVP仕様書。ここまで全部、<b>机の上でAIと回せる</b>。</div>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">Point</p>
+          <p><strong>ここまで全部、就職活動と両立できる作業量</strong>。お金もほぼかからない。立ち上げの最初の壁は資金でも技術でもなく、「設計を紙に落とすかどうか」。</p>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 5 -->
+      <section id="s5" class="rv">
+        <div class="kicker"><span class="num acc">5</span><span class="time-pill">42–54分</span></div>
+        <h2 class="sec">第5部：90日プラン ── AIチームで回す立ち上げ工程</h2>
+        <p class="sec-aim">設計図を工程表に落とす。30日で設計、60日で制作、90日で配信と計測。</p>
+
+        <h3 class="sub3"><span class="tag">5-1</span>30日・60日・90日</h3>
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead><tr><th>期間</th><th>フェーズ</th><th>やること</th><th>ゴール</th></tr></thead>
+            <tbody>
+              <tr><td class="ttime">Day 1–30</td><td><b>設計と検証</b></td><td>棚卸し→棚リサーチ→企画3案→MVP仕様（第4部の5ステップ）</td><td class="tkw">企画書1枚＋MVP仕様書</td></tr>
+              <tr><td class="ttime">Day 31–60</td><td><b>制作</b></td><td>AIチームで最小の1本（脚本AIたたき→生成→自分の演出判断で仕上げ）</td><td class="tkw">公開できる1本</td></tr>
+              <tr><td class="ttime">Day 61–90</td><td><b>配信と計測</b></td><td>オーガニック配信（TikTok等）→数字を読む→"何が当たったか"をAIと解釈</td><td class="tkw">次の1本の企画</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><div class="v">1/3<span class="u">コスト</span></div><p class="l">AI短劇の制作費（60集20万元・実写比）</p><p class="src">第一财经</p></div>
+          <div class="stat"><div class="v">1–3<span class="u">人</span></div><p class="l">AI短劇の制作チーム規模 × 約1週間</p><p class="src">第一财经</p></div>
+          <div class="stat alt"><div class="v">数話<span class="u">でOK</span></div><p class="l">学生のMVPは60集も要らない。まず棚に置いて反応を見る</p></div>
+        </div>
+        <p>コスト感の参照値は中国のAI短劇（60集で実写の約1/3・1〜3人・約1週間）。学生のMVPは<strong>数話・小予算・1人×AI</strong>で、まず棚に置いてみることが目的。</p>
+
+        <h3 class="sub3"><span class="tag">5-2</span>影も見る（第1回の宿題）</h3>
+        <p>第1回で確認したOPCの影3つは、立ち上げ日から現実になる：</p>
+        <ul>
+          <li><strong>① コストの置き換え</strong>：AI利用料は毎月出ていく → MVPに<strong>上限額</strong>を決めてから始める</li>
+          <li><strong>② 信用と資金の壁</strong>：実績ゼロでは誰も組んでくれない → だからこそ<strong>公開された1本</strong>が名刺になる</li>
+          <li><strong>③ リスクの集中</strong>：全部一人に乗る → 90日で「やめる／続ける」を判定する<strong>数字</strong>を先に決めておく</li>
+        </ul>
+        <div class="reveal">
+          <p class="rv-lab">Point</p>
+          <h4>立ち上げの覚悟とは、<span class="hot">根性のことじゃない</span></h4>
+          <p><strong>撤退条件を先に決めておく冷静さ</strong>のこと。上限額と判定の数字を決めた瞬間から、挑戦は「ギャンブル」じゃなく「検証」になる。</p>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 6 / CLOSING -->
+      <section id="s6" class="rv">
+        <div class="kicker"><span class="num acc">6</span><span class="time-pill">54–60分</span></div>
+        <h2 class="sec">クロージング ── 最後の問い</h2>
+
+        <p>3回の旅をまとめる：</p>
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead><tr><th>回</th><th>テーマ</th><th>持ち帰り</th></tr></thead>
+            <tbody>
+              <tr><td class="tno">第1回</td><td class="ttime">作る</td><td>AIでコスト崩壊。個人がIPを作れる ── OPCという選択肢</td></tr>
+              <tr><td class="tno">第2回</td><td class="ttime">売る</td><td>棚・盲点・分解。1本を10個のビジネスに</td></tr>
+              <tr><td class="tno">第3回</td><td class="ttime">立ち上げる</td><td>4部品の設計図。コピーできない資産から、棚から逆算した最初の1本へ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>会社に入る人も、この設計図は無駄にならない。<strong>社内で企画を立てるのも、4部品を埋める作業</strong>だから。OPCの設計図は、そのまま「プロデューサーの頭の中」。</p>
+
+        <div class="closing-q">
+          <p class="lab">最後の問い</p>
+          <h3>君の会社の、<br/>最初の商品は何？</h3>
+          <p>来年の今ごろ、この問いに「作品のURL」で答えられる人になっていてほしい。</p>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- SUMMARY -->
+      <section id="summary" class="rv">
+        <div class="kicker"><span class="time-pill">まとめ</span></div>
+        <h2 class="sec">持ち帰り</h2>
+        <div class="takeaway">
+          <h3>作る × 売る × 立ち上げる ＝ 自分のOPC</h3>
+          <p class="ta-q">第1回 × 第2回 × 第3回 ── シリーズの答え</p>
+          <div class="ta-list">
+            <p class="ti"><b>会社は4部品</b> ── IP×制作×流通×顧客。埋めれば設計図になる。「作る」は4分の1でしかない。</p>
+            <p class="ti"><b>コピーできない資産から始める</b> ── 文脈・関係・センス。棚卸しはAIにやらせ、選ぶのは自分。</p>
+            <p class="ti"><b>最初の90日はMVPの1本</b> ── 棚から逆算し、上限額と撤退条件を決めて、まず出す。</p>
+          </div>
+          <p class="ta-foot">中国では新規OPCが半年で<b>286万社</b>。日本のショートドラマ市場は2026年に<b>1,530億円</b>見通し。<br/>君たちは、<b>設計図を持って就職できる最初の世代</b> ── 会社に入るのも、自分が会社になるのも、両方選べる。</p>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="rv">
+        <div class="kicker"><span class="time-pill">Q&amp;A</span></div>
+        <h2 class="sec">よくある質問</h2>
+
+        <details class="faq">
+          <summary><span class="qm">Q.</span>お金がほとんどありません。それでも始められますか？</summary>
+          <div class="ans">MVPの目的は「稼ぐ」じゃなく「棚に置いて反応を見る」。スマホ＋無料枠のAIツール＋オーガニック配信なら、ほぼ0円から回せる。上限額を決めるのは、少額でも同じ。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>企画が思いつきません。</summary>
+          <div class="ans">思いつく必要はない。第4部の5ステップは「思いつく」を「調べて掛け合わせる」に置き換える手順。棚リサーチと資産棚卸しをやれば、交点は機械的に出てくる。選ぶのが君の仕事。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>失敗したらどうなりますか？</summary>
+          <div class="ans">90日版の失敗は「公開した1本の数字が悪かった」ということ。それは第2回でやった通り<b>解剖の材料</b>になる。何が外れたかを読めれば、次の打率が上がる。読まずにやめるのだけが本当の失敗。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>就職とOPC、どっちを目指すべきですか？</summary>
+          <div class="ans">二択じゃない。設計図を持って就職する人は、社内で「分解の目」を持つプロデューサー候補。就職してから週末OPCで1本出す人もいる。<b>選択肢を両方持てる</b>のがこの世代の強み。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>一人だと心が折れそうです。</summary>
+          <div class="ans">OPCは「一人で全部やる」だけど「一人ぼっちでやる」ではない。AIはチーム、同級生は最初の視聴者、講師は壁打ち相手。<b>関係はコピーできない資産</b> ── 孤立しないこともスキルのうち。</div>
+        </details>
+      </section>
+
+      <!-- REFS -->
+      <section id="refs" class="rv">
+        <div class="kicker"><span class="time-pill">出典・参照</span></div>
+        <h2 class="sec">出典</h2>
+        <div class="refs">
+          <h4>シリーズ教材</h4>
+          <ul>
+            <li>第1回：<a href="../26年5月第1回/">AIイノベーションとOPC ── エンタメ界にもたらすAI革命とその未来「OPC」</a></li>
+            <li>第2回：<a href="../">ショートドラマヒットの解剖学 ── AIで分析、AIで制作。OPCで生きる道</a></li>
+          </ul>
+          <h4>データの出所（第1回・第2回教材からの再掲）</h4>
+          <ul>
+            <li>制作コスト99.5%削減・一人で一日一本：2026上海微短劇大会 各社プレゼン（一般社団法人日本ショート動画協会 現地レポート）</li>
+            <li>新規OPC登録286万社（2025年上半期・前年比+47%）：中関村人材協会「中国OPC発展トレンド報告」</li>
+            <li>韦先生工作室 月営収300万元／3人×5日=75集／AI短劇20万元/60集：第一财经『AI短剧狂飙』<a href="https://www.yicai.com/news/103084978.html">yicai.com</a></li>
+            <li>柯淳 日薪2万元・FunnyElves代言：21经济网<a href="https://news.qq.com/rain/a/20250327A0AEXY00">news.qq.com</a></li>
+            <li>日本ショートドラマ市場1,530億円見通し（2026年）：上海微短劇大会（前回大会登壇内容）</li>
+            <li>ドコモS&amp;L 3作品配信実績・陰キャAIキャラ転用：社内データ（第2回教材参照）</li>
+          </ul>
+          <p class="note">※数字はソース時点の値。一部は各社プレゼン／報道時点の推定を含む。公の場で使う際は最新情報を再確認のこと。</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<button class="backtop" id="backtop" aria-label="ページ上部へ戻る">↑</button>
+
+<footer>
+  <p>YCA 2026年 第3回講義（日程調整中） 60分 ／ <b>自分のOPCを立ち上げる</b><br/>
+  ── 作る × 売る × 繋ぐを、君の番に ──<br/>
+  第1回講義：<a href="../26年5月第1回/" style="color:#fff">AIイノベーションとOPC</a>　／　第2回講義：<a href="../" style="color:#fff">ショートドラマヒットの解剖学</a></p>
+</footer>
+
+<script>
+  // progress bar
+  const progress = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+    progress.style.width = (scrolled * 100) + '%';
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // reveal-on-scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  // TOC active state
+  const tocLinks = document.querySelectorAll('.toc a, #mnav a');
+  const sections = ['aim','timetable','s1','s2','s3','s4','s5','s6','summary','faq','refs']
+    .map(id => document.getElementById(id)).filter(Boolean);
+  const setActive = () => {
+    let curr = sections[0]?.id;
+    const y = window.scrollY + 120;
+    for (const s of sections) { if (s.offsetTop <= y) curr = s.id; else break; }
+    tocLinks.forEach(a => {
+      const href = a.getAttribute('href');
+      a.classList.toggle('active', href === '#' + curr);
+    });
+  };
+  window.addEventListener('scroll', setActive, { passive: true });
+  setActive();
+
+  // back to top
+  const backtop = document.getElementById('backtop');
+  window.addEventListener('scroll', () => {
+    backtop.classList.toggle('show', window.scrollY > 600);
+  }, { passive: true });
+  backtop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>

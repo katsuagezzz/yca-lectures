@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ショートドラマヒットの解剖学 ── AIで分析、AIで制作。OPCで生きる道</title>
+<meta name="description" content="YCA 1年生向け 60分講義｜どんなショートドラマが当たるのか？ ドコモS&L 3作品の生データで解剖し、1本を10個のビジネスに分解する力＝OPCの本質を学ぶ。前回「OPC」講義の続編。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#15151a;
+    --ink-soft:#3a3a44;
+    --paper:#fbfaf7;
+    --paper-2:#f3f1ea;
+    --line:#e3dfd4;
+    --accent:#ff4d2e;
+    --accent-2:#2b2bff;
+    --gold:#c79a3a;
+    --green:#1f7a4d;
+    --red:#c0392b;
+    --dark:#0e0e13;
+    --maxread:760px;
+    --sidebar:264px;
+    --shadow:0 18px 48px -24px rgba(20,20,30,.45);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-weight:400;line-height:1.95;letter-spacing:.01em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  h1,h2,h3,h4{font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif;line-height:1.4;letter-spacing:.02em}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* progress bar */
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--gold));z-index:200;transition:width .08s linear}
+
+  /* HERO */
+  .hero{position:relative;background:radial-gradient(1200px 600px at 80% -10%,rgba(255,77,46,.22),transparent 60%),radial-gradient(900px 500px at 0% 110%,rgba(43,43,255,.18),transparent 55%),linear-gradient(rgba(14,14,19,.72),rgba(14,14,19,.86)),url("hero_bg.png") center/cover no-repeat,var(--dark);color:#fff;padding:88px 24px 72px;overflow:hidden}
+  .hero-inner{max-width:920px;margin:0 auto;position:relative;z-index:2}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;letter-spacing:.18em;color:#ffd9cf;border:1px solid rgba(255,255,255,.22);padding:7px 14px;border-radius:999px;text-transform:uppercase;margin-bottom:26px}
+  .eyebrow b{color:#fff;font-weight:700}
+  .hero h1{font-weight:900;font-size:clamp(1.85rem,4.6vw,3rem);margin:.1em 0 .25em;color:#fff;letter-spacing:.01em}
+  .hero h1 .q{color:var(--accent)}
+  .hero .sub{font-size:clamp(1rem,2.1vw,1.25rem);color:#cfcfd8;font-weight:500;margin:0 0 30px;line-height:1.65}
+  .hero .sub b{color:#fff}
+  .hero .sub .hot{color:var(--accent);font-weight:700}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#eee;font-size:.82rem;padding:8px 14px;border-radius:999px;font-weight:500}
+  .chip b{color:#fff}
+  .hero-msg{margin-top:30px;padding:18px 22px;border-left:4px solid var(--accent);background:rgba(255,255,255,.06);border-radius:0 12px 12px 0;color:#e9e9f0;font-size:clamp(.98rem,2vw,1.08rem);line-height:1.9;max-width:730px}
+  .hero-msg b{color:#fff;font-weight:700}
+  .hero-msg .hot{color:var(--accent);font-weight:700}
+  .scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#777;font-size:.72rem;letter-spacing:.2em;z-index:2}
+  .prev-link{display:inline-flex;align-items:center;gap:7px;margin-top:18px;font-size:.82rem;color:#9a9aa6;background:rgba(255,255,255,.06);padding:7px 13px;border-radius:999px;text-decoration:none;border:1px solid rgba(255,255,255,.14)}
+  .prev-link:hover{color:#fff;background:rgba(255,255,255,.12);text-decoration:none}
+  .prev-link .arr{color:var(--accent)}
+
+  /* LAYOUT */
+  .layout{max-width:1180px;margin:0 auto;display:block;padding:0 20px}
+  .sidebar{display:none}
+  .content{min-width:0;padding:0 0 120px}
+  .reading{max-width:var(--maxread);margin:0 auto}
+  @media(min-width:1080px){
+    .layout{display:grid;grid-template-columns:var(--sidebar) minmax(0,1fr);gap:48px;padding:0 28px}
+    .sidebar{display:block;position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:48px 4px 48px 0;border-right:1px solid var(--line)}
+    .reading{margin:0;max-width:var(--maxread)}
+    .content{padding-top:8px}
+  }
+  .toc-title{font-size:.72rem;letter-spacing:.16em;color:#a39c8c;text-transform:uppercase;margin:0 0 14px;font-weight:700}
+  .toc a{display:block;color:var(--ink-soft);font-size:.86rem;padding:7px 12px 7px 14px;border-left:2px solid transparent;border-radius:0 6px 6px 0;line-height:1.45;transition:all .15s}
+  .toc a .n{color:#b9b1a0;font-weight:700;margin-right:8px;font-size:.78rem}
+  .toc a:hover{background:var(--paper-2);text-decoration:none;color:var(--ink)}
+  .toc a.active{border-left-color:var(--accent);background:var(--paper-2);color:var(--ink);font-weight:700}
+  .toc a.active .n{color:var(--accent)}
+
+  #mnav{position:sticky;top:0;z-index:120;background:rgba(251,250,247,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;gap:8px;overflow-x:auto;padding:11px 14px;scrollbar-width:none}
+  #mnav::-webkit-scrollbar{display:none}
+  #mnav a{flex:0 0 auto;font-size:.78rem;color:var(--ink-soft);background:var(--paper-2);padding:6px 13px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
+  #mnav a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  @media(min-width:1080px){#mnav{display:none}}
+
+  /* sections */
+  section{padding-top:64px;scroll-margin-top:70px}
+  @media(min-width:1080px){section{scroll-margin-top:24px}}
+  .kicker{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+  .num{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1.05rem;color:#fff;background:var(--ink);width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .num.acc{background:var(--accent)}
+  .time-pill{font-size:.74rem;letter-spacing:.08em;color:#8a8475;background:var(--paper-2);border:1px solid var(--line);padding:4px 11px;border-radius:999px;font-weight:700}
+  h2.sec{font-size:clamp(1.5rem,3.4vw,2.05rem);font-weight:900;margin:.15em 0 .1em;letter-spacing:.01em}
+  .sec-aim{color:var(--ink-soft);font-size:.95rem;border-left:3px solid var(--gold);padding:2px 0 2px 14px;margin:14px 0 26px;background:linear-gradient(90deg,rgba(199,154,58,.07),transparent)}
+  h3.sub3{font-size:1.18rem;font-weight:700;margin:38px 0 12px;padding-top:4px}
+  h3.sub3 .tag{font-size:.72rem;color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px;margin-right:9px;vertical-align:middle;font-family:"Noto Sans JP";letter-spacing:.04em}
+  p{margin:0 0 16px}
+  .content ul{margin:0 0 18px;padding-left:1.25em}
+  .content li{margin-bottom:9px}
+  strong{font-weight:700;background:linear-gradient(transparent 62%,rgba(255,77,46,.22) 62%);padding:0 .05em}
+  .lead{font-size:1.06rem;color:var(--ink)}
+  .divider{height:1px;background:var(--line);border:0;margin:0}
+
+  .concept{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:24px 0}
+  .concept .ct{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.05rem;margin:0 0 6px;display:flex;align-items:center;gap:9px}
+  .concept .ct::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--accent-2);transform:rotate(45deg)}
+  .concept p:last-child{margin-bottom:0}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:24px 0}
+  .stat{background:var(--dark);color:#fff;border-radius:14px;padding:18px 18px 16px}
+  .stat .v{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.55rem;line-height:1.1;color:#fff}
+  .stat .v .u{font-size:.85rem;color:var(--accent);margin-left:2px}
+  .stat .l{font-size:.8rem;color:#b7b7c2;margin-top:7px}
+  .stat .src{font-size:.68rem;color:#7a7a86;margin-top:4px}
+  .stat.alt{background:var(--accent)}
+  .stat.alt .v,.stat.alt .v .u{color:#fff}
+  .stat.alt .l{color:#ffe2db}
+  .stat.win{background:linear-gradient(120deg,#1f7a4d,#2d9968)}
+  .stat.lose{background:linear-gradient(120deg,#7a1f1f,#9c2929)}
+
+  .message{background:linear-gradient(120deg,#15151a,#26262f);color:#fff;border-radius:16px;padding:24px 26px;margin:26px 0 0;box-shadow:var(--shadow)}
+  .message .msg-lab{font-size:.7rem;letter-spacing:.14em;color:var(--accent);font-weight:700;text-transform:uppercase;margin:0 0 9px}
+  .message p{margin:0 0 12px;font-size:1.05rem;line-height:1.95;color:#eaeaf0}
+  .message p:last-child{margin-bottom:0}
+  .message p strong{color:#fff;background:linear-gradient(transparent 58%,rgba(255,77,46,.5) 58%);padding:0 .05em}
+
+  .tt-wrap{overflow-x:auto;margin:22px 0}
+  table.tt{border-collapse:collapse;width:100%;font-size:.85rem;min-width:540px}
+  table.tt th,table.tt td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.tt thead th{background:var(--ink);color:#fff;font-weight:700;font-size:.8rem;letter-spacing:.04em}
+  table.tt tbody tr:hover{background:var(--paper-2)}
+  table.tt .tno{font-family:"Zen Kaku Gothic New";font-weight:900;color:var(--accent)}
+  table.tt .ttime{white-space:nowrap;color:var(--ink-soft);font-weight:700}
+  table.tt .tkw{color:#8a8475;font-size:.78rem}
+
+  /* 3作品 cards */
+  .three-works{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:24px 0}
+  .work-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .work-card.win{border-top:4px solid var(--green)}
+  .work-card.sleeper{border-top:4px solid var(--gold)}
+  .work-card.lose{border-top:4px solid var(--red)}
+  .work-card .wtag{font-size:.7rem;letter-spacing:.1em;font-weight:700;text-transform:uppercase;margin:0 0 6px}
+  .work-card.win .wtag{color:var(--green)}
+  .work-card.sleeper .wtag{color:var(--gold)}
+  .work-card.lose .wtag{color:var(--red)}
+  .work-card h4{font-size:1.02rem;font-weight:900;margin:0 0 9px;line-height:1.35}
+  .work-card .roi{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.85rem;margin:8px 0 4px;line-height:1}
+  .work-card.win .roi{color:var(--green)}
+  .work-card.sleeper .roi{color:var(--gold)}
+  .work-card.lose .roi{color:var(--red)}
+  .work-card .roi-l{font-size:.74rem;color:#8a8475;letter-spacing:.04em;margin:0 0 12px}
+  .work-card dl{margin:0;font-size:.85rem}
+  .work-card dt{color:#8a8475;font-size:.74rem;letter-spacing:.04em;margin-top:7px}
+  .work-card dd{margin:1px 0 0;font-weight:700;color:var(--ink)}
+
+  /* ROI comparison bigstat */
+  .bigstat{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;background:linear-gradient(120deg,#15151a,#26262f);color:#fff;border-radius:16px;padding:24px 26px;margin:24px 0}
+  .bigstat .v{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:2.4rem;color:#fff;line-height:1}
+  .bigstat .v .u{font-size:1rem;color:var(--gold);margin-left:4px}
+  .bigstat .l{color:#cfcfd8;font-size:.92rem;max-width:430px}
+
+  /* shelf table (棚に並ぶ／並ばない) */
+  .shelf-wrap{overflow-x:auto;margin:22px 0}
+  table.shelf{border-collapse:collapse;width:100%;min-width:560px;font-size:.88rem}
+  table.shelf th,table.shelf td{padding:10px 12px;border:1px solid var(--line);text-align:center;vertical-align:middle;line-height:1.45}
+  table.shelf thead th{background:var(--ink);color:#fff;font-weight:700;font-size:.8rem}
+  table.shelf tbody th{background:var(--paper-2);text-align:left;font-weight:700;white-space:nowrap;color:var(--ink);font-size:.85rem}
+  table.shelf td.win{background:rgba(31,122,77,.1);color:var(--green);font-weight:700}
+  table.shelf td.lose{background:rgba(192,57,43,.1);color:var(--red);font-weight:700}
+  table.shelf .big{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1rem}
+  table.shelf .zero{color:#aaa;font-weight:700}
+
+  /* component matrix (作品分解) */
+  .components{margin:24px 0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .components-row{display:grid;grid-template-columns:120px 1fr 1fr;border-bottom:1px solid var(--line);align-items:start}
+  .components-row:last-child{border-bottom:0}
+  .components-row.header{background:var(--ink);color:#fff;font-weight:700;font-size:.85rem}
+  .components-row.header > div{padding:11px 14px}
+  .components-row > div{padding:12px 14px;font-size:.88rem;line-height:1.65}
+  .components-row .lbl{font-weight:700;color:var(--accent-2);background:var(--paper-2);font-size:.88rem}
+  @media(max-width:680px){.components-row{grid-template-columns:1fr}.components-row.header{display:none}.components-row > div{padding:8px 14px}.components-row .lbl{padding-top:14px;font-weight:900;border-top:1px solid var(--line)}}
+
+  /* step workflow */
+  .workflow{margin:24px 0}
+  .step{background:#fff;border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:0 14px 14px 0;padding:18px 22px 18px 22px;margin:0 0 14px;box-shadow:var(--shadow);position:relative}
+  .step .step-head{display:flex;align-items:center;gap:12px;margin:0 0 10px}
+  .step .step-num{background:var(--accent);color:#fff;font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.1rem;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .step .step-t{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.08rem;color:var(--ink)}
+  .step .prompt{background:var(--dark);color:#fff;border-radius:10px;padding:14px 16px;font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.85rem;line-height:1.75;margin:10px 0 14px;border-left:3px solid var(--gold)}
+  .step .prompt .pl{display:block;color:var(--gold);font-size:.7rem;font-family:"Noto Sans JP";letter-spacing:.1em;margin-bottom:6px;text-transform:uppercase;font-weight:700}
+  .step .out{background:var(--paper-2);border:1px solid var(--line);border-radius:10px;padding:13px 16px;font-size:.88rem;line-height:1.7}
+  .step .out .ol{display:block;font-size:.7rem;color:#8a8475;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+  .step .out ol,.step .out ul{margin:0;padding-left:1.25em}
+  .step .out li{margin-bottom:4px}
+  .step .arrow-next{text-align:center;color:var(--accent);font-family:"Zen Kaku Gothic New";font-weight:900;margin:6px 0 0}
+  .step.final{border-left-color:var(--green)}
+  .step.final .step-num{background:var(--green)}
+
+  /* answer-reveal callout */
+  .reveal{background:linear-gradient(120deg,#15151a,#26262f);color:#fff;border-radius:18px;padding:28px;margin:28px 0;box-shadow:var(--shadow);position:relative}
+  .reveal .rv-lab{font-size:.74rem;letter-spacing:.18em;color:var(--gold);font-weight:900;text-transform:uppercase;margin:0 0 10px}
+  .reveal h4{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.3rem;color:#fff;margin:0 0 12px;line-height:1.4}
+  .reveal h4 .hot{color:var(--accent)}
+  .reveal p{color:#cfcfd8;font-size:.96rem;line-height:1.85;margin:0 0 10px}
+  .reveal p:last-child{margin:0}
+  .reveal p strong{color:#fff;background:linear-gradient(transparent 58%,rgba(255,77,46,.5) 58%);padding:0 .05em}
+
+  /* AI character reuse panel */
+  .reuse{margin:24px 0}
+  .reuse-vids{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:0 0 16px}
+  .reuse-vids figure{margin:0;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center}
+  .reuse-vids figure img{display:block;width:100%;height:auto;border-radius:10px;aspect-ratio:9/16;object-fit:cover;box-shadow:0 14px 36px -18px rgba(0,0,0,.5)}
+  .reuse-vids figcaption{margin-top:11px;font-size:.83rem;color:var(--ink-soft);line-height:1.55}
+  .reuse-vids figcaption .badge{display:inline-block;font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px;margin:0 0 6px;letter-spacing:.04em}
+  .reuse-vids .live .badge{background:var(--ink);color:#fff}
+  .reuse-vids .anime .badge{background:var(--accent);color:#fff}
+  .reuse-vids figcaption b{display:block;color:var(--ink);font-weight:700;margin:4px 0 2px}
+
+  /* B2OPC structure diagram */
+  .b2opc{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:24px 22px;margin:24px 0}
+  .b2opc h4{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.05rem;margin:0 0 16px;color:var(--ink);text-align:center}
+  .b2opc-flow{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+  .b2opc-node{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:13px 16px;font-size:.85rem;text-align:center;line-height:1.45;flex:1 1 180px;max-width:240px;font-weight:700}
+  .b2opc-node.you{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .b2opc-node.opc{background:#fff;border-color:var(--accent);color:var(--accent)}
+  .b2opc-node.agency{background:#fff;border-color:var(--accent-2);color:var(--accent-2)}
+  .b2opc-node small{display:block;font-size:.7rem;color:#8a8475;font-weight:500;margin-top:5px}
+  .b2opc-node.you small{color:#9a9aa6}
+  .b2opc-arrow{font-family:"Zen Kaku Gothic New";font-weight:900;color:var(--accent);font-size:1.3rem;flex:0 0 auto}
+
+  /* takeaway dark card */
+  .takeaway{background:var(--dark);color:#fff;border-radius:20px;padding:34px 30px;margin:30px 0}
+  .takeaway h3{color:#fff;font-size:1.35rem;font-weight:900;margin:0 0 6px}
+  .takeaway .ta-q{color:var(--accent);font-weight:700;margin:0 0 22px;font-size:.98rem}
+  .takeaway .ta-list{counter-reset:t;display:grid;gap:14px;margin:0 0 22px}
+  .takeaway .ta-list .ti{position:relative;padding-left:42px;color:#eaeaf0}
+  .takeaway .ta-list .ti::before{counter-increment:t;content:counter(t);position:absolute;left:0;top:-2px;width:28px;height:28px;border:2px solid var(--accent);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"Zen Kaku Gothic New";font-weight:900;font-size:.9rem}
+  .takeaway .ta-list .ti b{color:#fff}
+  .takeaway .ta-foot{border-top:1px solid rgba(255,255,255,.16);padding-top:16px;color:#bdbdc8;font-size:.92rem;line-height:1.85}
+  .takeaway .ta-foot b{color:#fff}
+
+  /* bridge line */
+  .bridge{margin:26px 0 0;font-family:"Zen Kaku Gothic New";font-weight:900;font-size:clamp(1.05rem,2.4vw,1.25rem);line-height:1.62;color:var(--ink)}
+  .bridge .arrow{color:var(--accent)}
+
+  /* lesson box */
+  .lesson{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:0 12px 12px 0;padding:14px 18px;margin:16px 0 22px;box-shadow:var(--shadow);font-size:.96rem}
+  .lesson .lt{font-family:"Zen Kaku Gothic New";font-weight:900;color:var(--gold);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;margin:0 0 5px}
+
+  /* closing question */
+  .closing-q{background:linear-gradient(120deg,var(--accent),#ff7a4d);color:#fff;border-radius:20px;padding:36px 30px;margin:34px 0;text-align:center;box-shadow:var(--shadow)}
+  .closing-q .lab{font-size:.74rem;letter-spacing:.2em;color:#ffd9cf;font-weight:700;text-transform:uppercase;margin:0 0 12px}
+  .closing-q h3{font-family:"Zen Kaku Gothic New";font-weight:900;color:#fff;font-size:clamp(1.3rem,3.8vw,1.9rem);margin:0 0 14px;line-height:1.45}
+  .closing-q p{color:#fff;margin:0;font-size:.96rem;opacity:.9}
+
+  /* FAQ */
+  details.faq{background:#fff;border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden}
+  details.faq summary{cursor:pointer;padding:16px 46px 16px 18px;font-weight:700;position:relative;list-style:none;font-size:.96rem}
+  details.faq summary::-webkit-details-marker{display:none}
+  details.faq summary::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:1.3rem;color:var(--accent);font-weight:700;transition:transform .2s}
+  details.faq[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+  details.faq summary .qm{color:var(--accent);font-weight:900;margin-right:8px}
+  details.faq .ans{padding:0 18px 18px;color:var(--ink-soft);font-size:.93rem;line-height:1.85}
+
+  /* references */
+  .refs{font-size:.82rem;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-top:20px;line-height:1.75}
+  .refs h4{margin:14px 0 10px;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:#a39c8c}
+  .refs h4:first-child{margin-top:0}
+  .refs ul{padding-left:1.1em;margin:0 0 14px}
+  .refs li{margin-bottom:7px}
+  .refs .note{color:#a39c8c;font-size:.78rem;margin-top:10px}
+
+  /* footer */
+  footer{background:var(--dark);color:#9a9aa6;text-align:center;padding:40px 20px;font-size:.82rem}
+  footer b{color:#fff}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+  .rv.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+  .backtop{position:fixed;right:18px;bottom:18px;z-index:120;background:var(--ink);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:1.1rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:var(--shadow)}
+  .backtop.show{opacity:1;pointer-events:auto}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow"><b>YCA</b> 1年生 ／ 60分講義 ／ 続編</span>
+    <h1>ショートドラマヒットの<span class="q">解剖学</span></h1>
+    <p class="sub"><b>AIで分析、AIで制作。</b><span class="hot">OPCで生きる道</span></p>
+    <div class="meta-row">
+      <span class="chip">⏱ <b>60分</b></span>
+      <span class="chip">📅 <b>2026.6.8（月）</b></span>
+      <span class="chip">💻 オンライン</span>
+    </div>
+    <p class="hero-msg">前回の核心は<b>「OPC＝"IP（資産）"を一人で作って売る」</b>。受託じゃない、自分の作品を、自分で売る。<br/>前回は<b>"作る"</b>を扱いました。今回はその<span class="hot">"売る"の解剖</span>です。<br/>どんなショート動画が当たるのか？ どんな商売をしているのか？ <b>3作の生データで解剖し、1本を10個のビジネスに分解する目を渡します。</b></p>
+    <a href="./26年5月第1回/" class="prev-link"><span class="arr">←</span> 前回講義「AIイノベーションとOPC」を見る</a>
+  </div>
+  <div class="scroll-hint">SCROLL ↓</div>
+</header>
+
+<nav id="mnav" aria-label="セクション">
+  <a href="#aim">狙い</a>
+  <a href="#s1">1 振り返り＋問い</a>
+  <a href="#s2">2 ヒット解剖</a>
+  <a href="#s3">3 作品を分解</a>
+  <a href="#s4">4 ビジネスを組む</a>
+  <a href="#s5">5 OPCで回す</a>
+  <a href="#s6">クロージング</a>
+  <a href="#summary">まとめ</a>
+  <a href="#faq">Q&amp;A</a>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="toc" aria-label="目次">
+      <p class="toc-title">目次 / Contents</p>
+      <a href="#aim">この講義の狙い</a>
+      <a href="#timetable">60分タイムテーブル</a>
+      <a href="#s1"><span class="n">1</span>振り返り＋今日の問い</a>
+      <a href="#s2"><span class="n">2</span>ヒットの解剖（3作対比）</a>
+      <a href="#s3"><span class="n">3</span>作品を分解する</a>
+      <a href="#s4"><span class="n">4</span>ビジネスを組む（3実例）</a>
+      <a href="#s5"><span class="n">5</span>OPCで回す（5ステップ）</a>
+      <a href="#s6"><span class="n">6</span>クロージング</a>
+      <a href="#summary">まとめ（持ち帰り）</a>
+      <a href="#faq">よくある質問</a>
+      <a href="#refs">出典</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="reading">
+
+      <!-- AIM -->
+      <section id="aim" class="rv">
+        <div class="kicker"><span class="time-pill">この講義の狙い</span></div>
+        <h2 class="sec">覚えて帰って欲しい2つ</h2>
+        <ul class="lead">
+          <li><strong>OPCのスキルセットは "作る＋売る" の両輪</strong>：前回は"作る"側。今回は"売る"側 ── どんな題材が、どこで、いくらで売れているかを読み解きます。</li>
+          <li><strong>プロデューサーは "1本" を "10個のビジネスの種" に見ている</strong>：作品を部品に分解し、それぞれを商売にする。中国ではすでに個人OPCが<strong>月営収300万元（≒6,000万円）</strong>でこれを実装しています。</li>
+        </ul>
+        <div class="message">
+          <p class="msg-lab">この講義のメッセージ</p>
+          <p><strong>君は、1本の作品を、いくつのビジネスに分解できる？</strong></p>
+          <p>見える人は1本のドラマを10個の商売にできる。見えない人は1本作って1本売って終わる。</p>
+          <p><strong>AIは、その"分解"と"繋ぎ"の道具になる。</strong>── ここが、君たちの戦場。</p>
+        </div>
+      </section>
+
+      <!-- TIMETABLE -->
+      <section id="timetable" class="rv">
+        <div class="kicker"><span class="time-pill">全体の流れ</span></div>
+        <h2 class="sec">60分タイムテーブル</h2>
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead>
+              <tr><th>区切り</th><th>時間</th><th>内容</th><th>キーワード</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="tno">1</td><td class="ttime">0–6分</td><td>前回の振り返り＋今日の問い</td><td class="tkw">OPC・IPを作って売る・"売る"の解剖へ</td></tr>
+              <tr><td class="tno">2</td><td class="ttime">6–18分</td><td>ヒットの解剖（圧縮）：3作対比＋三原則</td><td class="tkw">棚・盲点・視聴者×PF</td></tr>
+              <tr><td class="tno">3</td><td class="ttime">18–25分</td><td>作品を分解する：プロデューサー視点</td><td class="tkw">キャラ・音楽・脚本・衣装・ロケ</td></tr>
+              <tr><td class="tno">4</td><td class="ttime">25–45分</td><td>★ ビジネスを組む：3つの実例</td><td class="tkw">今晒IP展開・陰キャAI転用・中国OPC</td></tr>
+              <tr><td class="tno">5</td><td class="ttime">45–55分</td><td>OPCで回す：陰キャでやって見せる5ステップ</td><td class="tkw">分解→絞込→検証→繋ぐ→実行</td></tr>
+              <tr><td class="tno">6</td><td class="ttime">55–60分</td><td>クロージング</td><td class="tkw">1本を、いくつのビジネスに分解できる？</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 1 -->
+      <section id="s1" class="rv">
+        <div class="kicker"><span class="num acc">1</span><span class="time-pill">0–6分</span></div>
+        <h2 class="sec">第1部：前回の振り返り＋今日の問い</h2>
+        <p class="sec-aim">前回は"作る"を扱った。今回は"売る"を扱う ── どんな商売をしているのかを解剖する。</p>
+
+        <h3 class="sub3"><span class="tag">1-1</span>前回の到達点 ── OPCは「IPを作って、自分で売る」一人会社</h3>
+        <p>前回の核心を3行で：</p>
+        <ul>
+          <li><strong>OPC＝受託じゃない</strong>。AIで「<strong>IP（資産）を一人で作って、自分で売る</strong>」働き方</li>
+          <li>中国で見えた未来：作る部分のコストが崩れた（一人で一日一本／99.5%減）── でもそれだけじゃない</li>
+          <li><strong>「作る＋売る」を両輪で回せる</strong>ことが、OPCのスキルセットの本質</li>
+        </ul>
+        <p>前回は主に <b>"作る"</b> の側を扱った（コスト崩壊、AIで一人で作れる、3週間¥200万円で「君アニメ」が作れた話）。<br/>でも作っただけじゃ商売にならない。<strong>売れて、初めてOPCは成立する</strong>。</p>
+
+        <h3 class="sub3"><span class="tag">1-2</span>今日の問い ── どんなショート動画が、どんな商売をしているのか</h3>
+        <div class="message">
+          <p class="msg-lab">今日の問い</p>
+          <p><strong>どんなショートドラマが当たるのか？ どんな商売で成立しているのか？</strong></p>
+        </div>
+        <p>抽象論じゃ答えにならない。<strong>ドコモスタジオ＆ライブが実際に作って、実際に売った（売れなかった）3作品</strong>を、生データで解剖する。教科書じゃない、現場の数字で考える60分。<strong>まずは「ショートドラマ」という商売の中身から</strong>。</p>
+
+        <div class="three-works">
+          <div class="work-card win">
+            <p class="wtag">狙い通り当たり</p>
+            <h4>今、晒してます。</h4>
+            <div class="roi">143.3%</div>
+            <p class="roi-l">ROI（売上÷制作費）</p>
+            <dl>
+              <dt>題材</dt><dd>不倫</dd>
+              <dt>制作費</dt><dd>¥10.0M</dd>
+              <dt>売上</dt><dd>¥14.3M</dd>
+            </dl>
+          </div>
+          <div class="work-card sleeper">
+            <p class="wtag">期待してなかったのに当たり</p>
+            <h4>陰キャなアイツが義理の兄！？</h4>
+            <div class="roi">150.7%</div>
+            <p class="roi-l">ROI ── 同日リリースで本命を超えた</p>
+            <dl>
+              <dt>題材</dt><dd>BL</dd>
+              <dt>制作費</dt><dd>¥6.7M</dd>
+              <dt>売上</dt><dd>¥10.1M</dd>
+            </dl>
+          </div>
+          <div class="work-card lose">
+            <p class="wtag">大きく外し</p>
+            <h4>極道人事部 黒崎隼人</h4>
+            <div class="roi">11.5%</div>
+            <p class="roi-l">ROI ── 制作費の93%が消えた</p>
+            <dl>
+              <dt>題材</dt><dd>正体隠し</dd>
+              <dt>制作費</dt><dd>¥6.7M</dd>
+              <dt>売上</dt><dd>¥0.77M</dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="bigstat">
+          <span class="v">¥-3.5M</span>
+          <p class="l">3作合計：制作費 ¥28.7M／売上 ¥25.2M／回収率 約88%。<b>ポートフォリオは赤字</b>。<br/>2勝1敗でも、外しの規模で全部もっていかれる ── これがショートドラマの商売の現実。</p>
+        </div>
+
+        <p class="bridge">→ <span class="arrow">この3作の差はどこにあるのか？</span> どんなものが、どこで、いくらで売れているのか。<br/>それを、AIで解剖していくのが今日の60分。</p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 2 -->
+      <section id="s2" class="rv">
+        <div class="kicker"><span class="num acc">2</span><span class="time-pill">6–18分</span></div>
+        <h2 class="sec">第2部：ヒットの解剖（圧縮版）── 3作対比＋三原則</h2>
+        <p class="sec-aim">「売れる作品の正体」を3作対比で一気に押さえる。ここは骨子だけ。本番は第3部以降。</p>
+
+        <h3 class="sub3"><span class="tag">2-1</span>当たりの正体（今晒：ROI 143.3%）── 鉄板の棚に並ぶ職人芸</h3>
+        <ul>
+          <li><strong>題材＝不倫</strong>：配信PFが「売り方」と「課金導線」を持つ鉄板コモディティ</li>
+          <li><strong>冒頭14ページに"全部入りフック"</strong>：いじめ復讐／不倫／パパ活／デジタルタトゥー／マウント／復讐配信 ── 業界の鉄板フックをほぼ全部</li>
+          <li><strong>12+PFが棚を空けた</strong>：BUMP ¥2.2M／ShortMax ¥1.3M／TikTok ¥1.0M／Renta!（コミック）¥1.0M／au Short ¥800K…</li>
+        </ul>
+        <div class="lesson">
+          <p class="lt">教訓 ①</p>
+          <p><strong>棚を持っているジャンルを職人で組めば、当たる。</strong>ただし"再現可能な当たり"は、いずれAIで模倣される領域。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">2-2</span>盲点が当てた（陰キャ：ROI 150.7%）── 想定外の正体</h3>
+        <p><strong>同日リリースで本命（今晒）を超えた、回収率No.1の sleeper</strong>。売上¥6.0M（他PF）の内訳：</p>
+        <ul>
+          <li><strong>TikTok ¥2,059K（35%）</strong>／Renta! ¥1,293K／<strong>GAGAOOLALA ¥620K</strong>（アジアLGBTQ+専門）</li>
+          <li><strong>22+PFが拾った</strong>（含む TikTok オーガニック発見）</li>
+        </ul>
+        <div class="concept">
+          <p class="ct">チーム想定 vs 実は作っていたもの</p>
+          <p><b>チーム想定</b>：「BLニッチ・少し外す覚悟の副作品」</p>
+          <p><b>実は作っていたもの</b>：</p>
+          <ol>
+            <li><strong>二面性物語</strong>（学校での自分 vs 本当の自分）── 全中高生が共感する普遍テーマ</li>
+            <li><strong>過激描写ゼロ</strong> → TikTokで切り抜き可能</li>
+            <li><strong>30エピソード全部クリフハンガー終わり</strong> → 短尺バイラル最適化</li>
+            <li><strong>文化祭ステージの公開告白</strong>（♯55-56）→ 切り抜き想定の映像フック</li>
+          </ol>
+        </div>
+        <div class="lesson">
+          <p class="lt">教訓 ②</p>
+          <p><strong>当たったとき"何が当たったか"を勝手に結論しない。</strong>"BLが当たった"と総括したら次は外す。"二面性が当たった"と読めれば次も再現できる。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">2-3</span>なぜ外したか（極道：ROI 11.5%）── 棚がなかった</h3>
+        <p><strong>陰キャと同レーベル・同予算（¥6.7M）で、結果は13倍差</strong>。</p>
+        <div class="shelf-wrap">
+          <table class="shelf">
+            <thead>
+              <tr><th></th><th>陰キャ（同レーベル）</th><th>極道人事部</th></tr>
+            </thead>
+            <tbody>
+              <tr><th>TikTok</th><td class="win big">¥2,059K</td><td class="lose zero">¥0</td></tr>
+              <tr><th>ShortMax</th><td class="win">¥20K</td><td class="lose zero">¥0</td></tr>
+              <tr><th>DramaBox</th><td class="win">¥290K</td><td class="lose zero">¥0</td></tr>
+              <tr><th>BUMP</th><td class="win">¥100K</td><td class="lose zero">¥0</td></tr>
+              <tr><th>au Short</th><td class="win">¥1,293K</td><td class="lose zero">¥0</td></tr>
+              <tr><th>ReelShort</th><td class="win">¥218K</td><td class="lose zero">¥0</td></tr>
+              <tr><th>DMM TV</th><td class="win">¥700K</td><td>¥700K（MG）</td></tr>
+              <tr><th>合計PF数</th><td class="win big">22+</td><td class="lose big">実質1</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>脚本品質は高い</strong>（クリフハンガー設計、痛快感）。なのに棚に並ばなかった理由：</p>
+        <ul>
+          <li>主役が新入社員（縦型ショート視聴者層・10〜30代女性と乖離）</li>
+          <li>舞台がオフィス（視聴者の関心外の世界）</li>
+          <li>ジャンルが地上波と競合（"半沢直樹的"勧善懲悪 ── PFの棚にない）</li>
+        </ul>
+        <div class="lesson">
+          <p class="lt">教訓 ③</p>
+          <p><strong>外しは"作る前"に始まっている。</strong>棚がない題材を選んだ時点で、勝負はもう決まっている。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">2-4</span>三原則 ── "1本売る"の公式</h3>
+        <p>3作の解剖から立ち上がる：</p>
+        <ol>
+          <li><strong>棚に並ぶか</strong> ── 配信PFが棚を持っている題材か（流通設計）</li>
+          <li><strong>自分の発見を見直すか</strong> ── 自分の盲点をAIで埋める（解釈の盲点）</li>
+          <li><strong>視聴者×PFをセットで設計するか</strong> ── 企画段階でターゲティング</li>
+        </ol>
+        <p class="bridge">→ これは <span class="arrow">「1本売る」の公式</span>。<br/>でも、当たった作品はそこで終わりじゃない。<strong>プロデューサーの仕事はここから始まる。</strong></p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 3 -->
+      <section id="s3" class="rv">
+        <div class="kicker"><span class="num acc">3</span><span class="time-pill">18–25分</span></div>
+        <h2 class="sec">第3部：作品を分解する ── プロデューサー視点</h2>
+        <p class="sec-aim">プロデューサーは "1本" を "10個のビジネスの種" に見ている。その目線を渡す。</p>
+
+        <h3 class="sub3"><span class="tag">3-1</span>ショートドラマ ＝ 部品の集合体</h3>
+        <p>1本のショートドラマを、構成要素に分解すると：</p>
+        <div class="components">
+          <div class="components-row header"><div>コンポーネント</div><div>「今、晒してます」の中身</div><div>単独で成立する商売</div></div>
+          <div class="components-row"><div class="lbl">キャラクター</div><div>優子・沙織・里美・隆二</div><div>IP化、グッズ、推し活、ASMR、VTuber化</div></div>
+          <div class="components-row"><div class="lbl">脚本・ストーリー</div><div>復讐配信・いじめ・同窓会</div><div><strong>コミック</strong>、小説、海外ローカライズ、実写⇄アニメ</div></div>
+          <div class="components-row"><div class="lbl">音楽</div><div>主題歌・劇伴・SE</div><div>サブスク配信、カラオケ、ライブ、タイアップ</div></div>
+          <div class="components-row"><div class="lbl">衣装・アパレル</div><div>沙織のブランドドレス</div><div>ファッションコラボ、コスプレ、コスメ、アクセサリー</div></div>
+          <div class="components-row"><div class="lbl">舞台・ロケーション</div><div>ホテルハナクラ</div><div>聖地巡礼、コラボ宿泊プラン、観光振興</div></div>
+          <div class="components-row"><div class="lbl">小道具</div><div>スマホ・香水・ジュエリー</div><div>プロダクトプレースメント、コラボ商品</div></div>
+          <div class="components-row"><div class="lbl">テーマ・トピック</div><div>復讐・デジタルタトゥー</div><div>エッセイ、書籍、講演、専門家コラボ</div></div>
+          <div class="components-row"><div class="lbl">声・演技</div><div>M独白の声・俳優の演技</div><div>音声ドラマ、ASMR、メッセージサービス</div></div>
+        </div>
+        <p class="bridge">→ <span class="arrow">1本のショートドラマ ＝ 最大8〜10本のビジネスの種</span></p>
+
+        <h3 class="sub3"><span class="tag">3-2</span>"1本売る人" と "10個売る人" の違い</h3>
+        <ul>
+          <li><strong>1本売る人</strong>：制作費の1.4倍売れて、それで終わり</li>
+          <li><strong>10個売る人</strong>：1本のIPで派生商品が当たれば、トータルROIは桁が変わる</li>
+          <li>中国の<strong>阅文集団</strong>（網絡小説プラットフォーム）は2024年に<strong>衍生品 GMV 5億元突破</strong>、カードゲームだけで <strong>2億元</strong></li>
+        </ul>
+        <p>プロデューサーの仕事は「<strong>分解の目</strong>」を持つこと。</p>
+        <p class="bridge">→ じゃあ実際に、どう"組む"のか。<span class="arrow">第4部で3つの実例。</span></p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 4 -->
+      <section id="s4" class="rv">
+        <div class="kicker"><span class="num acc">4</span><span class="time-pill">25–45分 ／ メイン</span></div>
+        <h2 class="sec">第4部：ビジネスを組む ── 3つの実例</h2>
+        <p class="sec-aim">前回の「IP360度展開」を、実装レベルで具体化する。今晒の動いている展開、陰キャAIキャラの転用、中国OPCの実態 ── 順に。</p>
+
+        <h3 class="sub3"><span class="tag">4-1</span>ケース①「今、晒してます。」── 動いているIP展開</h3>
+        <p><strong>既に実装されている</strong>「分解→ビジネス化」の生きた証拠：</p>
+        <ul>
+          <li><strong>コミカライズ</strong>：脚本 → コミック（<strong>Renta!で ¥991K ＝ 売上の7%</strong>）</li>
+          <li>これは前回の講義でも触れた「ショートドラマ → コミック」の逆流パイプライン</li>
+        </ul>
+        <div class="concept">
+          <p class="ct">ここから派生できるビジネス（叩き台）</p>
+          <ul style="margin:0">
+            <li><b>沙織のドレス</b> → アパレルコラボ「Saori Line」── ハイスペ風OL向け</li>
+            <li><b>ホテルハナクラ</b> → 都内ホテル系列との「マウント同窓会プラン」</li>
+            <li><b>復讐配信のテーマ</b> → デジタルタトゥー啓発の書籍・講演・専門家コラボ</li>
+            <li><b>主題歌・劇伴</b> → サブスク配信＋カラオケ配信＋ライブイベント</li>
+            <li><b>優子のキャラ</b> → ASMR音声・ボイスメッセージサービス</li>
+          </ul>
+        </div>
+        <p class="bridge">→ <span class="arrow">1本の ¥14.3M 売上の上に、+α の収益が乗せられる</span>。これがプロデューサー視点。</p>
+
+        <h3 class="sub3"><span class="tag">4-2</span>ケース② ★陰キャ AIキャラ → 「君を王子にするまで30日間」への転用</h3>
+        <p><strong>ここが今回の目玉。"作品分解→AI資産化→他作品で再利用" の生きた実装</strong>。</p>
+
+        <div class="reuse">
+          <div class="reuse-vids">
+            <figure class="live">
+              <img src="26年5月第1回/Kimi_live_poster.jpg" alt="実写版『君を王子にするまで30日間』" loading="lazy" />
+              <figcaption>
+                <span class="badge">実写版</span>
+                <b>『君を王子にするまで30日間』</b>
+                俳優・黒髪・メガネ・ネイビーニット
+              </figcaption>
+            </figure>
+            <figure class="anime">
+              <img src="26年5月第1回/Kimi_anime_poster.jpg" alt="AIアニメ版『君を王子にするまで30日間』" loading="lazy" />
+              <figcaption>
+                <span class="badge">AIアニメ版</span>
+                <b>同作品のAIアニメ化</b>
+                <strong>陰キャ AIキャラを"再配役"</strong>（銀髪・アニメ顔・同じ衣装・同じロケ）
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <p class="rv-lab">この事例が意味すること</p>
+          <h4>1つの当たり作品から、<span class="hot">AIキャラという "再利用可能な資産"</span> が生まれる</h4>
+          <p>その資産は、<strong>別の作品のAI化に転用できる</strong>。</p>
+          <p>パイプラインで見るとこう：</p>
+          <p style="color:#cfcfd8">① 陰キャ実写（ROI 151%）── 1本目の収益<br/>
+          ② AIアニメ版 陰キャ ── キャラIPの「資産化」<br/>
+          ③ <strong>「君を王子30日」AIアニメ化</strong> ── 陰キャ AIキャラを再配役して2本目<br/>
+          ④ n本目の作品 ── 同じキャラ資産で別作品もAI化可能</p>
+          <p>→ <strong>AI時代のIPは、"作品単位"じゃなく"部品単位"で資産化される</strong>。キャラクター・声・衣装・背景 ── それぞれが独立資産になり、別作品に貸し出せる。</p>
+          <p>これが、前回触れた「<strong>IP360度展開</strong>」の <span class="hot">AI実装バージョン</span>。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">4-3</span>ケース③ 中国OPCの実態 ── 個人がIPで多角化している</h3>
+        <p>中国の現場で<strong>いま実際に起きていること</strong>。学生にとってこれが<strong>未来のプレビュー</strong>。</p>
+
+        <h4 style="font-family:'Zen Kaku Gothic New';font-weight:900;font-size:1rem;margin:22px 0 10px">個人クリエイター／小規模OPCのスケール</h4>
+        <div class="stats">
+          <div class="stat alt">
+            <div class="v">300<span class="u">万元/月</span></div>
+            <div class="l">韦先生工作室『如意坊』</div>
+            <div class="src">個人クリエイターの標杆（20人チーム）</div>
+          </div>
+          <div class="stat alt">
+            <div class="v">3人<span class="u">×5日 = 75集</span></div>
+            <div class="l">『気運三角洲』</div>
+            <div class="src">29時間で再生 2億回</div>
+          </div>
+          <div class="stat">
+            <div class="v">1人<span class="u">×1週間</span></div>
+            <div class="l">以前は5-7人×1ヶ月</div>
+            <div class="src">同じ規模の制作が、桁違いの効率で</div>
+          </div>
+        </div>
+
+        <h4 style="font-family:'Zen Kaku Gothic New';font-weight:900;font-size:1rem;margin:22px 0 10px">コスト構造の革命</h4>
+        <div class="tt-wrap">
+          <table class="tt" style="font-size:.9rem">
+            <thead><tr><th></th><th>実写短劇（中規模）</th><th>AI短劇</th></tr></thead>
+            <tbody>
+              <tr><td><b>60集×2分の制作費</b></td><td>50-60万元（≒1,000万円）</td><td style="color:var(--accent);font-weight:900">20万元（≒400万円）</td></tr>
+              <tr><td><b>制作チーム</b></td><td>5-7人 × 1ヶ月</td><td style="color:var(--accent);font-weight:900">1-3人 × 1週間</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="bridge">→ <span class="arrow">1/3コスト × 1/4期間 × 1/3人員</span> = 個人OPCで成立する経済性</p>
+
+        <h4 style="font-family:'Zen Kaku Gothic New';font-weight:900;font-size:1rem;margin:26px 0 10px">演員→自有ブランドのパイプライン（"作品分解→ビジネス化" の中国版）</h4>
+        <ul>
+          <li><strong>柯淳</strong>（短劇F4の1人）：化粧品 <b>FunnyElves</b> ＋唐揚げ <b>満巍明</b> と代言契約、<strong>日薪 2万元</strong></li>
+          <li><strong>柯淳×马小宇×フィガロ联名</strong>：売上 <strong>110万元（≒2,300万円）、2万本超</strong></li>
+          <li><strong>韩束×姜十七</strong>（短劇クリエイター）：5本のショート劇で <strong>50億再生</strong>、韩束「红蛮腰」抖音GMV <strong>17.71億元、290万セット</strong></li>
+          <li><strong>韩束×黄宥明×彦儿</strong>：短劇直播 GMV <strong>5,500万元（≒11億円）</strong></li>
+        </ul>
+        <div class="concept">
+          <p class="ct">中国の演員 ≒ "自分が商品" の OPC</p>
+          <p>「自分が商品」「自分のドラマが広告媒体」「自分のグッズが収益源」── すべてが一人の上に乗っている。<strong>これがOPCの実装形</strong>。</p>
+        </div>
+
+        <h4 style="font-family:'Zen Kaku Gothic New';font-weight:900;font-size:1rem;margin:26px 0 10px">全体市場（2025年）</h4>
+        <div class="stats">
+          <div class="stat"><div class="v">900<span class="u">億元</span></div><div class="l">中国微短剧市場</div><div class="src">≒ 1.8兆円</div></div>
+          <div class="stat alt"><div class="v">+276.3<span class="u">%</span></div><div class="l">AI漫剧 前年比</div><div class="src">市場規模 189.8億元</div></div>
+          <div class="stat"><div class="v">6.96<span class="u">億人</span></div><div class="l">ユーザー数</div><div class="src">中国人口の約半分</div></div>
+        </div>
+        <div class="reveal">
+          <p class="rv-lab">中国の現場が見せている真実</p>
+          <h4>中国では「短劇クリエイター」 ≒ <span class="hot">「IP経営者」</span></h4>
+          <p>1本作って終わりじゃなく、<strong>自分のキャラ・ブランド・コラボで複層的に稼ぐ</strong>。これがOPCの本番。</p>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 5 -->
+      <section id="s5" class="rv">
+        <div class="kicker"><span class="num acc">5</span><span class="time-pill">45–55分</span></div>
+        <h2 class="sec">第5部：OPCで回す ── 陰キャでやって見せる5ステップ</h2>
+        <p class="sec-aim">AIへの問いかけは"単発"じゃない。分解→絞り込み→検証→繋ぐ→実行 ── 連鎖して使う。陰キャを素材に実演する。</p>
+
+        <h3 class="sub3"><span class="tag">5-1</span>OPCの "売る" 側のスキルセット</h3>
+        <div class="reveal">
+          <p class="rv-lab">OPCの本質</p>
+          <h4>OPCとは、"1本作る人" じゃない。<br/><span class="hot">"1本を10個に分解して、1つに絞って、商売にする人"</span>。</h4>
+          <p>1本のプロンプトで答えは出ない。<strong>分解→絞り込み→検証→繋ぐ→実行</strong> ── この5段階を、AIと対話しながら進めるのが OPC の頭の使い方。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">5-2</span>実装デモ：陰キャから「1つのビジネス」を絞り出すまで</h3>
+
+        <div class="workflow">
+          <div class="step">
+            <div class="step-head"><div class="step-num">1</div><div class="step-t">分解</div></div>
+            <div class="prompt">
+              <span class="pl">プロンプト ①</span>
+              「『陰キャなアイツが義理の兄！？』の脚本を渡す。ビジネス化可能な構成要素を10個リストアップして。それぞれ、<b>業界・想定単価・参考事例</b>つきで。」
+            </div>
+            <div class="out">
+              <span class="ol">AI の出力（イメージ）</span>
+              <ol>
+                <li>日向×水月のキャラIP → BLグッズ・推し活市場（¥3-5K/個）</li>
+                <li>文化祭ステージ告白シーン → ASMR音声配信（¥500/月課金）</li>
+                <li>主題歌「真実の愛」 → サブスク配信（Spotify ¥0.4/再生）</li>
+                <li>制服／ニットの衣装デザイン → 高校生風アパレルコラボ（¥4-8K/着）</li>
+                <li>銀髪・アニメ顔の水月キャラ → AI VTuber／AIインフルエンサー化（月¥100K-1M）</li>
+                <li><strong>AI化された陰キャキャラ → 他作品への"配役ライセンス"</strong>（既実装、横展開可）</li>
+                <li>"二面性"テーマ → 心理学エッセイ書籍（Kindle ¥980/冊）</li>
+                <li>クリフハンガー脚本術 → 脚本講座（¥30K/講座）</li>
+                <li>文化祭演劇シーン → 学校演劇向け脚本販売（¥10-50K/校）</li>
+                <li>名場面切り抜き集 → 公式TikTok/YouTube（広告収益）</li>
+              </ol>
+            </div>
+            <p class="arrow-next">↓ 10分で 10個のビジネスの種が並ぶ</p>
+          </div>
+
+          <div class="step">
+            <div class="step-head"><div class="step-num">2</div><div class="step-t">絞り込み</div></div>
+            <div class="prompt">
+              <span class="pl">プロンプト ②</span>
+              「上記10個から、<b>①初期投資が小さい ②6ヶ月以内で売上が立つ ③陰キャ既存ファン層が買う</b>、の3条件で評価し、ROI期待値順に3つに絞って。それぞれリスクと前提も。」
+            </div>
+            <div class="out">
+              <span class="ol">AI の出力（イメージ）</span>
+              <ul>
+                <li><strong>A.（最有望）陰キャAIキャラの他作品配役ライセンス</strong><br/>追加投資ゼロ／既に技術実証済／需要は実写制作会社のアニメ化案件／リスク＝他社が同モデルを開発する競争</li>
+                <li><strong>B. 文化祭告白シーンのASMR + サウンドトラック</strong><br/>音声配信PFで小コスト早期収益／リスク＝ASMR市場の競争密度</li>
+                <li><strong>C. "二面性"テーマのコミックエッセイ</strong><br/>既存コミカライズ路線の延長／リスク＝テーマが抽象的すぎる可能性</li>
+              </ul>
+            </div>
+            <p class="arrow-next">↓ 10個 → 3個に絞られた</p>
+          </div>
+
+          <div class="step">
+            <div class="step-head"><div class="step-num">3</div><div class="step-t">検証</div></div>
+            <div class="prompt">
+              <span class="pl">プロンプト ③</span>
+              「最有望のAについて、市場性を3観点で検証して：<b>①既存の競合・代替サービス ②想定単価レンジ ③需要側（実写ドラマ制作会社）のニーズ規模</b>。日本と中国それぞれで。」
+            </div>
+            <div class="out">
+              <span class="ol">AI の出力（イメージ）</span>
+              <ul>
+                <li><b>競合</b>：個別AIキャラのライセンス事業はまだ未成熟。中国で先行する社（巨日禄、商湯）も自社プラットフォーム内利用が主。<strong>他社IP配役は事実上ブルーオーシャン</strong></li>
+                <li><b>単価</b>：1作品ライセンスで <strong>¥30万〜¥300万レンジ</strong>（実写制作費¥1,000万との比較で1/3〜1/30で済む経済性）</li>
+                <li><b>需要</b>：実写ドラマのAIアニメ化需要 ── 中国は年+276.3%（AI漫剧 189.8億元市場）、日本は勃興期だが急成長見込み</li>
+              </ul>
+            </div>
+            <p class="arrow-next">↓ 市場は存在する、しかも先行優位が取れる</p>
+          </div>
+
+          <div class="step">
+            <div class="step-head"><div class="step-num">4</div><div class="step-t">繋ぐ（B2OPCへの転換）</div></div>
+            <p style="font-size:.93rem;margin:0 0 12px">ここが<strong>今回の提案の核心</strong>。売り先を、大手プロダクションじゃなく、<strong>OPCそのもの＋OPCを束ねる事務所</strong>に向ける。</p>
+            <div class="prompt">
+              <span class="pl">プロンプト ④</span>
+              「Aを <b>"B2OPC素材ライセンス事業"</b> として展開する場合の市場と潜在顧客を提案して。── 個人OPCクリエイター、OPC事務所／MCN系企業向け。中国の類似ベンチマーク事業と、日本での具体パートナー候補も。」
+            </div>
+
+            <div class="b2opc">
+              <h4>ビジネスモデルの構造</h4>
+              <div class="b2opc-flow">
+                <div class="b2opc-node you">あなた（DSL／OPC）<small>AIキャラ素材を提供</small></div>
+                <div class="b2opc-arrow">→</div>
+                <div class="b2opc-node agency">OPC事務所／MCN<small>キャラを束ねて再販</small></div>
+                <div class="b2opc-arrow">→</div>
+                <div class="b2opc-node opc">個人OPCクリエイター<small>キャラを使って作品制作</small></div>
+              </div>
+            </div>
+
+            <div class="out">
+              <span class="ol">AI の出力（イメージ）── 市場構造</span>
+              <ul>
+                <li><strong>直接顧客 = 個人OPC</strong>：中国で2025年上半期に新規 <strong>286万社</strong>、累計 <strong>1,600万社超</strong>（前年比+47%）。日本でも個人クリエイターは急増中</li>
+                <li><strong>法人顧客 = OPC事務所／MCN系</strong>：中国MCNは「<strong>短劇・艺人孵化・海外進出</strong>」へ転換中。日本もYouTuber事務所が映像領域へ拡張</li>
+              </ul>
+            </div>
+
+            <div class="out" style="margin-top:12px">
+              <span class="ol">中国の "IPホスト型" 既存ベンチマーク</span>
+              <ul>
+                <li><strong>咪咕（CMCC系）「繁星・沐光」</strong>：全量IP無料開放＋AIツール＋数億元資金で<strong>OPCを集める</strong>（プラットフォーム型）</li>
+                <li><strong>阅文集団「AI+漫剧」</strong>：網絡文学IP储备を盘活してOPC連携（衍生品GMV 5億元）</li>
+                <li><strong>腾讯クラウド</strong>：腾讯文学IPライブラリと制作ツールを連動（大手連携型）</li>
+                <li><strong>影伙引擎</strong>：AI翻訳・配音・素材ツールをOPC向けに提供（ツール型）</li>
+              </ul>
+              <p style="margin:10px 0 0;font-size:.85rem">→ "IPを安く渡してOPCを稼がせ、配信や流通で回収" のモデルが既に存在<br/>→ <strong>「キャラ単品ライセンス」</strong>として独立サービス化はまだ未成熟＝<strong>ブルーオーシャン</strong></p>
+            </div>
+
+            <div class="out" style="margin-top:12px">
+              <span class="ol">提案する5つのパートナー候補</span>
+              <ul>
+                <li><b>個人OPCクリエイター</b>（フリーランス映像作家／大学映像系）→ 月額 ¥3-10K でキャラパック＋プロンプト提供（SaaS型）</li>
+                <li><b>国内"進化型"MCN／芸能事務所</b>（UUUM等の動画事務所、ショート動画特化型新興）→ 月額キャラレンタル＋共同制作レベニューシェア</li>
+                <li><b>中国OPC孵化基地</b>（済南／嘉興／広東省支援拠点）→ 拠点と提携・<strong>日本IPパック輸出</strong>でアービトラージ</li>
+                <li><b>中国MCN（短劇進出組）</b>（古麦嘉禾、無憂等）→ 日中共同IP開発・素材レイヤー提供</li>
+                <li><b>大手IPホスト企業</b>（咪咕／阅文／腾讯）→ 補完素材としてOEM供給（B2B2OPC）</li>
+              </ul>
+            </div>
+            <p class="arrow-next">↓ 30分で、B2OPC素材ライセンス事業の市場仮説＋具体顧客候補が組み立てられる</p>
+          </div>
+
+          <div class="step final">
+            <div class="step-head"><div class="step-num">5</div><div class="step-t">実行</div></div>
+            <div class="prompt">
+              <span class="pl">プロンプト ⑤</span>
+              「上記パートナー向けの初回商談用企画書（A4 1枚）を、<b>3パターン</b>作って：①保守的（ライセンス契約）／②中間（共同制作）／③攻め（独占パートナーシップ）」
+            </div>
+            <div class="out">
+              <span class="ol">AI の出力（イメージ）</span>
+              <ul>
+                <li>パターン①〜③の企画書ドラフトが、<strong>それぞれ A4 1枚で出てくる</strong></li>
+                <li>後はOPCが、相手に合わせて選んで送るだけ</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <p class="rv-lab">答え合わせ</p>
+          <h4>AIが絞り込んだ A ── 実は<span class="hot">もう動いている</span></h4>
+          <p>第4部で見せた「<strong>陰キャ AIキャラ → 君を王子にするまで30日間 アニメ版</strong>」── これそのもの。</p>
+          <p>つまり <strong>AIの分解→絞り込み→検証は、現場の判断と一致した</strong>。OPCがAIを使えば、<strong>社内の優秀なプロデューサーが時間をかけて出した結論を、個人が30分で再現できる</strong>。</p>
+          <p>これが「<strong>AIで分解するOPC × AIで繋ぐOPC</strong>」の現場での意味。</p>
+        </div>
+
+        <div class="reveal" style="background:linear-gradient(120deg,#1a1a24,#2d2d3e);margin-top:18px">
+          <p class="rv-lab" style="color:var(--accent)">隠れた本論</p>
+          <h4>プロデューサーの仕事は「自分が大手と組む」じゃない。<br/><span class="hot">「OPCを増やし、束ね、その全員に素材を供給する」</span></h4>
+          <p>── これがAI時代の本当のスケール戦略。<strong>中国 MCN がいま向かっているのは、まさにここ</strong>。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">5-3</span>君たちは "標準装備" で就職する世代</h3>
+        <p>これは未来の話じゃない、<strong>いまの中国で起きていること</strong>：</p>
+        <ul>
+          <li>韦先生工作室は今月も月300万元で新作を出している</li>
+          <li>柯淳のFunnyElvesは今月もコラボ商品が売れている</li>
+          <li>AI漫剧 189.8億元市場は前年比+276%で急成長中</li>
+        </ul>
+        <p>日本でも、ドコモS&Lのような会社で、<strong>陰キャAIキャラの転用</strong>が既に動いている。</p>
+        <div class="concept">
+          <p class="ct">君たちが目指す武器</p>
+          <ul style="margin:0">
+            <li>「<b>AIで作れます</b>」だけじゃ、もう武器にならない（誰でもできる時代）</li>
+            <li>「<b>AIで分解して、ビジネス化できます</b>」── これがOPCを名乗れる武器</li>
+          </ul>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 6 -->
+      <section id="s6" class="rv">
+        <div class="kicker"><span class="num acc">6</span><span class="time-pill">55–60分</span></div>
+        <h2 class="sec">クロージング ── 最後の問い</h2>
+
+        <p>今日の旅をまとめる：</p>
+        <div class="tt-wrap">
+          <table class="tt" style="font-size:.95rem">
+            <thead><tr><th>段階</th><th>答え</th></tr></thead>
+            <tbody>
+              <tr><td><b>1本売る</b></td><td>棚に並ぶか／盲点を見直すか／視聴者×PFを設計するか</td></tr>
+              <tr><td><b>1本を10個に分解する</b></td><td>プロデューサーは"部品の目"で作品を見る</td></tr>
+              <tr><td><b>個人でそれをやる</b></td><td>OPC = "AIで作る × AIで分解する × AIで繋ぐ" 一人会社</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>中国では既に動いている：個人/3人チームで月300万元、AI制作1/3コスト、衍生品市場5億元、演員自有ブランドで億単位の売上。<br/>日本でも、陰キャAIキャラが「君を王子30日」に転用される時代。</p>
+        <p><strong>君たちは、その第一世代として就職する</strong>。</p>
+
+        <div class="closing-q">
+          <p class="lab">最後の問い</p>
+          <h3>君は、1本の作品を、<br/>いくつのビジネスに分解できる？</h3>
+          <p>これが、AI時代のクリエイティビティ。<br/>これが、OPCで生きる道。</p>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- SUMMARY -->
+      <section id="summary" class="rv">
+        <div class="kicker"><span class="time-pill">まとめ（持ち帰り）</span></div>
+        <h2 class="sec">この講義で覚えて帰って欲しいこと</h2>
+        <div class="takeaway">
+          <h3>AIで作るOPC ＋ AIで分解するOPC ＋ AIで繋ぐOPC ＝ OPCで生きる道</h3>
+          <p class="ta-q">3つの原則：</p>
+          <div class="ta-list">
+            <div class="ti"><b>棚に並ぶか</b> ── 売れる前提を整える</div>
+            <div class="ti"><b>自分の発見を見直すか</b> ── 盲点を AIで埋める</div>
+            <div class="ti"><b>作品を分解して商売を組むか</b> ── 1本を10個のビジネスに変える</div>
+          </div>
+          <p class="ta-foot"><b>いま中国で起きていること</b>：個人/3人チームで月営収300万元、AIで1/3コスト、衍生品市場5億元、演員が自有ブランドで億単位の売上、AI漫剧市場 +276% で爆発成長。<br/><b>いま日本で起きていること</b>：陰キャの AI アニメキャラ → 「君を王子にするまで30日間」AIアニメ版に転用。<b>IPは「作品単位」ではなく「部品単位」で資産化される</b>時代の入り口。<br/><br/>→ 君たちが目指すのは、<b>1本を作れる人</b>じゃなく、<b>1本を10個に分解できる人</b>。</p>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- FAQ -->
+      <section id="faq" class="rv">
+        <div class="kicker"><span class="time-pill">Q&amp;A</span></div>
+        <h2 class="sec">よくある質問</h2>
+
+        <details class="faq">
+          <summary><span class="qm">Q.</span>「分解する目」って、どうやって鍛えますか？</summary>
+          <div class="ans"><b>作品をいつも"分解しながら見る"習慣</b>。「このキャラ、グッズにしたら売れる？」「この曲、サブスクで何万再生取れる？」「このロケ地、コラボ宿泊プラン作れる？」── これを全部AIに聞いて、答え合わせを続ける。半年で目が変わります。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>AIで全部わかるなら、結局AIに置き換わるんじゃないですか？</summary>
+          <div class="ans">AIは「材料を出す」までで止まる。「<b>どの分解を採用するか・しないか</b>」「<b>どの繋ぎ手を選ぶか</b>」を決めるのは最後まで人間の仕事。それも、自分のセンスと業界の信頼関係が必要。今日の話は、<b>その判断力をどう武装するか</b>の話です。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>「陰キャ」みたいなsleeperは、結局運じゃないですか？</summary>
+          <div class="ans">半分は運。でも残り半分は<b>運を解釈する能力</b>。陰キャを「BLが当たった」と総括する人と「二面性が当たった」と読む人で、次の打率が変わります。<b>運も、解釈で資産化できる</b>。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>配信PFが棚を持つジャンルって、どこで調べたら？</summary>
+          <div class="ans">各PFの公式ランキング・配信履歴・取材記事から始まる。慣れたら数時間で見える化できます。AIに「過去5年で配信されたショートドラマのジャンル別分布」を聞くのも一案。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>中国の月営収300万元みたいなレベル、日本でも来ますか？</summary>
+          <div class="ans">規模は中国ほどにはならない（人口・市場が違う）。ただし<b>個人/小規模チームでビジネス成立する経済性</b>は確実に来る。日本のショート動画市場は2026年に1,530億円見通し（前回講義参照）。君たちが就職する頃の戦場はここです。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>自社で当たった作品の理由って、内部の人でも見えないものですか？</summary>
+          <div class="ans">むしろ内部の人ほど見えない。自分たちの正解物語を作りたがる。だからこそ"外部の目"が必要 ── それを今、AIが代行できる。OPCの強みのひとつです。</div>
+        </details>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- REFS -->
+      <section id="refs" class="rv">
+        <div class="kicker"><span class="time-pill">出典</span></div>
+        <h2 class="sec">出典・参照</h2>
+        <div class="refs">
+          <h4>前回講義</h4>
+          <ul>
+            <li><a href="./講義教材_OPCがつくるエンタメの未来.md">AIイノベーションとOPC ── エンタメ界にもたらすAI革命とその未来「OPC」</a></li>
+          </ul>
+          <h4>ドコモS&L 内部データ</h4>
+          <ul>
+            <li>3作品配信実績（2024年12月〜2025年9月）</li>
+            <li>各作品脚本（決定稿）</li>
+            <li>陰キャ AI アニメ転用ケース（「君を王子にするまで30日間」AIアニメ版）</li>
+          </ul>
+          <h4>中国OPC・微短劇関連（2025〜2026）</h4>
+          <ul>
+            <li>第一财经『AI短剧狂飙：一天能上20部，成本千元一分钟』<a href="https://www.yicai.com/news/103084978.html">yicai.com</a></li>
+            <li>21经济网『短剧造星進入2.0時代』<a href="https://news.qq.com/rain/a/20250327A0AEXY00">news.qq.com</a></li>
+            <li>21经济网『Sora关停，中国"一人公司"跑通AI视频商业闭环』<a href="https://www.21jingji.com/article/20260325/herald/c284b17ee692a0e6c65a0edab670b772.html">21jingji.com</a></li>
+            <li>智研咨询『2025中国AI短剧行业発展現状』<a href="https://www.chyxx.com/industry/1239688.html">chyxx.com</a></li>
+            <li>北大国家発展研究院『2025年中国微短剧产业格局与就业発展報告』<a href="https://www.nsd.pku.edu.cn/docs/2026-02/48accc85b74f4939b8f4c4b612e610ec.pdf">nsd.pku.edu.cn</a></li>
+            <li>澎湃新聞『美妆+电商品牌，撑起了短剧的百亿市场』<a href="https://www.thepaper.cn/newsDetail_forward_26524096">thepaper.cn</a></li>
+            <li>数英／視覚星媒体『2024-2025短剧营销新观察』<a href="https://www.digitaling.com/articles/1321347.html">digitaling.com</a></li>
+            <li>ofweek『2024阅文"爆款年"成色：衍生品GMV創新高』<a href="https://mp.ofweek.com/digitaleconomy/a256714263517">ofweek.com</a></li>
+            <li>新华网『"一人公司"的那些事』<a href="https://www.news.cn/fortune/20260321/943f6293dbe14f918ef29a481d12a6d0/c.html">news.cn</a></li>
+          </ul>
+          <p class="note">※数字はソース時点の値。一部は各社プレゼン／報道時点の推定を含む。公の場で使う際は最新情報を再確認のこと。</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<button class="backtop" id="backtop" aria-label="ページ上部へ戻る">↑</button>
+
+<footer>
+  <p>YCA 2026年6月8日（月） 60分講義 ／ <b>ショートドラマヒットの解剖学</b><br/>
+  ── AIで分析、AIで制作。OPCで生きる道 ──<br/>
+  前回講義：<a href="./26年5月第1回/" style="color:#fff">AIイノベーションとOPC</a>　／　次回講義：<a href="./26年第3回/" style="color:#fff">自分のOPCを立ち上げる</a></p>
+</footer>
+
+<script>
+  // progress bar
+  const progress = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+    progress.style.width = (scrolled * 100) + '%';
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // reveal-on-scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  // TOC active state
+  const tocLinks = document.querySelectorAll('.toc a, #mnav a');
+  const sections = ['aim','timetable','s1','s2','s3','s4','s5','s6','summary','faq','refs']
+    .map(id => document.getElementById(id)).filter(Boolean);
+  const setActive = () => {
+    let curr = sections[0]?.id;
+    const y = window.scrollY + 120;
+    for (const s of sections) { if (s.offsetTop <= y) curr = s.id; else break; }
+    tocLinks.forEach(a => {
+      const href = a.getAttribute('href');
+      a.classList.toggle('active', href === '#' + curr);
+    });
+  };
+  window.addEventListener('scroll', setActive, { passive: true });
+  setActive();
+
+  // back to top
+  const backtop = document.getElementById('backtop');
+  window.addEventListener('scroll', () => {
+    backtop.classList.toggle('show', window.scrollY > 600);
+  }, { passive: true });
+  backtop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>

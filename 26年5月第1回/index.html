@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AIイノベーションとOPC ── エンタメ界にもたらすAI革命とその未来</title>
+<meta name="description" content="YDA・YCA統合1年生向け 60分講義｜OPC（一人会社）がエンタメの未来になる。AIの動画生成が"作り手"を自動で大量生産し、作る人の価値が下がる時代の人生設計を。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#15151a;
+    --ink-soft:#3a3a44;
+    --paper:#fbfaf7;
+    --paper-2:#f3f1ea;
+    --line:#e3dfd4;
+    --accent:#ff4d2e;
+    --accent-2:#2b2bff;
+    --gold:#c79a3a;
+    --dark:#0e0e13;
+    --maxread:760px;
+    --sidebar:264px;
+    --shadow:0 18px 48px -24px rgba(20,20,30,.45);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    font-weight:400;
+    line-height:1.95;
+    letter-spacing:.01em;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  h1,h2,h3,h4{font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif;line-height:1.4;letter-spacing:.02em;}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* progress bar */
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--gold));z-index:200;transition:width .08s linear}
+
+  /* HERO */
+  .hero{position:relative;background:radial-gradient(1200px 600px at 80% -10%,rgba(255,77,46,.22),transparent 60%),radial-gradient(900px 500px at 0% 110%,rgba(43,43,255,.18),transparent 55%),linear-gradient(rgba(14,14,19,.72),rgba(14,14,19,.86)),url("hero_bg.png") center/cover no-repeat,var(--dark);color:#fff;padding:88px 24px 72px;overflow:hidden}
+  .hero-inner{max-width:920px;margin:0 auto;position:relative;z-index:2}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;letter-spacing:.18em;color:#ffd9cf;border:1px solid rgba(255,255,255,.22);padding:7px 14px;border-radius:999px;text-transform:uppercase;margin-bottom:26px}
+  .eyebrow b{color:#fff;font-weight:700}
+  .hero h1{font-weight:900;font-size:clamp(2rem,5.4vw,3.6rem);margin:.1em 0 .25em;color:#fff;letter-spacing:.01em}
+  .hero h1 .q{color:var(--accent);}
+  .hero .sub{font-size:clamp(1.02rem,2.2vw,1.3rem);color:#cfcfd8;font-weight:500;margin:0 0 30px}
+  .hero .sub .ko{color:#fff}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#eee;font-size:.82rem;padding:8px 14px;border-radius:999px;font-weight:500}
+  .chip b{color:#fff}
+  .hero-foot{margin-top:34px;font-size:.86rem;color:#9a9aa6}
+  .hero-msg{margin-top:30px;padding:18px 22px;border-left:4px solid var(--accent);background:rgba(255,255,255,.06);border-radius:0 12px 12px 0;color:#e9e9f0;font-size:clamp(.98rem,2vw,1.08rem);line-height:1.9;max-width:700px}
+  .hero-msg b{color:#fff;font-weight:700}
+  .hero-msg .hot{color:var(--accent);font-weight:700}
+  .scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#777;font-size:.72rem;letter-spacing:.2em;z-index:2}
+
+  /* LAYOUT */
+  .layout{max-width:1180px;margin:0 auto;display:block;padding:0 20px}
+  .sidebar{display:none}
+  .content{min-width:0;padding:0 0 120px}
+  .reading{max-width:var(--maxread);margin:0 auto}
+
+  @media(min-width:1080px){
+    .layout{display:grid;grid-template-columns:var(--sidebar) minmax(0,1fr);gap:48px;padding:0 28px}
+    .sidebar{display:block;position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:48px 4px 48px 0;border-right:1px solid var(--line)}
+    .reading{margin:0;max-width:var(--maxread)}
+    .content{padding-top:8px}
+  }
+  .toc-title{font-size:.72rem;letter-spacing:.16em;color:#a39c8c;text-transform:uppercase;margin:0 0 14px;font-weight:700}
+  .toc a{display:block;color:var(--ink-soft);font-size:.86rem;padding:7px 12px 7px 14px;border-left:2px solid transparent;border-radius:0 6px 6px 0;line-height:1.45;transition:all .15s}
+  .toc a .n{color:#b9b1a0;font-weight:700;margin-right:8px;font-size:.78rem}
+  .toc a:hover{background:var(--paper-2);text-decoration:none;color:var(--ink)}
+  .toc a.active{border-left-color:var(--accent);background:var(--paper-2);color:var(--ink);font-weight:700}
+  .toc a.active .n{color:var(--accent)}
+
+  /* mobile chip nav */
+  #mnav{position:sticky;top:0;z-index:120;background:rgba(251,250,247,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;gap:8px;overflow-x:auto;padding:11px 14px;scrollbar-width:none}
+  #mnav::-webkit-scrollbar{display:none}
+  #mnav a{flex:0 0 auto;font-size:.78rem;color:var(--ink-soft);background:var(--paper-2);padding:6px 13px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
+  #mnav a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  @media(min-width:1080px){#mnav{display:none}}
+
+  /* sections */
+  section{padding-top:64px;scroll-margin-top:70px}
+  @media(min-width:1080px){section{scroll-margin-top:24px}}
+  .kicker{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+  .num{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1.05rem;color:#fff;background:var(--ink);width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .num.acc{background:var(--accent)}
+  .time-pill{font-size:.74rem;letter-spacing:.08em;color:#8a8475;background:var(--paper-2);border:1px solid var(--line);padding:4px 11px;border-radius:999px;font-weight:700}
+  h2.sec{font-size:clamp(1.5rem,3.4vw,2.05rem);font-weight:900;margin:.15em 0 .1em;letter-spacing:.01em}
+  .sec-aim{color:var(--ink-soft);font-size:.95rem;border-left:3px solid var(--gold);padding:2px 0 2px 14px;margin:14px 0 26px;background:linear-gradient(90deg,rgba(199,154,58,.07),transparent)}
+  h3.sub3{font-size:1.18rem;font-weight:700;margin:38px 0 12px;padding-top:4px}
+  h3.sub3 .tag{font-size:.72rem;color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px;margin-right:9px;vertical-align:middle;font-family:"Noto Sans JP";letter-spacing:.04em}
+  p{margin:0 0 16px}
+  .content ul{margin:0 0 18px;padding-left:1.25em}
+  .content li{margin-bottom:9px}
+  strong{font-weight:700;background:linear-gradient(transparent 62%,rgba(255,77,46,.22) 62%);padding:0 .05em}
+  .lead{font-size:1.06rem;color:var(--ink)}
+  .divider{height:1px;background:var(--line);border:0;margin:0}
+
+  /* concept card */
+  .concept{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:24px 0}
+  .concept .ct{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.05rem;margin:0 0 6px;display:flex;align-items:center;gap:9px}
+  .concept .ct::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--accent-2);transform:rotate(45deg)}
+  .concept p:last-child{margin-bottom:0}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:24px 0}
+  .stat{background:var(--dark);color:#fff;border-radius:14px;padding:18px 18px 16px}
+  .stat .v{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.7rem;line-height:1.1;color:#fff}
+  .stat .v .u{font-size:.95rem;color:var(--accent);margin-left:2px}
+  .stat .l{font-size:.8rem;color:#b7b7c2;margin-top:7px}
+  .stat .src{font-size:.68rem;color:#7a7a86;margin-top:4px}
+  .stat.alt{background:var(--accent)}
+  .stat.alt .v,.stat.alt .v .u{color:#fff}
+  .stat.alt .l{color:#ffe2db}
+
+  /* big single stat */
+  .bigstat{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;background:linear-gradient(120deg,#15151a,#26262f);color:#fff;border-radius:16px;padding:24px 26px;margin:24px 0}
+  .bigstat .v{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:2.6rem;color:#fff;line-height:1}
+  .bigstat .v .u{font-size:1.1rem;color:var(--gold);margin-left:4px}
+  .bigstat .l{color:#cfcfd8;font-size:.95rem;max-width:380px}
+
+  /* message callout */
+  .message{background:linear-gradient(120deg,#15151a,#26262f);color:#fff;border-radius:16px;padding:24px 26px;margin:26px 0 0;box-shadow:var(--shadow)}
+  .message .msg-lab{font-size:.7rem;letter-spacing:.14em;color:var(--accent);font-weight:700;text-transform:uppercase;margin:0 0 9px}
+  .message p{margin:0;font-size:1.05rem;line-height:1.95;color:#eaeaf0}
+  .message p strong{color:#fff;background:linear-gradient(transparent 58%,rgba(255,77,46,.5) 58%);padding:0 .05em}
+
+  /* timetable */
+  .tt-wrap{overflow-x:auto;margin:22px 0}
+  table.tt{border-collapse:collapse;width:100%;font-size:.88rem;min-width:520px}
+  table.tt th,table.tt td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.tt thead th{background:var(--ink);color:#fff;font-weight:700;font-size:.8rem;letter-spacing:.04em}
+  table.tt tbody tr:hover{background:var(--paper-2)}
+  table.tt .tno{font-family:"Zen Kaku Gothic New";font-weight:900;color:var(--accent)}
+  table.tt .ttime{white-space:nowrap;color:var(--ink-soft);font-weight:700}
+  table.tt .tkw{color:#8a8475;font-size:.8rem}
+
+  /* job grid */
+  .jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:22px 0}
+  .job{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  .job h4{margin:0 0 8px;font-size:1rem;font-weight:900;color:var(--accent-2)}
+  .job p{margin:0;font-size:.9rem;color:var(--ink-soft)}
+
+  /* numbered "4 things" */
+  .four{counter-reset:f;margin:22px 0;display:grid;gap:12px}
+  .four .f{position:relative;background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:16px 18px 16px 56px}
+  .four .f::before{counter-increment:f;content:counter(f);position:absolute;left:14px;top:14px;width:30px;height:30px;background:var(--ink);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:"Zen Kaku Gothic New";font-weight:900}
+  .four .f b{font-weight:700}
+
+  /* weapons */
+  .weapon{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:0 14px 14px 0;padding:20px 22px;margin:18px 0;box-shadow:var(--shadow)}
+  .weapon .wt{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.15rem;margin:0 0 8px;display:flex;align-items:center;gap:10px}
+  .weapon .wn{background:var(--gold);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex:0 0 auto}
+  .weapon p:last-child{margin-bottom:0}
+
+  /* videos */
+  .video-block{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;padding:22px;margin:26px 0}
+  .video-block > .vbh{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.1rem;margin:0 0 4px}
+  .video-block > .vbn{font-size:.82rem;color:#8a8475;margin:0 0 18px}
+  .vid{background:#000;border-radius:12px;overflow:hidden;box-shadow:0 14px 36px -18px rgba(0,0,0,.6)}
+  .vid video{display:block;width:100%;height:auto}
+  figure{margin:0 0 20px}
+  figure figcaption{font-size:.83rem;color:var(--ink-soft);margin-top:9px;line-height:1.6}
+  figure figcaption .fc-t{font-weight:700;color:var(--ink)}
+  figure figcaption .fc-len{color:#a39c8c;font-size:.76rem;margin-left:6px}
+  .vid--port{max-width:330px;margin-inline:auto}
+  .vid-row{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;justify-content:center;margin:18px 0}
+  .vid-row figure{flex:1 1 340px;margin-bottom:0}
+  .vid-row figure.port{flex:0 1 240px}
+  .vid-row--end{justify-content:flex-end}
+  .vid-row .yt{width:100%}
+  /* text-left + portrait-video-right */
+  .aivid{display:flex;gap:26px;flex-wrap:wrap;align-items:center;margin:22px 0}
+  .aivid .aivid-text{flex:1 1 280px;min-width:0}
+  .aivid .aivid-text p:last-child{margin-bottom:0}
+  .aivid figure{flex:0 0 250px;max-width:250px;margin:0}
+
+  /* cold-open hook */
+  .hook{position:relative;background:radial-gradient(900px 500px at 90% -20%,rgba(255,77,46,.25),transparent 60%),radial-gradient(700px 400px at -10% 120%,rgba(43,43,255,.20),transparent 55%),var(--dark);color:#fff;border-radius:22px;padding:30px 26px 28px;margin:24px 0 32px;overflow:hidden;box-shadow:var(--shadow)}
+  .hook .ho-eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:.74rem;letter-spacing:.16em;color:#ffd9cf;border:1px solid rgba(255,255,255,.25);padding:6px 13px;border-radius:999px;margin:0 0 16px;font-weight:700}
+  .hook .ho-h{font-family:"Zen Kaku Gothic New";font-weight:900;color:#fff;font-size:clamp(1.5rem,4.4vw,2.25rem);line-height:1.34;margin:0 0 10px;letter-spacing:.01em}
+  .hook .ho-h .hot{color:var(--accent)}
+  .hook .ho-sub{color:#cfcfd8;font-size:clamp(.95rem,2vw,1.05rem);margin:0 0 22px;line-height:1.85}
+  .hook .ho-sub strong{color:#fff;background:none;padding:0}
+  .hook-vids{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:0 0 6px}
+  .hook-vids figure{flex:1 1 240px;max-width:280px;margin:0;text-align:center}
+  .hook-vids .vid{border-radius:14px}
+  .hook-vids video{display:block;width:100%;height:auto}
+  .hook-vids figcaption{margin-top:10px;font-size:.83rem;color:#cfcfd8;line-height:1.6}
+  .ho-badge{display:inline-block;font-family:"Zen Kaku Gothic New";font-weight:900;font-size:.82rem;padding:4px 13px;border-radius:999px;margin:0 0 9px}
+  .ho-badge.live{background:#fff;color:var(--dark)}
+  .ho-badge.anime{background:var(--accent);color:#fff}
+  .hook .same{text-align:center;color:#9a9aa6;font-size:.82rem;letter-spacing:.04em;margin:14px 0 0}
+  .hook .vs{background:#fff;color:var(--ink);border-radius:16px;padding:18px 14px 16px;margin:22px 0 0;box-shadow:0 14px 36px -22px rgba(0,0,0,.5)}
+  .hook .vs .vs-cap{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1rem;text-align:center;margin:0 0 13px;color:var(--ink)}
+  .hook .vs .vstable-wrap{overflow-x:auto}
+  table.vstable{border-collapse:collapse;width:100%;font-size:.9rem}
+  table.vstable th,table.vstable td{padding:10px 7px;border:1px solid var(--line);text-align:center;vertical-align:middle;line-height:1.4}
+  table.vstable td{white-space:nowrap}
+  table.vstable thead th{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:.95rem}
+  table.vstable thead th.live{background:var(--ink);color:#fff}
+  table.vstable thead th.ai{background:var(--accent);color:#fff}
+  table.vstable thead th:first-child{background:transparent;border-top:0;border-left:0}
+  table.vstable thead th span{display:block;font-family:"Noto Sans JP",sans-serif;font-weight:500;font-size:.7rem;opacity:.88;margin-top:3px}
+  table.vstable tbody th{background:var(--paper-2);text-align:left;font-weight:700;white-space:nowrap;color:var(--ink)}
+  table.vstable td.ai{background:rgba(255,77,46,.09);font-weight:700;color:var(--ink)}
+  table.vstable .big{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.04rem}
+  .hook .vs .vs-foot{text-align:center;margin:13px 0 0;font-size:.92rem;color:var(--ink-soft);line-height:1.7}
+  .hook .vs .vs-foot b{color:var(--accent);font-weight:900}
+  .hook-manga{margin:22px 0 0}
+  .hook-manga img{display:block;width:100%;height:auto;border-radius:14px}
+  .hook-manga figcaption{font-size:.83rem;color:#bdbdc8;margin-top:10px;line-height:1.75}
+  .hook-manga figcaption b{color:#fff;background:none;padding:0}
+  .hook .punch{margin:24px 0 0;font-family:"Zen Kaku Gothic New";font-weight:900;font-size:clamp(1.08rem,2.5vw,1.35rem);line-height:1.6;color:#fff}
+  .hook .punch .arrow{color:var(--accent)}
+  /* section-level bridge line */
+  .bridge{margin:26px 0 0;font-family:"Zen Kaku Gothic New";font-weight:900;font-size:clamp(1.05rem,2.4vw,1.3rem);line-height:1.62;color:var(--ink)}
+  .bridge .arrow{color:var(--accent)}
+  /* IP 360 expansion */
+  .ip360{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:22px 18px;margin:24px 0;text-align:center}
+  .ip360 .hub{display:inline-block;font-family:"Zen Kaku Gothic New";font-weight:900;background:var(--ink);color:#fff;padding:10px 20px;border-radius:12px;font-size:1.02rem}
+  .ip360 .hub b{color:var(--accent)}
+  .ip360 .arrows{font-family:"Zen Kaku Gothic New";font-weight:700;font-size:.92rem;color:var(--accent);margin:10px 0 8px;letter-spacing:.06em}
+  .ip360 .spokes{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  .ip360 .spoke{background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-weight:700;font-size:.9rem;color:var(--ink-soft)}
+  .ip360 .spoke.now{border-color:var(--accent);color:var(--accent)}
+  .ip360 .ip360-note{font-size:.78rem;color:#8a8475;margin:14px 0 0;line-height:1.6}
+
+  /* supply-demand chart */
+  .sd-fig{margin:24px 0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 18px 14px;box-shadow:var(--shadow)}
+  .sd-fig svg{display:block;width:100%;height:auto}
+  .sd-fig img{display:block;width:100%;height:auto;border-radius:8px}
+  .sd-fig figcaption{font-size:.85rem;color:var(--ink-soft);margin-top:10px;line-height:1.7}
+  .sd-fig figcaption .fc-t{font-weight:700;color:var(--ink)}
+
+  /* comparison table (cost) */
+  .ctable-cap{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1rem;margin:22px 0 10px;display:flex;align-items:center;gap:10px}
+  .ctable-cap::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--accent);transform:rotate(45deg)}
+  .ctable-wrap{overflow-x:auto;margin:0 0 8px}
+  table.ctable{border-collapse:collapse;width:100%;min-width:540px;font-size:.9rem}
+  table.ctable th,table.ctable td{padding:13px 14px;border:1px solid var(--line);text-align:center;vertical-align:middle;line-height:1.55}
+  table.ctable thead th{background:var(--ink);color:#fff;font-weight:700;font-size:.84rem}
+  table.ctable thead th.opc{background:var(--accent)}
+  table.ctable thead th:first-child{background:transparent;border-top:0;border-left:0}
+  table.ctable tbody th{background:var(--paper-2);text-align:left;font-weight:700;white-space:nowrap;color:var(--ink)}
+  table.ctable td.opc{background:rgba(255,77,46,.09);font-weight:700;color:var(--ink)}
+  table.ctable .big{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.02rem}
+
+  /* youtube embed */
+  .yt-fig{margin:18px 0 22px}
+  .yt{position:relative;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 14px 36px -18px rgba(0,0,0,.6)}
+  .yt iframe{display:block;width:100%;height:100%;border:0}
+  .yt--port{max-width:320px;margin-inline:auto;aspect-ratio:9/16}
+  .yt--land{width:100%;aspect-ratio:16/9}
+  .yt-fig figcaption{font-size:.83rem;color:var(--ink-soft);margin-top:9px;text-align:center;line-height:1.6}
+
+  /* photo gallery (on-site report) */
+  .photo-block{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;padding:22px;margin:24px 0}
+  .photo-block .pbh{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.1rem;margin:0 0 4px}
+  .photo-block .pbn{font-size:.82rem;color:#8a8475;margin:0 0 18px}
+  .photo-block figure{margin:0 0 20px}
+  .photo-block figure:last-child{margin-bottom:0}
+  .photo-block img{display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 14px 36px -18px rgba(0,0,0,.5)}
+  .solo-photo{margin:24px 0}
+  .solo-photo img{display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 14px 36px -18px rgba(0,0,0,.5)}
+  .solo-photo figcaption{font-size:.85rem;color:var(--ink-soft);margin-top:11px;line-height:1.7}
+
+  /* takeaway dark card */
+  .takeaway{background:var(--dark);color:#fff;border-radius:20px;padding:34px 30px;margin:30px 0}
+  .takeaway h3{color:#fff;font-size:1.35rem;font-weight:900;margin:0 0 6px}
+  .takeaway .ta-q{color:var(--accent);font-weight:700;margin:0 0 22px;font-size:.98rem}
+  .takeaway .ta-list{counter-reset:t;display:grid;gap:14px;margin:0 0 22px}
+  .takeaway .ta-list .ti{position:relative;padding-left:42px;color:#eaeaf0}
+  .takeaway .ta-list .ti::before{counter-increment:t;content:counter(t);position:absolute;left:0;top:-2px;width:28px;height:28px;border:2px solid var(--accent);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"Zen Kaku Gothic New";font-weight:900;font-size:.9rem}
+  .takeaway .ta-list .ti b{color:#fff}
+  .takeaway .ta-foot{border-top:1px solid rgba(255,255,255,.16);padding-top:16px;color:#bdbdc8;font-size:.92rem}
+  .takeaway .ta-foot b{color:#fff}
+
+  /* FAQ */
+  details.faq{background:#fff;border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden}
+  details.faq summary{cursor:pointer;padding:16px 46px 16px 18px;font-weight:700;position:relative;list-style:none;font-size:.96rem}
+  details.faq summary::-webkit-details-marker{display:none}
+  details.faq summary::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:1.3rem;color:var(--accent);font-weight:700;transition:transform .2s}
+  details.faq[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+  details.faq summary .qm{color:var(--accent);font-weight:900;margin-right:8px}
+  details.faq .ans{padding:0 18px 18px;color:var(--ink-soft);font-size:.93rem}
+
+  /* references */
+  .refs{font-size:.82rem;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-top:20px;line-height:1.75}
+  .refs h4{margin:0 0 10px;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:#a39c8c}
+  .refs ul{padding-left:1.1em;margin:0 0 14px}
+  .refs li{margin-bottom:8px}
+  .refs .note{color:#a39c8c;font-size:.78rem}
+
+  /* footer */
+  footer{background:var(--dark);color:#9a9aa6;text-align:center;padding:40px 20px;font-size:.82rem}
+  footer b{color:#fff}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+  .rv.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+  .backtop{position:fixed;right:18px;bottom:18px;z-index:120;background:var(--ink);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:1.1rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:var(--shadow)}
+  .backtop.show{opacity:1;pointer-events:auto}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow"><b>YDA × YCA</b> 統合1年生 ／ 60分講義</span>
+    <h1>AIイノベーションと<span class="q">OPC</span></h1>
+    <p class="sub">エンタメ界にもたらすAI革命と、その未来「<span class="ko">OPC</span>」</p>
+    <div class="meta-row">
+      <span class="chip">⏱ <b>60分</b></span>
+      <span class="chip">💻 オンライン</span>
+    </div>
+    <p class="hero-msg">AIの動画生成プラットフォームが、コンテンツを<b>自動で大量生産</b>する時代です。「作り手＝コンテンツ」の構図が崩れ、<span class="hot">"作り手"の価値は下がっていきます。</span><br/>──だからこそ、それを踏まえた<b>人生設計</b>が必要です。その答えが、<b>OPC（一人会社）</b>です。</p>
+  </div>
+  <div class="scroll-hint">SCROLL ↓</div>
+</header>
+
+<!-- mobile chip nav -->
+<nav id="mnav" aria-label="セクション">
+  <a href="#aim">狙い</a>
+  <a href="#biz">1 AI・制作とビジネス</a>
+  <a href="#s1">2 OPC・未来</a>
+  <a href="#s4">3 サプライチェーン</a>
+  <a href="#s5">4 3つの武器</a>
+  <a href="#s6">5 最後の問い</a>
+  <a href="#summary">まとめ</a>
+  <a href="#faq">Q&amp;A</a>
+</nav>
+
+<div class="layout">
+  <!-- desktop sidebar TOC -->
+  <aside class="sidebar">
+    <nav class="toc" aria-label="目次">
+      <p class="toc-title">目次 / Contents</p>
+      <a href="#aim">この講義の狙い</a>
+      <a href="#timetable">60分タイムテーブル</a>
+      <a href="#biz"><span class="n">1</span>AIが変えるエンタメの制作とビジネス</a>
+      <a href="#s1"><span class="n">2</span>OPCがエンタメの未来になる</a>
+      <a href="#s4"><span class="n">3</span>映像サプライチェーンの変化</a>
+      <a href="#s5"><span class="n">4</span>これからどうするか</a>
+      <a href="#s6"><span class="n">5</span>クロージング：最後の問い</a>
+      <a href="#summary">まとめ（持ち帰り）</a>
+      <a href="#faq">よくある質問</a>
+      <a href="#refs">出典</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="reading">
+
+      <!-- AIM -->
+      <section id="aim" class="rv">
+        <div class="kicker"><span class="time-pill">この講義の狙い</span></div>
+        <h2 class="sec">この講義で覚えて欲しいこと2つ</h2>
+        <ul class="lead">
+          <li><strong>OPC（One-Person Company）</strong>：AIでエンタメは<strong>一人ビジネス</strong>になっています。（中国の2年後、日本でも）</li>
+          <li><strong>ショートドラマが、全てのエンタメのIP</strong>：制作コストが激安になったショートドラマが、<strong>あらゆるエンタメの起点</strong>になります。</li>
+        </ul>
+        <div class="message">
+          <p class="msg-lab">この講義のメッセージ</p>
+          <p><strong>AIの動画生成プラットフォームが、コンテンツを自動で大量生産する時代です。</strong>「作り手＝コンテンツ」という構図が崩れ、ただ"作る人"の価値は下がっていきます。だからこそ、それを踏まえた<strong>人生設計</strong>が必要です——"作る側"から"決める側"へ。<strong>OPC（一人会社）こそ、エンタメの未来です。</strong></p>
+        </div>
+        <figure class="solo-photo">
+          <img src="slide_creator.png" alt="図解：作り手＝コンテンツの時代は終わる。作る人から決める人へ" loading="lazy" />
+          <figcaption>図解：「作り手＝コンテンツ」の時代は終わる ──「作る人」から「決める人」へ。</figcaption>
+        </figure>
+      </section>
+
+      <!-- TIMETABLE -->
+      <section id="timetable" class="rv">
+        <div class="kicker"><span class="time-pill">全体の流れ</span></div>
+        <h2 class="sec">60分タイムテーブル</h2>
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead>
+              <tr><th>区切り</th><th>時間</th><th>内容</th><th>キーワード</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="tno">1</td><td class="ttime">0–18分</td><td>AIが変えるエンタメの制作とビジネス（実写×AI・IP360度・コスト崩壊・需給）</td><td class="tkw">実写vs AI・IP360度・99.5%減・無尽蔵</td></tr>
+              <tr><td class="tno">2</td><td class="ttime">18–27分</td><td>OPCがエンタメの未来になる（中国が見せる先取りされた未来）</td><td class="tkw">一人会社・上海微短劇大会</td></tr>
+              <tr><td class="tno">3</td><td class="ttime">27–38分</td><td>映像サプライチェーンの変化（使い捨て表現／分業制→マルチエージェント・監督）</td><td class="tkw">使い捨て表現・マルチエージェント・監督</td></tr>
+              <tr><td class="tno">4</td><td class="ttime">38–56分</td><td>これからどうするか（3つの武器：決める力・文脈/関係・歴史とアウラ）</td><td class="tkw">決める力・文脈と関係・アウラ</td></tr>
+              <tr><td class="tno">5</td><td class="ttime">56–60分</td><td>クロージング：最後の問い</td><td class="tkw">何を握り続けるか</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 1: AIが変えるエンタメの制作とビジネス -->
+      <section id="biz" class="rv">
+        <div class="kicker"><span class="num acc">1</span><span class="time-pill">0–18分</span></div>
+        <h2 class="sec">第1部：AIが変えるエンタメの制作とビジネス</h2>
+
+        <h3 class="sub3"><span class="tag">1-1</span>同じ作品を、人間とAIで作った ── 制作が変わる</h3>
+        <p>あるショートドラマ<strong>『君を王子にするまで30日』</strong>を、人間の俳優が演じて撮った<strong>実写版</strong>と、まったく同じ物語をAIだけで作り直した<strong>アニメ版</strong>——2つのバージョンを、数十秒ずつ見比べてみてください。</p>
+        <div class="hook">
+          <div class="hook-vids">
+            <figure>
+              <span class="ho-badge live">実写版 ／ 人間が制作</span>
+              <div class="vid"><video controls preload="none" playsinline poster="Kimi_live_poster.jpg" src="Kimi_live.mp4#t=0.1"></video></div>
+              <figcaption>人間の俳優＋実際の撮影でつくった実写版<br/>（縦型 / 約57秒）</figcaption>
+            </figure>
+            <figure>
+              <span class="ho-badge anime">アニメ版 ／ AIが制作</span>
+              <div class="vid"><video controls preload="none" playsinline poster="Kimi_anime_poster.jpg" src="Kimi_anime.mp4#t=0.1"></video></div>
+              <figcaption>同じ作品を、ボイスまで含めAIだけで作り直したアニメ版<br/>（縦型 / 約1分50秒）</figcaption>
+            </figure>
+          </div>
+          <p class="same">── アニメ版には、俳優も、カメラも、撮影現場もありません。声すらAIです。</p>
+
+          <div class="vs">
+            <p class="vs-cap">同じ作品。でも"作り方"でこれだけ変わります</p>
+            <div class="vstable-wrap">
+              <table class="vstable">
+                <thead>
+                  <tr><th></th><th class="live">実写版<span>人間が制作</span></th><th class="ai">アニメ版<span>AIが制作</span></th></tr>
+                </thead>
+                <tbody>
+                  <tr><th>制作時期</th><td>2025年9月</td><td class="ai">2026年2月</td></tr>
+                  <tr><th>制作期間</th><td><span class="big">4ヶ月</span></td><td class="ai"><span class="big">3週間</span></td></tr>
+                  <tr><th>制作費用</th><td><span class="big">1,000万円</span></td><td class="ai"><span class="big">200万円</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="vs-foot">同じ物語が、<b>期間およそ1/6・費用1/5</b>に。AIは、エンタメの<b>「作り方」</b>を根こそぎ変えました。</p>
+          </div>
+        </div>
+
+        <h3 class="sub3"><span class="tag">1-2</span>AIで実写ドラマを制作 ── アニメだけじゃない</h3>
+        <div class="aivid">
+          <figure>
+            <div class="vid vid--port">
+              <video controls preload="none" playsinline poster="Ninja_poster.jpg" src="Ninja.mp4"></video>
+            </div>
+            <figcaption><span class="fc-t">AIで作られた"実写"ドラマ</span><span class="fc-len">（縦型 / 約1分19秒）</span><br/>実在の俳優が演じているように見えますが、役者も撮影もなく、すべて生成AIです。</figcaption>
+          </figure>
+          <div class="aivid-text">
+            <p>AIが作れるのは、アニメだけではありません。実在の俳優が演じているとしか見えない<strong>"実写"のドラマ</strong>も、いまやAIだけで作れます。この映像は、すべて生成AIで作られた実写風の日本のショートドラマです。役者も撮影現場もありません。</p>
+          </div>
+        </div>
+
+        <h3 class="sub3"><span class="tag">1-3</span>ショートドラマが"原作"になる ── ビジネスが変わる</h3>
+        <p>変わったのは作り方だけではありません。<strong>稼ぎ方（ビジネスの形）</strong>も変わっています。これまでの王道は「<strong>マンガ → アニメ → ドラマ</strong>」で、原作はいつもマンガでした。ところが、いまその順番が逆転しはじめています。<strong>先にショートドラマがヒットし、それが"原作"になって、コミックにもアニメにも広がっていく</strong>——従来とは逆向きの、新しいコンテンツ・パイプラインです。</p>
+        <figure class="solo-photo">
+          <img src="今更マンガ.png" alt="ショートドラマ「今、晒してます。」のコミカライズ告知ビジュアル" loading="lazy" />
+          <figcaption><span class="fc-t">ショートドラマ →（原作）→ コミック。</span>ドコモスタジオ＆ライブのヒット作「今、晒してます。」は、人気を受けて<strong>コミカライズ</strong>へ。ドラマが"原作"になり、マンガやアニメへ展開していく——これが新しいIPの育て方です。</figcaption>
+        </figure>
+        <p>1つの物語（IP）を、ドラマ・コミック・アニメ・グッズ・舞台/ライブへ——<strong>あらゆる形へ同時に広げる</strong>のが「<strong>IP360度展開</strong>」です。決定的なのは、<strong>AIを使えば、この展開が一気に速く・安くなる</strong>ことです。さきほどの実写→アニメ化が<strong>3週間・200万円</strong>でできたように、コミック化も海外ローカライズも、桁違いのスピードで回せるようになります。</p>
+        <figure class="solo-photo">
+          <img src="ショートドラマ原作から.png" alt="図解：ショートドラマ（原作）から、AIで一気にコミック・アニメ・グッズ・舞台/ライブ・海外ローカライズへ展開するIP360度展開。コミック・アニメは展開中の例。" loading="lazy" />
+          <figcaption>図解：ショートドラマ（原作）から、<strong>AIで一気に</strong>コミック・アニメ・グッズ・舞台/ライブ・海外へ。これが「IP360度展開」です。</figcaption>
+        </figure>
+        <p class="bridge">作るコストが崩れ、1つのIPが360度に広がる——これがいま、エンタメの<strong>"制作"と"ビジネス"</strong>に同時に起きていることです。<br/><span class="arrow">→</span> では、その「作るコスト」は、どこまで安くなったのでしょうか。具体的な数字で見てみましょう。</p>
+
+        <h3 class="sub3"><span class="tag">1-4</span>AIが変える制作の常識 ── コストはどこまで下がるか</h3>
+        <p>ここまで見てきた実写・アニメ・AI実写のように、AIは映像制作の<strong>工程そのもの</strong>を置き換えはじめています。同じ"映像作品"を作るのに、従来のテレビドラマ、いま伸びている縦型のショートドラマ、そして<strong>AIをフル活用した制作</strong>で、<strong>人・時間・お金</strong>がどう変わるか並べてみます。</p>
+        <p class="ctable-cap">制作コストの激安化</p>
+        <div class="ctable-wrap">
+          <table class="ctable">
+            <thead>
+              <tr><th></th><th>ドラマ（従来）</th><th>ショートドラマ</th><th class="opc">AIフル活用</th></tr>
+            </thead>
+            <tbody>
+              <tr><th>企画制作（体制）</th><td>大規模チーム<br/>数十〜100人超</td><td>少人数チーム<br/>数人〜十数人</td><td class="opc">少人数＋<br/>AIエージェント</td></tr>
+              <tr><th>撮影・キャスティング</th><td>実写ロケ＋スタジオ<br/>俳優をキャスティング（出演料）</td><td>簡易な実写撮影<br/>少人数の出演者</td><td class="opc">撮影ゼロ<br/>キャストもAIが生成</td></tr>
+              <tr><th>制作期間</th><td>数ヶ月〜年単位</td><td>数日〜数週間</td><td class="opc"><span class="big">半日〜1日</span><br/>「一日一本」のペースも</td></tr>
+              <tr><th>制作コスト</th><td>数千万〜数億円</td><td>数十万〜数百万円</td><td class="opc"><span class="big">ほぼAI利用料のみ</span><br/>最大99.5%減</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>作るための「人・時間・お金」が、<strong>桁ごと消えていきます</strong>。これだけ速く・安く・大量に作れるということは——世の中に映像作品が<strong>無尽蔵にあふれる</strong>ということです。これが、<strong>「供給が増えると、価値が下がる」</strong>の正体です。</p>
+
+        <h3 class="sub3"><span class="tag">1-5</span>コストが崩れると、何が起きるか ── 供給と価値</h3>
+        <p>大事なのは「クオリティが上がった」ことではありません。<strong>作るコストが崩れた</strong>ことです。昔は30秒の映像をそれっぽく作るのに、人・機材・時間・お金が必要でした。いまは、AIを使えば午後いっぱいで、ある程度のものを出せます。</p>
+        <p>上で見たコスト構造を、中国の現場は数字でも裏づけています。3月の上海で、AIショートドラマ制作プラットフォーム各社が発表した数字です（各社プレゼンテーションより）：</p>
+        <div class="stats">
+          <div class="stat"><div class="v">99.5<span class="u">%</span></div><div class="l">制作コスト削減</div><div class="src">Seko / 商湯科技</div></div>
+          <div class="stat"><div class="v">80–90<span class="u">%</span></div><div class="l">制作期間 短縮</div><div class="src">Seko / 商湯科技</div></div>
+          <div class="stat alt"><div class="v">1日1本</div><div class="l">「一人で一日一本のドラマ」を目指す</div><div class="src">巨日禄 / Jurilu</div></div>
+          <div class="stat"><div class="v">半日</div><div class="l">のトレーニングで業務開始</div><div class="src">Seko / 商湯科技</div></div>
+        </div>
+        <p>※これらは各社のプレゼン上の主張で、誇張もあるかもしれません。でも「桁が変わった」というオーダー感は、現地で複数のプラットフォームが競うように出してきた数字でした。<strong>方向性は間違いなくこちらに向かっています</strong>。短尺・縦型ドラマの世界では、量を、速く、安く——その勝負の分野ほど、AIが先に入っていきます。</p>
+        <p>ここで、経済の基本を一つ。モノの値段は<strong>需要と供給</strong>で決まります。<strong>供給が増えれば、ひとつあたりの価値（価格）は下がります</strong>。コストが崩れるということは、<strong>映像作品の"供給"が、事実上"無尽蔵"になる</strong>ということです。下のグラフがその到達点です——<strong>供給が無限に増えるほど、1作品あたりの価値は"希少＝高い"から、ゼロに向かって落ちていきます</strong>。これがAI時代の出発点です。</p>
+        <figure class="sd-fig">
+          <img src="経済の現実_グラフ.png" alt="経済の現実：供給が無限になれば、価値はゼロに近づく。縦軸＝価値/価格、横軸＝供給量。供給が増えるほど、価値は『希少＝高い』から『無尽蔵＝安い』へ落ちていく曲線。" loading="lazy" />
+          <figcaption><span class="fc-t">経済の現実：供給が無限になれば、価値はゼロに近づく。</span><br/>横軸＝映像作品の供給量、縦軸＝1作品あたりの価値。<strong>希少だったうちは高く、無尽蔵になれば限りなく安く</strong>なります。AIによる「作れること」のコモディティ化が、この曲線を一気に右へ進めています。</figcaption>
+        </figure>
+        <p class="bridge">作るコストが崩れ、映像が無尽蔵にあふれていく——この現実を<strong>いち早く利用して</strong>、新しい人種・ビジネスモデルが立ち上がっています。<br/><span class="arrow">→</span> それが<strong>「OPC（一人会社）」</strong>。震源地・中国で私が見てきた話に移ります。</p>
+      </section>
+
+      <!-- 2 (旧1): OPC -->
+      <section id="s1" class="rv">
+        <div class="kicker"><span class="num">2</span><span class="time-pill">18–27分</span></div>
+        <h2 class="sec">第2部：OPCがエンタメの未来になる ── 中国が見せる"先取りされた未来"</h2>
+
+        <h3 class="sub3"><span class="tag">2-1</span>上海現地から ── 3月、微短劇大会で見た熱気</h3>
+        <p>今年の3月10日、<strong>第3回「上海微短劇大会」</strong>（上海广播电视台＆静安区主催）に参加しました。テーマは「AIGCが駆動するショートドラマ産業の新地平」。政府・企業・研究機関・制作者が一堂に会す大規模な産業会議です。その大会の外でも、行く先々である言葉が飛び交っていました——「<strong>OPC</strong>」。</p>
+        <div class="photo-block">
+          <p class="pbh">現地レポート ── 写真3枚で見る</p>
+          <p class="pbn">2026年3月10日／第3回 上海微短劇大会にて撮影</p>
+
+          <figure>
+            <img src="上海_AI.jpeg" alt="上海微短劇大会のスライド：微短劇市場の国内・海外規模" loading="lazy" />
+            <figcaption><span class="fc-t">① 爆発する市場規模。</span>国内のショートドラマ市場は2024年に505.4億元 → 2025年に1,000億元、5〜10年で<strong>4,000億元</strong>へ。海外も2026年に60〜90億ドル、5〜10年で1,500億ドル規模という見通しが堂々と掲げられていました。</figcaption>
+          </figure>
+
+          <figure>
+            <img src="上海_巨日禄.jpeg" alt="巨日禄のAI微短劇ランキングと新プラットフォーム星河3.0の発表" loading="lazy" />
+            <figcaption><span class="fc-t">② AIで"量産"する競争。</span>巨日禄（Jurilu）のAI微短劇ランキングと、新プラットフォーム「<strong>星河3.0</strong>」の発表。AIエージェントでAI実写ドラマを量産していく——という宣言が、各社から競うように出てきます。</figcaption>
+          </figure>
+
+          <figure>
+            <img src="上海_Seko.jpeg" alt="Sekoのプレゼン：効率革命×創意平権の見取り図" loading="lazy" />
+            <figcaption><span class="fc-t">③ 「効率革命 × 創意平権」。</span>Seko（商湯）のプレゼン。縦軸が<strong>効率革命</strong>（制作10倍へ）、横軸が<strong>創意平権＝創作の民主化</strong>。「誰もが・速く・安く作れる」世界へ、という産業全体の見取り図そのものです。</figcaption>
+          </figure>
+        </div>
+
+        <h3 class="sub3"><span class="tag">2-2</span>OPCとは何か ── 一人が、会社になる</h3>
+        <div class="concept">
+          <p class="ct">OPC ＝ One Person Company（一人会社）</p>
+          <p>個人が、AIの支援を受けて、企画・開発・マーケティング・顧客対応まで、<strong>会社の全工程を一人で回す</strong>——そういう起業・組織のかたちです。重要なのは、これが「個人の頑張り」の話ではなく、<strong>社会の仕組みとして立ち上がっている</strong>ことです。中国では地方政府が競ってOPC専用のインキュベーション拠点を作っています。</p>
+        </div>
+        <p>よく聞かれるのが「<strong>フリーランスと何が違うのか</strong>」です。いちばんの違いは、次の3点に集約されます。</p>
+        <p class="ctable-cap">OPC と フリーランスの違い</p>
+        <div class="ctable-wrap">
+          <table class="ctable">
+            <thead>
+              <tr><th></th><th class="opc">OPC（一人会社）</th><th>フリーランス</th></tr>
+            </thead>
+            <tbody>
+              <tr><th>ビジネスモデル</th><td class="opc">自分で<span class="big">IP資産を保有</span></td><td>受託仕事</td></tr>
+              <tr><th>スキル・役割</th><td class="opc">労働はAIが代替。<br/>アイデア・経営判断に特化</td><td>専門スキルに特化</td></tr>
+              <tr><th>サプライチェーン</th><td class="opc">企画から販売まで<span class="big">一人</span>で実施</td><td>脚本・撮影・編集など<br/>1領域を担当</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figure class="solo-photo">
+          <img src="上海_AI_Studio.png" alt="上海のAI制作スタジオ（オフィス）の様子" loading="lazy" />
+          <figcaption><span class="fc-t">「個人＋AI」を支える現場。</span>上海のAI制作の拠点。広いフロアにずらりと並ぶ制作席。OPCは"一人"といっても孤立しているわけではありません。こうした拠点・コミュニティと、潤沢な計算資源（演算リソース）の上で動いています——だから「社会の仕組み」なのです。</figcaption>
+        </figure>
+        <figure class="yt-fig">
+          <div class="yt yt--land">
+            <iframe src="https://www.youtube.com/embed/nkwMuH6q0H0" title="OPC（一人会社）とは何か ── 解説動画" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <figcaption>OPC（一人会社）について。<a href="https://youtu.be/nkwMuH6q0H0" target="_blank" rel="noopener">YouTubeで開く ↗</a></figcaption>
+        </figure>
+        <figure class="yt-fig">
+          <div class="yt yt--land">
+            <iframe src="https://www.youtube.com/embed/PzjwATRWtyQ" title="OPC（一人会社）について ── 関連動画" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <figcaption>OPC（一人会社）について（関連動画）。<a href="https://youtu.be/PzjwATRWtyQ" target="_blank" rel="noopener">YouTubeで開く ↗</a></figcaption>
+        </figure>
+        <div class="stats">
+          <div class="stat"><div class="v">+47<span class="u">%</span></div><div class="l">2025年上半期の新規OPC登録（前年同期比）</div><div class="src">中関村人材協会</div></div>
+          <div class="stat"><div class="v">286<span class="u">万社</span></div><div class="l">新規OPC登録数（新規登録企業の約24％）</div><div class="src">中関村人材協会</div></div>
+          <div class="stat alt"><div class="v">51<span class="u">社</span></div><div class="l">済南市の拠点に、わずか1ヶ月で入居</div><div class="src">演算コスト最大60％補助</div></div>
+          <div class="stat"><div class="v">省レベル</div><div class="l">2026年3月、広東省が中国初のOPC特化支援計画を発表</div><div class="src">AFPBB News</div></div>
+        </div>
+        <p>背景には、<strong>自律型AIエージェント</strong>（AIが自分で段取りして作業する）の急速な普及があります。</p>
+
+        <h3 class="sub3"><span class="tag">2-3</span>OPCで作られる映像 ── 上海・OPCの世界</h3>
+        <p>「OPC」という言葉とセットで、現地ではこんな映像が次々に共有されていました。<strong>一人＋AI</strong>で作られた、ショートドラマや広告の実例です。</p>
+        <div class="video-block">
+          <p class="vbh">OPC＝AI制作の映像</p>
+
+          <!-- 1行目：アニメ（横型・左）＋ 上海ショートドラマ（縦型・右） -->
+          <div class="vid-row">
+            <figure>
+              <div class="vid vid--land">
+                <video controls preload="none" playsinline poster="OPC_anime_poster.jpg" src="OPC_anime.mp4"></video>
+              </div>
+              <figcaption><span class="fc-t">AIで制作された短編／アニメの例</span><span class="fc-len">（横型 / 約1分37秒）</span><br/>「一人で一日一本」を可能にしつつある、AI制作のショート作品。</figcaption>
+            </figure>
+            <figure class="port">
+              <div class="vid vid--port">
+                <video controls preload="none" playsinline poster="OPC_Shanghai_poster.jpg" src="OPC_Shanghai.mp4"></video>
+              </div>
+              <figcaption><span class="fc-t">AIで作られた縦型ショートドラマ</span><span class="fc-len">（縦型 / 約1分44秒）</span><br/>上海の中国人OPCが、中国向けにAI制作している動画。中国にいる日本好きな人向け。</figcaption>
+            </figure>
+          </div>
+
+          <!-- 2行目：ショート広告（横型・左）＋ ショート広告（縦型・右） -->
+          <div class="vid-row">
+            <figure>
+              <div class="vid vid--land">
+                <video controls preload="none" playsinline poster="OPC_Ad_hot_poster.jpg" src="OPC_Ad_hot.mp4"></video>
+              </div>
+              <figcaption><span class="fc-t">ショート広告の例（横型）</span><span class="fc-len">15秒</span></figcaption>
+            </figure>
+            <figure class="port">
+              <div class="vid vid--port">
+                <video controls preload="none" playsinline poster="OPC_Ad_soldjer_poster.jpg" src="OPC_Ad_soldjer.mp4"></video>
+              </div>
+              <figcaption><span class="fc-t">ショート広告の例（縦型）</span><span class="fc-len">15秒</span></figcaption>
+            </figure>
+          </div>
+        </div>
+        <p class="bridge">こうした作品を、<strong>一人＋AI</strong>で作り続ける——これが、いま中国で立ち上がっている<strong>OPC（一人会社）</strong>の現場です。<br/><span class="arrow">→</span> では、この変化は、<strong>映像制作のサプライチェーン</strong>そのものを、どう作り変えるのでしょうか。</p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- 4 -->
+      <section id="s4" class="rv">
+        <div class="kicker"><span class="num acc">3</span><span class="time-pill">27–38分</span></div>
+        <h2 class="sec">第3部：映像サプライチェーンの変化</h2>
+
+        <h3 class="sub3"><span class="tag">変わること①</span>"使い捨ての表現"があふれる</h3>
+        <p>作る値段が崩れると、<strong>コンテンツの量が爆発します</strong>。量が爆発すると、世の中は「<strong>使い捨ての表現</strong>」で埋まります。スワイプして、ドーパミンが出て、3秒で忘れる短い刺激。AIがいくらでも量産できます。</p>
+        <p>でも人間が本当に時間とお金を使うのは、そちらではありません。「<strong>また観たい</strong>」「<strong>この人だから観る</strong>」と思える、重層的なもの。希少なものが入れ替わります。<strong>「作れること」はもう希少ではありません。「選ばれること」が希少になります</strong>。</p>
+
+        <figure class="solo-photo">
+          <img src="無限生成.png" alt="図解：無限に生成されるコンテンツ。過去は『手を動かせる人』が詰まりどころ、未来はAIが無限に生成し、希少資源は『良し悪しの判断・方向づけ』へ移る。" loading="lazy" />
+          <figcaption>図解：コンテンツは無限に生成される時代へ。詰まりどころ（ボトルネック）は「手を動かせる人」から「良し悪しを判断し、方向づけできる人」へ移ります。</figcaption>
+        </figure>
+
+        <h3 class="sub3"><span class="tag">変わること②</span>「分業制」から、マルチタスクなAIに任せるスタイルへ</h3>
+        <p>映像制作は長く、<strong>専門性の高い「分業制」</strong>で回ってきました。脚本家が書き、撮影が撮り、編集がつなぎ、音響が仕上げる——工程ごとに専門家がバトンをつなぐ"サプライチェーン"です。ところがAIは、<strong>複数の工程をまたいで（マルチタスクに）</strong>担えます。脚本のたたき、絵づくり、動画化、音声まで一気通貫で流せる。だから現場は「<strong>各工程の専門家をそろえる</strong>」から「<strong>マルチタスクなAIに任せ、人はそれを差配する</strong>」スタイルへ移っていきます。</p>
+        <p>この「<strong>複数のAIを一本の作業フローにつなぐ</strong>」動きを<strong>マルチエージェント</strong>といいます。上海で見たプラットフォームは、脚本を入れると分割・絵コンテ生成・素材制作・音声合成・編集まで、AIが自動で段取りを組んで流していました。人間の仕事は<strong>「ツールを使う」から「ツールを指揮する」へ</strong>ずれていきます。</p>
+        <figure class="solo-photo">
+          <img src="slide_multiagent.png" alt="図解：ツールを使うからチームを指揮するへ（マルチエージェント）" loading="lazy" />
+          <figcaption>図解：「ツールを使う」から「チームを指揮する」へ ── 役割分担したAIのチーム（マルチエージェント）。</figcaption>
+        </figure>
+        <p>すると、詰まりどころ（ボトルネック）も移ります。これまでは「<strong>手を動かせる専門人材が足りない</strong>」ことが詰まりどころでした。AIが"手"を肩代わりすると、希少資源は「<strong>AIを差配し、方向と良し悪しを決められる人</strong>」へ移ります。</p>
+        <p>立ち位置は「自分が手を動かすプレイヤー」から「<strong>AIと人の混成チームの監督</strong>」へ移ります。AIを"道具"ではなく"チーム"として扱い、役割を持った何人か（のAI）に仕事を振り分けて束ねる——この監督業は、まさに裏方の本業です。上海のプラットフォームも「監督の思考プロセス・演出の暗黙知」をシステムに組み込んでいました。<strong>裏方の専門知識こそ、AIシステムの設計に一番必要なもの</strong>です。</p>
+        <figure class="solo-photo">
+          <img src="slide_weapon2.png" alt="図解：AIを道具ではなくチームとして扱う ── 担うのはAIと人の混成チームの監督" loading="lazy" />
+          <figcaption>図解：AIを「道具」ではなく「チーム」として扱う ── 担うのは、AIと人の混成チームの"監督"。</figcaption>
+        </figure>
+        <p>職種ごとに具体化すると、こうなります：</p>
+        <div class="jobs">
+          <div class="job"><h4>構成作家／企画</h4><p>AIが台本のたたきを10本出します。価値は「どれを選び、どこを切り、企画の核を一言で言えるか」へ移ります。</p></div>
+          <div class="job"><h4>映像ディレクター</h4><p>AIが素材を量産します。価値は「トーンを決め、引き算する」へ移ります。</p></div>
+          <div class="job"><h4>デジタルプロデューサー</h4><p>AIと人を混ぜたチームを采配する役割が増えます。</p></div>
+          <div class="job"><h4>マネージャー</h4><p>スケジュールや分析はAIが速くなります。残るのは<strong>タレントとの信頼関係</strong>——絶対に肩代わりされません。</p></div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- 5 -->
+      <section id="s5" class="rv">
+        <div class="kicker"><span class="num">4</span><span class="time-pill">38–56分</span></div>
+        <h2 class="sec">第4部：これからどうするか ── 3つの武器</h2>
+
+        <div class="weapon">
+          <p class="wt"><span class="wn">①</span>「作る力」より「決める力」</p>
+          <figure class="solo-photo">
+            <img src="slide_weapon1.png" alt="図解：武器①「作る力」より「決める力」" loading="lazy" />
+            <figcaption>図解：武器①「作る力」より「決める力」── 選び、捨て、方向を決める力が値段になります。</figcaption>
+          </figure>
+          <p>これからはAIが選択肢を山ほど出します。<strong>選び、捨て、方向を決める力</strong>が、これからの値段になります。「ボタンを押すだけの人」は要らなくなります。「何を押すべきか決める人」は、絶対に必要です。決める力は「<strong>たくさん見て、自分の基準を持つこと</strong>」でしか育ちません。AIで浮いた時間を、SNSの消費ではなく<strong>インプットの質</strong>に回します。それが投資です。</p>
+        </div>
+        <div class="weapon">
+          <p class="wt"><span class="wn">②</span>自分の「文脈」と「関係」を資産にする</p>
+          <figure class="solo-photo">
+            <img src="slide_weapon3.png" alt="図解：武器② 自分の文脈と関係を資産にする" loading="lazy" />
+            <figcaption>図解：武器② 自分の「文脈」と「関係」を資産にする ── コピーできないものだけが、自分の資産。</figcaption>
+          </figure>
+          <p>AIで誰でも同じ品質を出せる時代、<strong>差がつくのは"その人にしかない文脈"</strong>です。どんな現場を見たか、誰と信頼を築いたか、何を面白いと思うか。<strong>コピーできないものだけが、自分の資産になります</strong>。日本のエンタメで育ってきたセンスや世界観は、AI時代にこそ価値を持ちます。捨てるのではなく、磨いていきましょう。スキルは「掛け算」で跳ねます。「<strong>映像×AI×芸人と信頼を築ける</strong>」——掛けるほど代わりがいなくなります。代わりがいない人が、自分の値段を自分で決められます。</p>
+        </div>
+        <div class="weapon">
+          <p class="wt"><span class="wn">③</span>歴史の大局観を持つ ── 「複製技術」とアウラ</p>
+          <figure class="solo-photo">
+            <img src="slide_copytech.png" alt="図解：AIは複製技術の最新章。印刷・写真・映画・デジタル・SNS・生成AI" loading="lazy" />
+            <figcaption>図解：AIは「複製技術」の最新章 ── 技術が進むたび、作れる人が増え、コストは下がり、表現があふれてきた。</figcaption>
+          </figure>
+          <p>最後の武器は、目の前のツールより一段引いた<strong>大局観</strong>です。いま起きていることは、歴史上はじめてのことではありません。人類はずっと「表現を、安く、たくさん複製する技術」を発明し続けてきました。印刷、写真、レコード、映画、テレビ、デジタル、SNS。そのたびに<strong>作れる人が増え、作る値段が下がり、世の中に表現があふれた</strong>のです。生成AIは、その列のいちばん新しい一台にすぎません。だから「AIで世界が終わる」でも「AIで全部解決」でもなく、<strong>過去に何度も起きたことが、また起きている</strong>——そう捉えると、冷静に向き合えます。</p>
+          <figure class="solo-photo">
+            <img src="slide_aura.png" alt="図解：コピーが無料になる時、コピーできないもの（アウラ）が高騰する" loading="lazy" />
+            <figcaption>図解：コピーが無料になるほど、「コピーできないもの＝アウラ」の価値が逆に高騰する。</figcaption>
+          </figure>
+          <p>そして毎回、同じ逆転が起きます。複製が安くなるほど、<strong>「コピーできないもの」の価値が逆に上がる</strong>のです。さきほど武器②で触れた"その人にしかない文脈や関係"——あれには名前があります。</p>
+          <div class="concept">
+            <p class="ct">アウラ（Aura）</p>
+            <p>20世紀の批評家ベンヤミンの言葉です。ざっくり言うと「<strong>ここに、いま、これしかない、という一回性の重み</strong>」のこと。ライブで生で見た芸人のネタと、あとで切り抜きで見た同じネタ。なんとなく違いますよね。その"なんとなく違う"がアウラ。複製にコピーできない部分です。</p>
+          </div>
+          <p>複製技術が進むと、アウラは消える……のではなく、<strong>居場所を変えます</strong>。AIで「それっぽいもの」が無限にタダで作れる時代だからこそ、<strong>ライブ感、その人だからこその文脈、本物の関係性</strong>に価値が逃げ込みます。上海の会議でも中国の制作会社が同じことを言っていました。「<strong>技術はどんどん均質化していく。でも、その技術を使って何を語るか——そこにある文化的な素地こそが、コピーできない強みになる</strong>」。日本に引きつければ——マンガ・アニメ・ゲームで培ってきた世界観構築力や演出の「間」こそが、AI時代においてこそ価値を持ちます。</p>
+          <p>ひとつだけ注意点もあります。スタジオ一個ぶんの制作力が個人の手のひらに来た（分散）一方で、その"魔法の道具"を作る会社は世界に数社しかありません（集中）。「個人が強くなった」だけを見ると、足をすくわれます。<strong>「誰の道具に乗っているのか」を同時に見る目</strong>も、大局観のうちです。</p>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- 6 -->
+      <section id="s6" class="rv">
+        <div class="kicker"><span class="num acc">5</span><span class="time-pill">56–60分</span></div>
+        <h2 class="sec">クロージング ── 最後の問い</h2>
+        <p>AIの動画生成が"作り手"を自動で大量生産する時代です。ただ"作る人"の価値は下がっていく——でも、それは終わりではありません。<strong>"作る側"から"決める側"へ回ればいい</strong>のです。中国で見たOPC（一人会社）は、脅しではなく、その選択肢が増えた、という話です。会社に入るのも、自分が会社になるのも、どちらもアリな時代になりました。<strong>OPCは、エンタメの未来のひとつのかたち</strong>です。</p>
+      </section>
+
+      <!-- SUMMARY -->
+      <section id="summary" class="rv">
+        <div class="takeaway">
+          <h3>持ち帰ってほしいこと</h3>
+          <p class="ta-q">AIが"作り手"を自動で大量生産する時代です。"作る人"の価値は下がり、価値は"決める人"へ移ります。だから——それを踏まえた人生設計が必要です。<br/>OPC（一人会社）こそ、エンタメの未来です。</p>
+          <ul style="list-style:none;padding:0;margin:0 0 22px;color:#cfcfd8;font-size:.92rem;line-height:1.8">
+            <li>・「ボタンを押すだけの労働者」→「制作チームのボス」へ（AI会社が宣言しています）</li>
+            <li>・中国のOPC（一人会社）＝ 数年後のプレビュー</li>
+          </ul>
+          <div class="ta-list">
+            <div class="ti"><b>「作る力」より「決める力」</b></div>
+            <div class="ti"><b>AIは"道具"ではなく"チーム"。担うのは"監督"。</b></div>
+            <div class="ti"><b>自分の"文脈"と"信頼関係"こそ、コピーできない資産。</b></div>
+            <div class="ti"><b>歴史の大局観を持つ。安くなるほど"アウラ"が高くなる。</b></div>
+          </div>
+          <p class="ta-foot">── この4つは、そのまま<b>"一人会社"の経営マニュアル</b>です。</p>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="rv">
+        <div class="kicker"><span class="time-pill">よくある質問</span></div>
+        <h2 class="sec">Q &amp; A</h2>
+        <details class="faq"><summary><span class="qm">Q.</span>AIに仕事を取られませんか？</summary><div class="ans">"手を動かすだけの仕事"の一部は減ります。でも"ボス"の仕事は、むしろ増えます。AI会社もそう言っています。だからこそ、今日の3つの武器をお話ししました。</div></details>
+        <details class="faq"><summary><span class="qm">Q.</span>OPC（一人会社）って、結局フリーランスと何が違うんですか？</summary><div class="ans">フリーランスは"個人で仕事を請ける人"です。OPCは"AIを従業員代わりにして、会社の全機能を一人で持つ"発想です。一人だけれど"組織"なのです。規模の天井が違います。</div></details>
+        <details class="faq"><summary><span class="qm">Q.</span>日本でもOPCは増えますか？</summary><div class="ans">中国ほど政策で押し上げられはしないと思います。でも"個人が一個の制作単位になる"流れ自体は、世界共通です。日本では、形を変えて静かに進む——そう見ておくとよいでしょう。</div></details>
+        <details class="faq"><summary><span class="qm">Q.</span>どのAIツールを覚えればいいですか？</summary><div class="ans">特定のツール名より、"複数のAIを役割分担させて指揮する"発想を持つことです。ツールは1年で入れ替わりますが、その発想は腐りません。</div></details>
+        <details class="faq"><summary><span class="qm">Q.</span>Seko・Juriluは日本でも使えますか？</summary><div class="ans">いまは中国の規制下で動いていて、海外展開はこれからです。でも同様のプラットフォームは、日本でも出てきます。大事なのはツール名ではなく、そういうプラットフォームをどう使いこなすか、です。</div></details>
+      </section>
+
+      <!-- REFS -->
+      <section id="refs" class="rv">
+        <div class="refs">
+          <h4>出典メモ</h4>
+          <p><strong>自社事例（第1部）</strong></p>
+          <ul>
+            <li><a href="https://fanystudio.com/" target="_blank" rel="noopener">株式会社NTTドコモ・スタジオ＆ライブ</a>（第1部の自社事例：実写×AI・「今、晒してます。」コミカライズ・IP360度展開の出典）</li>
+            <li><a href="https://fany-d.com/" target="_blank" rel="noopener">縦型ショートドラマアプリ「FANY:D」</a>（同社の縦型ショートドラマ配信プラットフォーム）</li>
+          </ul>
+          <p><strong>上海微短劇大会レポート</strong>（第1部・第2部のAI制作プラットフォーム情報のもと）</p>
+          <ul>
+            <li>一般社団法人日本ショート動画協会「2026上海微短劇大会 現地レポート：AIGCが駆動するショートドラマ産業の新地平」（2026年3月11日）<a href="https://note.com/shortassosiation/n/ne62012291d94" target="_blank" rel="noopener">note.com/shortassosiation</a></li>
+            <li><a href="https://seko.sensetime.com/" target="_blank" rel="noopener">Seko</a>（商湯科技）：コスト99.5%削減・制作期間80–90%短縮・半日で業務開始（同社プレゼン）／「ボタンを押すだけの労働者から制作チームのボスへ」（Sekoのプラットフォーム思想）</li>
+            <li><a href="https://video.jurilu.com/" target="_blank" rel="noopener">巨日禄（Jurilu）</a>：「一人で一日一本」の効率目標（同社プレゼン）</li>
+          </ul>
+          <p><strong>OPC関連</strong></p>
+          <ul>
+            <li>「中国OPC発展トレンド報告（2025–2030年）」（中関村人材協会）── AFPBB News（2026年4月16日）</li>
+            <li>中国網日本語版／レコードチャイナ（2026年3月）── 済南市・蘇州・深センの各支援策</li>
+            <li>AFPBB News（2026年4月）── 広東省 省レベルOPC特化支援計画</li>
+          </ul>
+          <p class="note">※数字は各社プレゼン・報道時点の値。PR的誇張を含む可能性があり、方向性として捉えること。公の場で述べる際は当日の最新情報と照合を。</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<button class="backtop" id="backtop" aria-label="トップへ戻る">↑</button>
+
+<footer>
+  <p><b>AIイノベーションとOPC</b> ── エンタメ界にもたらすAI革命とその未来<br/>
+  YDA・YCA統合1年生 講義教材 ／ 60分・オンライン</p>
+</footer>
+
+<script>
+(function(){
+  // progress bar
+  var bar=document.getElementById('progress');
+  var backtop=document.getElementById('backtop');
+  function onScroll(){
+    var h=document.documentElement;
+    var scrolled=h.scrollTop/(h.scrollHeight-h.clientHeight);
+    bar.style.width=(scrolled*100)+'%';
+    if(h.scrollTop>600){backtop.classList.add('show');}else{backtop.classList.remove('show');}
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+
+  backtop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  // active section highlight (sidebar + mobile chips)
+  var sideLinks=Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  var chipLinks=Array.prototype.slice.call(document.querySelectorAll('#mnav a'));
+  var allLinks=sideLinks.concat(chipLinks);
+  var map={};
+  allLinks.forEach(function(a){
+    var id=a.getAttribute('href').slice(1);
+    (map[id]=map[id]||[]).push(a);
+  });
+  var sections=Array.prototype.slice.call(document.querySelectorAll('section[id]'));
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var id=e.target.id;
+        allLinks.forEach(function(a){a.classList.remove('active');});
+        (map[id]||[]).forEach(function(a){
+          a.classList.add('active');
+          // keep active chip in view on mobile
+          if(a.closest('#mnav')){a.scrollIntoView({inline:'center',block:'nearest'});}
+        });
+      }
+    });
+  },{rootMargin:'-45% 0px -50% 0px',threshold:0});
+  sections.forEach(function(s){io.observe(s);});
+
+  // reveal on scroll
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var rio=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}
+      });
+    },{rootMargin:'0px 0px -8% 0px',threshold:.06});
+    document.querySelectorAll('.rv').forEach(function(el){rio.observe(el);});
+  }else{
+    document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});
+  }
+})();
+</script>
+</body>
+</html>
