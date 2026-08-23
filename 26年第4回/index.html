@@ -538,7 +538,7 @@
               <tr><td class="tno">2</td><td class="ttime">6–18分</td><td>★ プロンプトに入れるべき4要素</td><td class="tkw">目的／インプット／アウトプット／制約条件</td></tr>
               <tr><td class="tno">3</td><td class="ttime">18–28分</td><td>★ 業務のワークフロー ── まず"流れ"を描く</td><td class="tkw">企画→商品化→提供→フィードバック→企画</td></tr>
               <tr><td class="tno">4</td><td class="ttime">28–40分</td><td>★ タスク分解 ── 流れをAIが回せる単位に割る</td><td class="tkw">1タスク1フォルダ・置き場所の決め方・01/02・結合</td></tr>
-              <tr><td class="tno">5</td><td class="ttime">40–50分</td><td>★ スキルにして、配る</td><td class="tkw">3点セット・素材へのアクセス</td></tr>
+              <tr><td class="tno">5</td><td class="ttime">40–50分</td><td>★ スキルにして、配る</td><td class="tkw">3点セット・素材へのアクセス・配る先の違い</td></tr>
               <tr><td class="tno">6</td><td class="ttime">50–56分</td><td>AI会社の動かし方 ── 4要素を"会社に置く"</td><td class="tkw">指示は3種類しかない</td></tr>
               <tr><td class="tno">7</td><td class="ttime">56–60分</td><td>演習＋クロージング＋次回予告</td><td class="tkw">その仕事、4段階に描ける？</td></tr>
             </tbody>
@@ -1257,7 +1257,7 @@
       <section id="s5" class="rv">
         <div class="kicker"><span class="num acc">5</span><span class="time-pill">40–50分</span></div>
         <h2 class="sec">第5部：★ スキルにして、配る</h2>
-        <p class="sec-aim">うまくいった工程は、パッケージにして固定できます。それが「スキル」という仕組みです。</p>
+        <p class="sec-aim">うまくいった工程は、パッケージにして固定できます。それが「スキル」という仕組みです。<b>どこまで配れて、どこで動かなくなるか</b>まで見ます。</p>
 
         <h3 class="sub3"><span class="tag">5-1</span>スキルとは何か</h3>
         <p>第4部の最後で「うまくいった手順を、そのまま文章にする」と言いました。<strong>その文章に、名前と"使いどころ"と"素材の置き場所"を添えて、1つのフォルダにまとめたもの</strong> ── それがスキルです。</p>
@@ -1357,7 +1357,62 @@
           </div>
         </div>
 
-        <h3 class="sub3"><span class="tag">5-5</span>スキルにすると、何が変わるか</h3>
+        <h3 class="sub3"><span class="tag">5-5</span>ただし ── 配る先で、動いたり動かなかったりします</h3>
+        <p>いま「フォルダごと渡せば、相手の環境でも同じ品質で動きます」と言いました。ここに1つだけ、正直な注釈をつけます。</p>
+        <p>いいニュースから。<strong>スキルという仕組みは、エンジニア向けのツール専用ではありません。</strong>ブラウザで使うClaudeにも、Cowork（チームで使う画面）にも、同じ「スキル」として置けます。書き方そのもの（<code>SKILL.md</code>という1枚のファイル）も<strong>オープンな形式として公開されていて、他社のAIエージェントにも広がりつつあります</strong>。<br/>つまり<strong>「配れる」は、本当です。</strong></p>
+        <p>問題はその次です。<strong>「読める」と「同じに動く」は、別</strong>です。</p>
+
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead><tr><th>配る先</th><th>置き方</th><th>気をつけること</th></tr></thead>
+            <tbody>
+              <tr><td><b>ブラウザのClaude・Cowork</b></td><td>設定画面から、スキルのフォルダをそのままアップロードする</td><td>いちばん手軽。チームの共有スキルとして配れる場合もあります</td></tr>
+              <tr><td><b>コマンド型のツール</b></td><td>決められたフォルダ（例：<code>.claude/skills/</code>）に置くだけ</td><td>置けば勝手に見つけてくれます。第3回のAI会社はこの形</td></tr>
+              <tr><td><b>他社のAIエージェント</b></td><td>そのツールが決めた、別のフォルダに置く</td><td>置き場所の名前が違います。対応状況も変わるので、<b>配る前に相手側を確認</b></td></tr>
+              <tr><td><b>スキル機能がないAI</b></td><td>手順書の中身を、そのまま貼り付けて使う</td><td>自動では発動しません。<b>毎回「これを使って」と言う必要があります</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">最初に効いてくる落とし穴</p>
+          <p><strong>置いた場所ごとに、置き直しが必要です。</strong>ブラウザのClaudeに入れたスキルが、自動でコマンド型ツールにも入る ── ということは起きません。<strong>「1回書けば、どこでも動く」ではなく「1回書けば、置いた先で動く」</strong>。使いたい場所それぞれに、同じフォルダを置いてください。</p>
+        </div>
+
+        <p>そのうえで、渡したのに期待どおり動かないときは、だいたい次の3つのどれかです。</p>
+
+        <div class="ngs">
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">発動しない ──「いつ使うか」の読み取り方が、ツールごとに違う</p>
+              <p>共通で決まっているのは<b>書き方（書式）だけ</b>で、<b>どのタイミングで呼び出すかは、それぞれのツールの判断</b>に任されています。同じ説明文でも、片方では勝手に立ち上がり、もう片方では黙っていることがあります。<b>動かないと思ったら、まず名指しで呼んでみてください。</b></p>
+            </div>
+          </div>
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">置き場所が違う ── フォルダの名前も場所もツールごとに別</p>
+              <p>「スキルを入れるフォルダ」の名前は統一されていません。<b>正しいファイルを、間違った場所に置いている</b>だけ、というのがいちばん多い原因です。相手のツールの決まりを1回だけ調べてください。</p>
+            </div>
+          </div>
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">素材に手が届かない ── これがいちばん多い</p>
+              <p>5-2で「素材へのアクセスが肝」と言いました。<b>渡した先のAIが、その素材につながっていなければ、手順書は読めても何も作れません。</b>社内フォルダ・Notion・メール・マスター動画 ── 自分の環境では当たり前につながっているものが、相手の環境には無いのです。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <p class="rv-lab">結局、同じ問いに戻ります</p>
+          <h4>配る前に確認するのは、<span class="hot">1つだけ</span></h4>
+          <p><strong>「渡した先のAIから、その素材が見えるか」</strong> ── 第4部でフォルダの置き場所を決めたときと、まったく同じ問いです。<br/>手順書はコピーすれば増えますが、<strong>素材へのつながりはコピーできません。</strong>だから、配るときは<strong>スキルと一緒に「素材の場所」も渡せるか</strong>を先に確認してください。共有フォルダに置いてあれば渡せます。自分のPCの中だけにあれば、渡せません。</p>
+          <p>逆に言えば ── <strong>第4部で置き場所をちゃんと決めた人は、そのまま配れます。</strong>あそこでクラウドの共有フォルダを選んだ意味が、ここで効いてきます。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">5-6</span>スキルにすると、何が変わるか</h3>
         <div class="tt-wrap">
           <table class="tt">
             <thead><tr><th>効果</th><th>中身</th><th>第3回の実物でいうと</th></tr></thead>
@@ -1375,7 +1430,7 @@
           <p><strong>「その作業、2回以上やりますか？」</strong> ── 1回きりならプロンプトで十分です。2回目があるなら、その時点でスキルにしてください。3回目からは、書いた自分が得をします。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">5-6</span>スキルが壊れる3つの原因</h3>
+        <h3 class="sub3"><span class="tag">5-7</span>スキルが壊れる3つの原因</h3>
         <div class="ngs">
           <div class="ngitem">
             <span class="x">✕</span>
