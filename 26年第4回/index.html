@@ -329,6 +329,33 @@
   .check .cb{flex:0 0 auto;width:19px;height:19px;border:2px solid var(--accent);border-radius:5px;margin-top:4px}
   .check .ci b{font-weight:700}
 
+  /* 置き場所カタログ（どこにフォルダを作るか） */
+  .place .lbl .pv{display:block;font-weight:900;font-size:.72rem;letter-spacing:.04em;margin-top:6px}
+  .place .lbl .pv.ok{color:var(--green)}
+  .place .lbl .pv.no{color:var(--red)}
+  .place .lbl .pv.mid{color:#8a8475}
+  .place .lbl .pn2{display:block;font-size:.72rem;color:#8a8475;font-weight:500;margin-top:3px;line-height:1.5}
+  .place .m::before{content:"◯ ";color:var(--green);font-weight:900}
+  .place .d::before{content:"✕ ";color:var(--red);font-weight:900}
+  .place .components-row > div > p:last-child{margin-bottom:0}
+  @media(min-width:681px){.place .components-row{grid-template-columns:200px 1fr 1fr;align-items:stretch}}
+  @media(max-width:680px){.place .lbl .pv{display:inline-block;margin:0 0 0 8px}}
+
+  .step .out code,.ngitem code,.pcard code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.8rem;background:var(--paper-2);border:1px solid var(--line);padding:1px 6px;border-radius:6px}
+
+  /* 迷ったときの結論（あなたはどのタイプ？） */
+  .pick{display:grid;grid-template-columns:1fr;gap:14px;margin:24px 0}
+  @media(min-width:760px){.pick{grid-template-columns:repeat(3,1fr)}}
+  .pcard{background:#fff;border:1px solid var(--line);border-top:5px solid var(--line);border-radius:14px;padding:17px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .pcard .ptype{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:.7rem;letter-spacing:.14em;color:#a39c8c;margin:0 0 6px}
+  .pcard h4{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1rem;margin:0 0 8px;line-height:1.5}
+  .pcard p{font-size:.84rem;line-height:1.75;color:var(--ink-soft);margin:0 0 12px}
+  .pcard .ans{display:block;margin:auto 0 0;background:var(--paper-2);border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:.82rem;line-height:1.7;color:var(--ink)}
+  .pcard .ans b{color:var(--accent-2)}
+  .pcard.best{border:2px solid var(--accent);border-top-width:5px;border-top-color:var(--accent);background:linear-gradient(180deg,rgba(255,77,46,.05),#fff)}
+  .pcard.best .ptype{color:var(--accent)}
+  .pcard.best .ans b{color:var(--accent)}
+
   /* フォルダ構成の良い例／悪い例 */
   .tree-pair{display:grid;grid-template-columns:1fr;gap:14px;margin:22px 0}
   @media(min-width:860px){.tree-pair{grid-template-columns:1fr 1fr}}
@@ -466,7 +493,7 @@
       <a href="#s1"><span class="n">1</span>なぜ"それっぽい答え"しか返らないのか</a>
       <a href="#s2"><span class="n">2</span>プロンプトに入れるべき4要素</a>
       <a href="#s3"><span class="n">3</span>業務のワークフロー ── まず流れを描く</a>
-      <a href="#s4"><span class="n">4</span>タスク分解 ── 流れを工程に割る</a>
+      <a href="#s4"><span class="n">4</span>タスク分解 ── 流れを工程に割る／フォルダはどこに作るか</a>
       <a href="#s5"><span class="n">5</span>スキルにして、配る</a>
       <a href="#s6"><span class="n">6</span>AI会社の動かし方</a>
       <a href="#s7"><span class="n">7</span>演習＋クロージング</a>
@@ -510,7 +537,7 @@
               <tr><td class="tno">1</td><td class="ttime">0–6分</td><td>振り返り＋今日の問い ── なぜ"それっぽい答え"しか返らないのか</td><td class="tkw">AIは中途入社の部下</td></tr>
               <tr><td class="tno">2</td><td class="ttime">6–18分</td><td>★ プロンプトに入れるべき4要素</td><td class="tkw">目的／インプット／アウトプット／制約条件</td></tr>
               <tr><td class="tno">3</td><td class="ttime">18–28分</td><td>★ 業務のワークフロー ── まず"流れ"を描く</td><td class="tkw">企画→商品化→提供→フィードバック→企画</td></tr>
-              <tr><td class="tno">4</td><td class="ttime">28–40分</td><td>★ タスク分解 ── 流れをAIが回せる単位に割る</td><td class="tkw">1タスク1フォルダ・01/02・結合</td></tr>
+              <tr><td class="tno">4</td><td class="ttime">28–40分</td><td>★ タスク分解 ── 流れをAIが回せる単位に割る</td><td class="tkw">1タスク1フォルダ・置き場所の決め方・01/02・結合</td></tr>
               <tr><td class="tno">5</td><td class="ttime">40–50分</td><td>★ スキルにして、配る</td><td class="tkw">3点セット・素材へのアクセス</td></tr>
               <tr><td class="tno">6</td><td class="ttime">50–56分</td><td>AI会社の動かし方 ── 4要素を"会社に置く"</td><td class="tkw">指示は3種類しかない</td></tr>
               <tr><td class="tno">7</td><td class="ttime">56–60分</td><td>演習＋クロージング＋次回予告</td><td class="tkw">その仕事、4段階に描ける？</td></tr>
@@ -850,7 +877,7 @@
       <section id="s4" class="rv">
         <div class="kicker"><span class="num acc">4</span><span class="time-pill">28–40分</span></div>
         <h2 class="sec">第4部：★ タスク分解 ── 流れを、AIが回せる単位に割る</h2>
-        <p class="sec-aim">第3部で描いた流れを、今度は工程単位まで割ります。4要素を完璧に書いても、仕事が大きすぎると失敗するからです。</p>
+        <p class="sec-aim">第3部で描いた流れを、今度は工程単位まで割ります。4要素を完璧に書いても、仕事が大きすぎると失敗するからです。割った工程を<b>どこに置くか</b>まで、この部で決め切ります。</p>
 
         <h3 class="sub3"><span class="tag">4-1</span>なぜ、一発で頼むと失敗するのか</h3>
         <p>「スライド作成を自動化して」「経理を自動化して」「動画作成を自動化して」── こういう<strong>大きなタスクを1発で自動化しようとすると、たいてい途中で崩れます</strong>。うまくいったように見えても、2回目・3回目で止まります。</p>
@@ -946,7 +973,220 @@
           <p>フォルダを分けるのは、整理整頓が好きだからではありません。<strong>AIの精度が、渡した箱の中身でほぼ決まるから</strong>です。散らかった机の上で仕事を頼めば、散らかった成果物が返ってきます。<strong>箱を綺麗にすることが、そのままチューニング</strong>になります。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">4-4</span>ステップ3：頭に「01」「02」と番号を振る</h3>
+        <h3 class="sub3"><span class="tag">4-4</span>【つまずきポイント】そのフォルダ、どこに作るのですか？</h3>
+        <p>ここで、ほぼ全員が一度止まります。<strong>「フォルダを作れ」と言われても、"どこに"作るのかを誰も教えてくれないから</strong>です。デスクトップ？ ダウンロードの中？ Dropbox？ Googleドライブ？ GitHub？ ── ここを決めないまま進むと、この先の話が全部宙に浮きます。</p>
+
+        <div class="lesson">
+          <p class="lt">まず、安心してください</p>
+          <p>ここで言う「フォルダ」は、<strong>エンジニアの専門用語ではありません</strong>。画面で右クリック →「新しいフォルダー」で作れる、<strong>写真や書類を入れているのと同じ、あのフォルダ</strong>です。新しく覚える道具は1つもありません。決めるのは<strong>「置き場所」だけ</strong>です。</p>
+        </div>
+
+        <div class="concept">
+          <p class="ct">判断基準は、たった1つ ──「そのAIから、そこが見えるか」</p>
+          <p>置き場所選びで悩む必要はありません。<strong>あなたが使うAIが、その場所を読めるかどうか</strong>。これだけです。<br/>だから先に、<strong>「Dropboxでもいいですか？」への答えを言っておきます ── いいです。</strong>Googleドライブでも、OneDriveでも、iCloudでも構いません。条件は1つだけ、<strong>「PCの中に、ファイルの実体があること」</strong>。これさえ満たしていれば、どれでも正解です。</p>
+        </div>
+
+        <p>なぜ「実体があること」が条件になるのか。使っているAIのタイプで、見えるものが違うからです。</p>
+
+        <div class="three">
+          <div class="tcard">
+            <p class="tn">A</p>
+            <h4>ブラウザで使うAI</h4>
+            <p>ChatGPT・Claude・Geminiのウェブ版。<strong>あなたのPCの中は、一切見えていません。</strong>毎回こちらからアップロードして、はじめて読めます。</p>
+            <span class="say">→ AIツールの中の<b>「プロジェクト」機能</b>が、実質のフォルダになります。</span>
+          </div>
+          <div class="tcard">
+            <p class="tn">B</p>
+            <h4>PCの中まで見えるAI</h4>
+            <p>デスクトップアプリや、第3回でお見せしたようなエージェント型。<strong>「このフォルダを見て」と住所を渡せば、中のファイルを直接読み書きします。</strong></p>
+            <span class="say">→ こちらは<b>PC上のフォルダそのもの</b>が作業場になります。実体がないと読めません。</span>
+          </div>
+        </div>
+
+        <p>この前提で、候補を全部並べます。<strong>正解は人によって違います</strong>ので、自分に当てはまるものを選んでください。<br/><span style="font-size:.85rem;color:#8a8475">（この表は"あとで見返す用"です。講義中は <b>◎</b> が付いた2つだけ頭に入れてください）</span></p>
+
+        <div class="components place">
+          <div class="components-row header">
+            <div>置き場所</div><div>メリット</div><div>デメリット</div>
+          </div>
+          <div class="components-row">
+            <div class="lbl">① 書類／デスクトップ<span class="pn2">＝PCの中（ローカル）</span><span class="pv ok">◎ 一人で始めるなら本命</span></div>
+            <div><p class="m">いちばん速い。AIから直接読み書きできて、待ち時間がない</p><p class="m">追加費用ゼロ。今この場で作れる</p></div>
+            <div><p class="d">そのPCが壊れたら、全部消えます。バックアップは自己責任</p><p class="d">他の端末や他人とは共有できない</p></div>
+          </div>
+          <div class="components-row">
+            <div class="lbl">② ダウンロード<span class="pn2">Downloads フォルダ</span><span class="pv no">✕ 絶対に避ける</span></div>
+            <div><p class="m">正直、ありません。強いて言えば、落としたファイルが最初からそこにある</p></div>
+            <div><p class="d">無関係なファイルが数百個。<b>4-3で見た「全部入り」のNG例そのもの</b>です</p><p class="d">OSの自動整理（Windowsのストレージセンサー／Macの「30日後に削除」）で、<b>作業中のファイルが勝手に消えることがあります</b></p></div>
+          </div>
+          <div class="components-row">
+            <div class="lbl">③ Googleドライブ<span class="pn2">OneDrive／iCloud Drive</span><span class="pv ok">◎ 複数端末・チームなら本命</span></div>
+            <div><p class="m">PCのフォルダとして見えるのに、自動でバックアップされる</p><p class="m">スマホ・別のPC・チームメンバーから同じ場所が見える</p><p class="m">アプリを入れれば、①とまったく同じ感覚で使えます</p></div>
+            <div><p class="d"><b>「オンラインのみ」設定だと、PCに実体が無く、AIが読めません</b>（→ 対象フォルダを右クリックして「オフラインでも使用可能」にする）</p><p class="d">同期の途中で触ると「競合コピー」が増える ── これも4-3のゴミです</p></div>
+          </div>
+          <div class="components-row">
+            <div class="lbl">④ Dropbox／Box<span class="pn2">同期型のクラウド</span><span class="pv mid">◯ すでに使っているなら、それでいい</span></div>
+            <div><p class="m">③と同じ。共有相手ごとの権限設定が細かく、社外とのやり取りに強い</p><p class="m">Boxは会社支給PCで標準になっていることが多い</p></div>
+            <div><p class="d">③と同じ落とし穴（オンラインのみ設定・競合コピー）</p><p class="d">無料枠が小さめ。動画素材を置くと、すぐ埋まります</p></div>
+          </div>
+          <div class="components-row">
+            <div class="lbl">⑤ AIツールの「プロジェクト」<span class="pn2">ChatGPT／Claude などの機能</span><span class="pv mid">◯ ブラウザ派の最初の一歩</span></div>
+            <div><p class="m">チャットと資料がセットで残る。ブラウザだけで完結し、スマホからも使える</p><p class="m">プロジェクト名を「01_情報収集」にすれば、<b>それがそのままフォルダの代わり</b>になります</p></div>
+            <div><p class="d">PC上のファイルを動かすことはできません（成果物は毎回ダウンロード）</p><p class="d">置ける容量・ファイル形式に制限があり、動画素材は基本的に置けません</p><p class="d">サービスを乗り換えるとき、持ち出しが面倒です</p></div>
+          </div>
+          <div class="components-row">
+            <div class="lbl">⑥ Notion／社内Wiki<span class="pn2">ドキュメント置き場</span><span class="pv mid">△ 手順書だけなら◯</span></div>
+            <div><p class="m">手順書・企画メモ・議事録を<b>書いて残す</b>場所としては最適</p><p class="m">チームでの検索性が高い</p></div>
+            <div><p class="d">素材を加工する<b>作業場</b>には向きません（動画・音声・大きなファイルが扱えない）</p><p class="d">結局、素材は①〜④のどこかに置くことになります</p></div>
+          </div>
+          <div class="components-row">
+            <div class="lbl">⑦ GitHub<span class="pn2">エンジニアの共同作業場</span><span class="pv mid">△ 今日は要りません</span></div>
+            <div><p class="m">誰がいつ何を変えたかが全部残り、<b>いつでも過去に戻せます</b></p><p class="m">AIエージェントとの相性は、この中で最強</p></div>
+            <div><p class="d">非エンジニアが最初に触る場所ではありません。用語も操作も、覚えることが多すぎます</p><p class="d">動画などの大容量ファイルは苦手。<b>設定を間違えると全世界に公開されます</b></p></div>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">迷ったら、この一文で決めてください</p>
+          <p><strong>「自分がいま、いちばん頻繁に開いている場所」</strong>に作ってください。開かない場所に作ったフォルダは、必ず放置されます。置き場所選びで失敗する最大の原因は、性能ではなく<strong>「そこを見に行かなくなること」</strong>です。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">4-5</span>結論 ── あなたはどのタイプですか</h3>
+        <p>3つに絞りました。当てはまるものを1つ選んで、今夜そのまま作ってください。</p>
+
+        <div class="pick">
+          <div class="pcard">
+            <p class="ptype">TYPE 1</p>
+            <h4>一人で、自分のPCで完結</h4>
+            <p>共有相手がいない。とにかく今すぐ始めたい。バックアップは自分で何とかする。</p>
+            <span class="ans"><b>【書類（ドキュメント）】の直下に、親フォルダを1つ。</b>デスクトップは他のもので散らかるので避けます。</span>
+          </div>
+          <div class="pcard best">
+            <p class="ptype">TYPE 2 ── 迷ったらこれ</p>
+            <h4>複数の端末・チームで使う</h4>
+            <p>PCとスマホ、あるいは仲間と共有する。壊れたときに泣きたくない。</p>
+            <span class="ans"><b>Googleドライブ／OneDrive／Dropbox のPC同期フォルダの中に、親フォルダを1つ。</b>見た目は①と同じで、勝手にバックアップされます。<b>「オフラインでも使用可能」</b>を必ずオンにしてください。</span>
+          </div>
+          <div class="pcard">
+            <p class="ptype">TYPE 3</p>
+            <h4>ブラウザのAIしか使わない</h4>
+            <p>PCにアプリを入れられない。会社の制限がある。スマホ中心。</p>
+            <span class="ans"><b>AIツールの「プロジェクト」を 01_／02_ の名前で作る。</b>加えて、PC側にも同じ名前のフォルダを1つ作り、<b>完成した成果物だけを保存</b>します。</span>
+          </div>
+        </div>
+
+        <div class="concept">
+          <p class="ct">1つだけ、絶対に守ってほしいこと</p>
+          <p><strong>置き場所は、最初に決め切ってください。</strong>あとで引っ越すと、<strong>「01_情報収集を見て」と書いた手順書が、全部動かなくなります</strong>。住所が変わるからです。<br/>逆に言えば ── 決めてしまえば、二度と悩みません。今日の数分が、この先ずっと効きます。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">4-6</span>実際に作る ── 3分で終わります</h3>
+
+        <div class="workflow">
+          <div class="step">
+            <div class="step-head"><span class="step-num">1</span><span class="step-t">親フォルダを1つ作る</span></div>
+            <div class="out"><span class="ol">場所を決める</span>
+              <ul>
+                <li><b>Windows</b>：エクスプローラーで【ドキュメント】（またはGoogle Drive／OneDrive）を開く → 右クリック →「新規作成」→「フォルダー」</li>
+                <li><b>Mac</b>：Finderで【書類】（またはGoogle Drive／Dropbox）を開く → 右クリック →「新規フォルダ」</li>
+              </ul>
+              <p style="margin:10px 0 0">名前は<b>プロジェクト名だけ</b>。例：<code>JDramaShorts</code>。「最新」「最終」「v2」は入れません。</p>
+            </div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step">
+            <div class="step-head"><span class="step-num">2</span><span class="step-t">中に、分解した工程の数だけ作る</span></div>
+            <div class="out"><span class="ol">箱を割る</span>4-2で分解した①〜⑤を、そのままフォルダ名にします。<b>頭に2桁の番号</b>（次の4-7で理由を説明します）。
+              <div class="org-tree">JDramaShorts/
+  ├── 01_情報収集/
+  ├── 02_構成作成/
+  ├── 03_切り抜き生成/
+  ├── 04_サムネ・投稿キット/
+  └── 05_計測レポート/</div>
+            </div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step final">
+            <div class="step-head"><span class="step-num">3</span><span class="step-t">AIに「住所」を1行で渡す</span></div>
+            <div class="out"><span class="ol">つなぐ</span>ここが最後の一手です。フォルダを作っただけでは、AIは知りません。<b>場所（パス）をコピーして、そのまま貼ります。</b>
+              <ul>
+                <li><b>Windows</b>：フォルダを開き、上のアドレスバーをクリックすると <code>C:\Users\…</code> の形で出ます</li>
+                <li><b>Mac</b>：フォルダを右クリックし、<b>optionキーを押しながら</b>「"◯◯"のパス名をコピー」</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="copybox">
+          <span class="cl">AIに置き場所を教える一文（パスを貼り替えるだけ）</span>
+          <button class="copy-btn" type="button">コピー</button>
+          <span class="copy-src">作業フォルダは /Users/自分の名前/Documents/JDramaShorts です。
+今日は 01_情報収集 の中だけを見て作業してください。
+他のフォルダは開かないでください。成果物も 01_情報収集 の中に保存してください。</span>
+        </div>
+
+        <p style="font-size:.86rem;color:var(--ink-soft);margin-top:-8px">※ 1行目のパスは、<b>手順3でコピーした自分のもの</b>に貼り替えてください。Windowsなら <code>C:\Users\自分の名前\Documents\JDramaShorts</code> のような形になります。</p>
+
+        <div class="lesson">
+          <p class="lt">最後の1行が効きます</p>
+          <p><strong>「他のフォルダは開かないでください」</strong> ── これを添えるだけで、4-3で見た"勝手に他を読みに行く"事故がほぼ消えます。フォルダを分けるのは、<strong>この一文を成立させるため</strong>でもあります。</p>
+        </div>
+
+        <div class="ngs">
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">ダウンロードフォルダで作業する</p>
+              <p>いちばん多い失敗です。数百個の無関係ファイルの隣で仕事を頼むことになります。<b>しかもOSが勝手に古いファイルを消します。</b></p>
+            </div>
+          </div>
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">「とりあえずデスクトップ」で、似たフォルダが3つできる</p>
+              <p><code>動画</code> <code>動画2</code> <code>動画_new</code> ── どれが本物か、人間にも分かりません。<b>AIにはもっと分かりません。</b>親フォルダは1プロジェクト1つだけです。</p>
+            </div>
+          </div>
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">クラウドを「オンラインのみ」にしたまま読ませようとする</p>
+              <p>PCの画面にはフォルダが見えているのに、<b>中身の実体はネット上にしかない</b>状態です。AIは「空っぽ」と判断します。対象フォルダを右クリックして<b>「オフラインでも使用可能」</b>にしてください。</p>
+            </div>
+          </div>
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">フォルダ名に絵文字・スペース・「最終」を入れる</p>
+              <p><code>🔥動画 最終 ver2</code> のような名前は、ツールによっては住所として正しく渡りません。<b>番号＋短い日本語（または英字）＋アンダースコア</b>で十分です。</p>
+            </div>
+          </div>
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">途中で置き場所を引っ越す</p>
+              <p>手順書に書いた住所が全部使えなくなります。<b>引っ越すなら、手順書側も同時に直す。</b>これを忘れると「昨日まで動いていたのに」が起きます。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="check">
+          <div class="ci"><span class="cb"></span><span><b>置き場所を1つに決めて、もう動かさない</b> ── 決めた住所を、手順書の1行目に書いておきます。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>親フォルダは、1プロジェクトに1つだけ</b> ── 似た名前の兄弟を作らないこと。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>その下は 01_ から始まる番号付き</b> ── 分解した工程の数だけ、過不足なく。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>中身がPCに実体としてある</b> ── クラウドなら「オフラインでも使用可能」がオン。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>住所（パス）を1行でコピーできる</b> ── AIに渡せない場所は、無いのと同じです。</span></div>
+        </div>
+
+        <div class="reveal">
+          <p class="rv-lab">よくある質問</p>
+          <h4>「<span class="hot">GitHub</span>じゃなくていいんですか？」</h4>
+          <p><strong>今日は要りません。</strong>GitHubは、ひとことで言えば<strong>「履歴が全部残るフォルダ」</strong>です。誰がいつ何を変えたかが残り、いつでも過去の状態に戻せます。エンジニアが必ず使うのは、それが必要な仕事だからです。</p>
+          <p>でも今日の目的は<strong>「AIに読ませる箱を、綺麗に区切ること」</strong>。それだけなら、ドライブでもDropboxでも十分に達成できます。<strong>覚えることが増える分だけ、始めるのが遅くなります。</strong></p>
+          <p>ただし ── AIエージェントに本格的に任せ始めると、いずれここに戻ってきます。<strong>「AIが勝手に書き換えてしまった」を、一瞬で元に戻せるのはGitHubだけ</strong>だからです。<br/>ちなみに、<strong>いま読んでいるこの講義ページも、第3回でお見せしたAI会社の規程ファイルも、実体はGitHubに置いてあります。</strong>必要になったとき、また説明します。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">4-7</span>ステップ3：頭に「01」「02」と番号を振る</h3>
         <p>順番に進めるステップを分けるときは、<strong>フォルダ名・チャット名・作業手順の頭に「01」「02」「03」と番号を振っておきます</strong>。</p>
         <p>理由は、<strong>AIエージェントがその順番に沿って正しく、スムーズに処理しやすくなるから</strong>です。「次は何をすればいいか」をAIに推測させないこと ── これだけで事故が減ります。</p>
 
@@ -957,7 +1197,7 @@
           <div class="ci"><span class="cb"></span><span><b>人間にとっても効きます</b> ── いまどこで止まっているかが、フォルダを見るだけで分かります。</span></div>
         </div>
 
-        <h3 class="sub3"><span class="tag">4-5</span>ステップ4：最後に「ガッチャンコ」（結合）</h3>
+        <h3 class="sub3"><span class="tag">4-8</span>ステップ4：最後に「ガッチャンコ」（結合）</h3>
         <p>いきなり全自動を作ろうとしないでください。順番はこうです。</p>
 
         <div class="workflow">
@@ -987,7 +1227,7 @@
           <p><strong>自動化とは、うまくいった手順を、そのまま文字にしたものです。</strong>まだ手でうまくいっていない工程を自動化しても、<strong>失敗が高速化するだけ</strong>です。順番を守ってください ── 手で成功させる → 文字にする → つなげる。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">4-6</span>第3回のあのパイプラインは、流れ＋分解の完成形でした</h3>
+        <h3 class="sub3"><span class="tag">4-9</span>第3回のあのパイプラインは、流れ＋分解の完成形でした</h3>
         <p>前回お見せした切り抜き工程を、番号で並べ直すとこうなります。まったく同じ構造です。</p>
 
         <div class="pipe">
