@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI会社を、動かす ── プロンプト4要素とタスク分解</title>
-<meta name="description" content="YCA 1年生向け 60分講義(第4回・実践編)｜第3回で作ったAI会社を実際に動かす技術。プロンプトに入れるべき4要素(目的・インプット・アウトプット・制約条件)と、大きな仕事を回すためのタスク分解4ステップを、具体例つきで解説します。" />
+<title>AI会社を、動かす ── プロンプト4要素からスキル化まで</title>
+<meta name="description" content="YCA 1年生向け 60分講義(第4回・実践編)｜第3回で作ったAI会社を実際に動かす技術。プロンプト4要素(目的・インプット・アウトプット・制約条件)、業務のワークフロー(企画→商品化→提供→フィードバック)、タスク分解、そしてスキル化と配布までを具体例つきで解説します。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet" />
@@ -360,6 +360,44 @@
   .pipe .pn i{display:block;font-style:normal;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;color:var(--accent);font-size:.9rem;margin-bottom:3px}
   .pipe .pn.loop{border-color:var(--green);color:var(--green)}
   .pipe .pn.loop i{color:var(--green)}
+  /* サービスフロー（輪） */
+  .cycle{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:22px 20px 18px;margin:24px 0}
+  .cycle-row{display:flex;flex-wrap:wrap;align-items:stretch;justify-content:center;gap:8px}
+  .cycle-node{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:13px 12px;text-align:center;flex:1 1 120px;max-width:170px;line-height:1.5}
+  .cycle-node .cn{display:block;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:.72rem;color:var(--accent);letter-spacing:.1em;margin-bottom:3px}
+  .cycle-node .ct2{display:block;font-weight:700;font-size:.94rem;color:var(--ink)}
+  .cycle-node .cs{display:block;font-size:.72rem;color:#8a8475;font-weight:500;margin-top:5px;line-height:1.55}
+  .cycle-node.fb{border-color:var(--green)}
+  .cycle-node.fb .cn{color:var(--green)}
+  .cycle-arrow{align-self:center;color:var(--accent);font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;flex:0 0 auto}
+  .cycle-return{margin-top:14px;border:2px dashed var(--green);border-radius:12px;padding:10px 14px;text-align:center;font-size:.85rem;font-weight:700;color:var(--green);background:#fff}
+  .cycle-return b{color:var(--ink)}
+  @media(max-width:640px){.cycle-row{flex-direction:column;align-items:stretch;gap:4px}.cycle-node{flex:0 0 auto;max-width:none;text-align:left;padding:11px 14px}.cycle-node .cn{display:inline;margin-right:8px}.cycle-node .ct2{display:inline}.cycle-arrow{transform:rotate(90deg);align-self:center}}
+
+  /* スキルの3点セット */
+  .kit{display:grid;grid-template-columns:1fr;gap:13px;margin:24px 0}
+  @media(min-width:700px){.kit{grid-template-columns:repeat(3,1fr)}}
+  .kitcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:17px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .kitcard .kn{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:.72rem;letter-spacing:.12em;color:#a39c8c;margin:0 0 6px}
+  .kitcard h4{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1.02rem;margin:0 0 8px}
+  .kitcard p{font-size:.85rem;line-height:1.75;color:var(--ink-soft);margin:0}
+  .kitcard.key{border:2px solid var(--accent);background:linear-gradient(180deg,rgba(255,77,46,.05),#fff)}
+  .kitcard.key .kn{color:var(--accent)}
+  .kitcard .badge{display:inline-block;margin-top:11px;background:var(--accent);color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.08em;padding:4px 10px;border-radius:999px;align-self:flex-start}
+
+  /* 昇格ステップ（プロンプト→手順書→スキル） */
+  .ladder{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:22px 0;justify-content:center}
+  .ladder .lv{flex:1 1 150px;max-width:230px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:13px 14px;text-align:center}
+  .ladder .lv .lvn{display:block;font-size:.68rem;letter-spacing:.12em;color:#a39c8c;font-weight:700;margin-bottom:4px}
+  .ladder .lv .lvt{display:block;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1rem;color:var(--ink)}
+  .ladder .lv .lvd{display:block;font-size:.76rem;color:#8a8475;margin-top:5px;line-height:1.6}
+  .ladder .lv.top{border:2px solid var(--accent);background:var(--dark);color:#fff}
+  .ladder .lv.top .lvt{color:#fff}
+  .ladder .lv.top .lvn{color:var(--accent)}
+  .ladder .lv.top .lvd{color:#b7b7c2}
+  .ladder .la{align-self:center;color:var(--accent);font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;flex:0 0 auto}
+  @media(max-width:640px){.ladder{flex-direction:column;gap:5px}.ladder .lv{flex:0 0 auto;max-width:none;text-align:left}.ladder .la{transform:rotate(90deg)}}
+
   .pipe .pa{align-self:center;color:var(--accent);font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;flex:0 0 auto;font-size:.9rem}
   @media(max-width:560px){.pipe{flex-direction:column;align-items:stretch;gap:4px}.pipe .pn{flex:0 0 auto;max-width:none;font-size:.82rem;padding:11px 12px}.pipe .pn i{display:inline;margin:0 8px 0 0}.pipe .pa{transform:rotate(90deg);align-self:center}}
 </style>
@@ -371,13 +409,13 @@
   <div class="hero-inner">
     <span class="eyebrow"><b>YCA</b> 1年生 ／ 60分講義 ／ 第4回・実践編</span>
     <h1>AI会社を、<span class="q">動かす</span></h1>
-    <p class="sub"><b>プロンプト4要素 × タスク分解</b> ── <span class="hot">指示の技術。</span></p>
+    <p class="sub"><b>4要素 × ワークフロー × 分解 × スキル</b> ── <span class="hot">指示の技術。</span></p>
     <div class="meta-row">
       <span class="chip">⏱ <b>60分</b></span>
       <span class="chip">📅 <b>日程調整中</b></span>
       <span class="chip">💻 オンライン</span>
     </div>
-    <p class="hero-msg">前回、<b>AI会社は作れる</b>ことを実物で見せました。役割を文章で書けば、AIは組織になります。<br/>でも、正直に言います。<span class="hot">作った会社の多くは、動きません。</span>原因はAIの性能ではなく、<b>投げ方</b>です。<br/>今日は、その会社を実際に走らせる技術を2つだけ渡します ── <b>プロンプトの4要素</b>と、<b>タスクの分解</b>。今日から使えて、今日から結果が変わります。</p>
+    <p class="hero-msg">前回、<b>AI会社は作れる</b>ことを実物で見せました。役割を文章で書けば、AIは組織になります。<br/>でも、正直に言います。<span class="hot">作った会社の多くは、動きません。</span>原因はAIの性能ではなく、<b>投げ方</b>です。<br/>今日は、その会社を実際に走らせる道具を4つ渡します ── <b>プロンプトの4要素</b>、<b>業務のワークフロー</b>、<b>タスクの分解</b>、そして<b>スキル化</b>。今日から使えて、今日から結果が変わります。</p>
     <a href="../26年第3回/" class="prev-link"><span class="arr">←</span> 第3回「AI会社を作ってみる」を見る</a>
     <a href="../" class="prev-link"><span class="arr">←</span> 第2回「ショートドラマヒットの解剖学」を見る</a>
     <a href="../26年5月第1回/" class="prev-link"><span class="arr">←</span> 第1回「AIイノベーションとOPC」を見る</a>
@@ -389,9 +427,11 @@
   <a href="#aim">狙い</a>
   <a href="#s1">1 なぜ動かないか</a>
   <a href="#s2">2 プロンプト4要素</a>
-  <a href="#s3">3 タスク分解</a>
-  <a href="#s4">4 会社の動かし方</a>
-  <a href="#s5">5 演習・クロージング</a>
+  <a href="#s3">3 ワークフロー</a>
+  <a href="#s4">4 タスク分解</a>
+  <a href="#s5">5 スキルにして配る</a>
+  <a href="#s6">6 会社の動かし方</a>
+  <a href="#s7">7 演習・クロージング</a>
   <a href="#summary">まとめ</a>
   <a href="#faq">Q&amp;A</a>
 </nav>
@@ -404,9 +444,11 @@
       <a href="#timetable">60分タイムテーブル</a>
       <a href="#s1"><span class="n">1</span>なぜ"それっぽい答え"しか返らないのか</a>
       <a href="#s2"><span class="n">2</span>プロンプトに入れるべき4要素</a>
-      <a href="#s3"><span class="n">3</span>タスク分解 ── 大きい仕事の壊し方</a>
-      <a href="#s4"><span class="n">4</span>AI会社の動かし方</a>
-      <a href="#s5"><span class="n">5</span>演習＋クロージング</a>
+      <a href="#s3"><span class="n">3</span>業務のワークフロー ── まず流れを描く</a>
+      <a href="#s4"><span class="n">4</span>タスク分解 ── 流れを工程に割る</a>
+      <a href="#s5"><span class="n">5</span>スキルにして、配る</a>
+      <a href="#s6"><span class="n">6</span>AI会社の動かし方</a>
+      <a href="#s7"><span class="n">7</span>演習＋クロージング</a>
       <a href="#summary">まとめ（持ち帰り）</a>
       <a href="#faq">よくある質問</a>
       <a href="#refs">出典</a>
@@ -419,16 +461,17 @@
       <!-- AIM -->
       <section id="aim" class="rv">
         <div class="kicker"><span class="time-pill">この講義の狙い</span></div>
-        <h2 class="sec">覚えて帰って欲しい2つ</h2>
+        <h2 class="sec">覚えて帰って欲しい3つ</h2>
         <ul class="lead">
           <li><strong>AIは察してくれない</strong>：プロンプトに<b>目的・インプット・アウトプット・制約条件</b>の4つを入れるだけで、返ってくるものが別物になります。魔法の呪文は要りません。抜けをなくすだけです。</li>
-          <li><strong>大きい仕事は、一発では回らない</strong>：まず<b>分解を頼む</b>。<b>01・02と番号を振る</b>。<b>1タスク1フォルダ</b>で回す。最後に<b>結合する</b>。この順番だけで、自動化は成功率が変わります。</li>
+          <li><strong>仕事は「点」ではなく「輪」</strong>：<b>企画 → 商品化 → 提供 → フィードバック → また企画へ</b>。この流れ（ワークフロー）をまず描き、それからAIが回せる単位に<b>分解</b>します。地図が先、道順が後です。</li>
+          <li><strong>うまくいった工程は、スキルにして配れる</strong>：手順に名前と使いどころ、そして<b>素材の置き場所</b>を添えれば「スキル」になります。<b>AIは、見えているものしか使えません</b> ── ここがいちばん大事です。</li>
         </ul>
         <div class="message">
           <p class="msg-lab">この講義のメッセージ</p>
           <p><strong>「同じAIを使っているのに、なぜ人によって結果がこんなに違うのか？」</strong></p>
           <p>差がついているのは、AIの性能ではありません。<strong>指示です。</strong></p>
-          <p>前回作った会社を、今日は実際に<strong>動かす</strong>ところまで持っていきます。</p>
+          <p>前回作った会社を、今日は実際に<strong>動かして、仕組みとして残す</strong>ところまで持っていきます。</p>
         </div>
       </section>
 
@@ -442,11 +485,13 @@
               <tr><th>区切り</th><th>時間</th><th>内容</th><th>キーワード</th></tr>
             </thead>
             <tbody>
-              <tr><td class="tno">1</td><td class="ttime">0–7分</td><td>振り返り＋今日の問い ── なぜ"それっぽい答え"しか返らないのか</td><td class="tkw">AIは中途入社の部下</td></tr>
-              <tr><td class="tno">2</td><td class="ttime">7–25分</td><td>★ プロンプトに入れるべき4要素</td><td class="tkw">目的／インプット／アウトプット／制約条件</td></tr>
-              <tr><td class="tno">3</td><td class="ttime">25–43分</td><td>★ タスク分解 ── 大きい仕事の壊し方（4ステップ）</td><td class="tkw">分解・1タスク1フォルダ・01/02・結合</td></tr>
-              <tr><td class="tno">4</td><td class="ttime">43–53分</td><td>AI会社の動かし方 ── 4要素を"会社に置く"</td><td class="tkw">指示は3種類しかない</td></tr>
-              <tr><td class="tno">5</td><td class="ttime">53–60分</td><td>演習＋クロージング</td><td class="tkw">その仕事、3つに分けられる？</td></tr>
+              <tr><td class="tno">1</td><td class="ttime">0–6分</td><td>振り返り＋今日の問い ── なぜ"それっぽい答え"しか返らないのか</td><td class="tkw">AIは中途入社の部下</td></tr>
+              <tr><td class="tno">2</td><td class="ttime">6–18分</td><td>★ プロンプトに入れるべき4要素</td><td class="tkw">目的／インプット／アウトプット／制約条件</td></tr>
+              <tr><td class="tno">3</td><td class="ttime">18–28分</td><td>★ 業務のワークフロー ── まず"流れ"を描く</td><td class="tkw">企画→商品化→提供→フィードバック→企画</td></tr>
+              <tr><td class="tno">4</td><td class="ttime">28–40分</td><td>★ タスク分解 ── 流れをAIが回せる単位に割る</td><td class="tkw">1タスク1フォルダ・01/02・結合</td></tr>
+              <tr><td class="tno">5</td><td class="ttime">40–50分</td><td>★ スキルにして、配る</td><td class="tkw">3点セット・素材へのアクセス</td></tr>
+              <tr><td class="tno">6</td><td class="ttime">50–56分</td><td>AI会社の動かし方 ── 4要素を"会社に置く"</td><td class="tkw">指示は3種類しかない</td></tr>
+              <tr><td class="tno">7</td><td class="ttime">56–60分</td><td>演習＋クロージング</td><td class="tkw">その仕事、4段階に描ける？</td></tr>
             </tbody>
           </table>
         </div>
@@ -456,7 +501,7 @@
 
       <!-- PART 1 -->
       <section id="s1" class="rv">
-        <div class="kicker"><span class="num acc">1</span><span class="time-pill">0–7分</span></div>
+        <div class="kicker"><span class="num acc">1</span><span class="time-pill">0–6分</span></div>
         <h2 class="sec">第1部：なぜ"それっぽい答え"しか返らないのか</h2>
         <p class="sec-aim">前回、会社は作れました。今日はその会社が"動かない"理由から始めます。</p>
 
@@ -513,7 +558,7 @@
 
       <!-- PART 2 -->
       <section id="s2" class="rv">
-        <div class="kicker"><span class="num acc">2</span><span class="time-pill">7–25分</span></div>
+        <div class="kicker"><span class="num acc">2</span><span class="time-pill">6–18分</span></div>
         <h2 class="sec">第2部：★ プロンプトに入れるべき「4つの要素」</h2>
         <p class="sec-aim">長い呪文も、役割演技も要りません。この4つの<strong>抜けをなくす</strong>だけです。</p>
 
@@ -681,18 +726,111 @@
           </table>
         </div>
 
-        <p class="bridge">→ <span class="arrow">ここまでが「1つの仕事」の頼み方です。</span>では、仕事が大きいときは？</p>
+        <p class="bridge">→ <span class="arrow">ここまでが「1つの仕事」の頼み方です。</span>では、仕事が"ひとつながりの流れ"になっているときは？</p>
       </section>
 
       <hr class="divider" />
 
       <!-- PART 3 -->
       <section id="s3" class="rv">
-        <div class="kicker"><span class="num acc">3</span><span class="time-pill">25–43分</span></div>
-        <h2 class="sec">第3部：★ タスク分解 ── 大きい仕事の壊し方</h2>
-        <p class="sec-aim">4要素を完璧に書いても、仕事が大きすぎると失敗します。理由と、その壊し方を4ステップで。</p>
+        <div class="kicker"><span class="num acc">3</span><span class="time-pill">18–28分</span></div>
+        <h2 class="sec">第3部：★ 業務のワークフロー ── まず"流れ"を描く</h2>
+        <p class="sec-aim">分解する前に、地図を描きます。仕事は点ではなく、ぐるぐる回る輪だからです。</p>
 
-        <h3 class="sub3"><span class="tag">3-1</span>なぜ、一発で頼むと失敗するのか</h3>
+        <h3 class="sub3"><span class="tag">3-1</span>すべての仕事は、この4段階でできています</h3>
+        <p>会社の仕事は、業種が違っても同じ形をしています。<strong>企画を立て、それを商品にし、お客様に届ける。そしてお客様の反応を受け取って、また企画に戻す</strong> ── これだけです。</p>
+
+        <div class="cycle">
+          <div class="cycle-row">
+            <div class="cycle-node"><span class="cn">01</span><span class="ct2">企画</span><span class="cs">何を作るかを決める</span></div>
+            <div class="cycle-arrow">→</div>
+            <div class="cycle-node"><span class="cn">02</span><span class="ct2">商品化</span><span class="cs">実際に形にする</span></div>
+            <div class="cycle-arrow">→</div>
+            <div class="cycle-node"><span class="cn">03</span><span class="ct2">提供</span><span class="cs">お客様に届ける</span></div>
+            <div class="cycle-arrow">→</div>
+            <div class="cycle-node fb"><span class="cn">04</span><span class="ct2">フィードバック</span><span class="cs">反応・数字を受け取る</span></div>
+          </div>
+          <p class="cycle-return">↺ そして 04 は <b>01 の企画に戻る</b> ── ここがつながって、はじめて「ワークフロー」になります</p>
+        </div>
+
+        <p>ショートドラマでも、飲食店でも、アプリでも、皆さんのバイト先でも同じです。<strong>この4段階を書き出すことを「サービスフローを考える」と言います</strong>。今日の話でいちばん最初にやるべきことは、実はこれです。</p>
+
+        <div class="concept">
+          <p class="ct">なぜ「一直線」ではなく「輪」なのか</p>
+          <p>企画 → 商品化 → 提供、で終わってしまう人がとても多いです。それは<strong>「作って出して終わり」</strong>で、次に活きるものが何も残りません。<br/>04のフィードバックが01の企画に戻ってはじめて、<strong>2周目が1周目より良くなります</strong>。第2回で言った「計測ループ」、第3回でAI会社が毎週回していたもの ── その正体がこの輪です。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">3-2</span>この地図が描けると、3つのことが決まります</h3>
+        <div class="check">
+          <div class="ci"><span class="cb"></span><span><b>① どこで詰まっているかが分かる</b> ── 「企画が出ない」のか「作るのが遅い」のか「届いていない」のか。悩みの正体が場所として見えます。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>② どこをAIに任せるかが決められる</b> ── 全部を任せる必要はありません。詰まっている1段階から渡します。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>③ 分解とスキル化の単位が決まる</b> ── この4段階が、そのまま第4部の <b>01・02・03…</b> の骨格になります。</span></div>
+        </div>
+
+        <h3 class="sub3"><span class="tag">3-3</span>自分で描けなくていい ── AIに描かせる</h3>
+        <p>「自分の仕事のフローなんて考えたことがない」という人こそ、AIの出番です。<strong>まずフローを考えさせてください。</strong>第2部の4要素で頼みます。</p>
+
+        <div class="copybox">
+          <span class="cl">サービスフローを描かせるプロンプト（◯◯を自分の仕事に置き換えて）</span>
+          <button class="copy-btn" type="button">コピー</button>
+          <span class="copy-src"><span class="k">【目的】</span>
+◯◯という仕事を、AIに任せられる形に整理したい。まず全体像を把握したいです。
+
+<span class="k">【インプット】</span>
+いまの進め方（分かる範囲で）：
+・（例）思いついたら撮る
+・（例）編集して、その日のうちに投稿する
+・（例）再生数はたまに見るが、次に活かせていない
+
+<span class="k">【アウトプット】</span>
+・「企画 → 商品化 → 提供 → フィードバック」の4段階に整理してください
+・各段階について「何を入力して／何をして／何を出すか」を表にしてください
+・最後に、フィードバックが企画にどう戻るのかを1行で書いてください
+
+<span class="k">【制約条件】</span>
+・まだ実行手順（やり方）には落とさないでください。<b>全体の流れだけ</b>を見たいです
+・いまできていない段階は「未整備」と正直に書いてください</span>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">制約条件がここで効きます</p>
+          <p>「まだ手順に落とさないで」と書かないと、AIはいきなり細かい作業手順を書き始めます。<strong>今ほしいのは地図であって、道順ではありません</strong> ── 4要素の「制約条件」は、こういうときのためにあります。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">3-4</span>実例：JDrama Shorts のサービスフロー</h3>
+        <p>第3回でお見せしたAI会社の運用も、この4段階に収まります。実物を当てはめると、こうです。</p>
+
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead><tr><th>段階</th><th>やっていること</th><th>インプット</th><th>アウトプット</th></tr></thead>
+            <tbody>
+              <tr><td class="tno">01</td><td><b>企画</b>：どの本編の、どの15〜30秒を切るか決める</td><td class="tkw">字幕全文・過去の勝ちパターン</td><td class="tkw">切り出し所リスト</td></tr>
+              <tr><td class="tno">02</td><td><b>商品化</b>：縦型変換・字幕焼き込み・フック・サムネ</td><td class="tkw">マスター動画・開始/終了時刻</td><td class="tkw">ショート動画＋サムネ</td></tr>
+              <tr><td class="tno">03</td><td><b>提供</b>：投稿キットを付けて、時間帯を選んで公開</td><td class="tkw">タイトル構文・本編URL</td><td class="tkw">公開されたショート</td></tr>
+              <tr><td class="tno">04</td><td><b>フィードバック</b>：4指標を読み、次に変える1変数を決める</td><td class="tkw">アナリティクス</td><td class="tkw">次の企画への申し送り</td></tr>
+              <tr><td class="tno">↺</td><td colspan="3"><b>04 の「次に変える1変数」が、そのまま 01 の企画条件になる</b> ── 輪が閉じています</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="reveal">
+          <p class="rv-lab">Point</p>
+          <h4>あなたの仕事の輪は、<span class="hot">閉じていますか？</span></h4>
+          <p>チェックはこれ1つだけです ── <strong>「先週の数字を見て、今週の企画は変わりましたか？」</strong><br/>変わっていないなら、04と01がつながっていません。数字を見ること自体が目的になっていて、輪が回っていない状態です。<strong>AIに自動化させるべきなのは、まずこの"戻す"部分</strong>です。人間がいちばんサボる場所だからです。</p>
+        </div>
+
+        <p class="bridge">→ <span class="arrow">地図が描けました。</span>次は、この4段階をAIが回せる大きさまで割ります。</p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 4 -->
+      <section id="s4" class="rv">
+        <div class="kicker"><span class="num acc">4</span><span class="time-pill">28–40分</span></div>
+        <h2 class="sec">第4部：★ タスク分解 ── 流れを、AIが回せる単位に割る</h2>
+        <p class="sec-aim">第3部で描いた流れを、今度は工程単位まで割ります。4要素を完璧に書いても、仕事が大きすぎると失敗するからです。</p>
+
+        <h3 class="sub3"><span class="tag">4-1</span>なぜ、一発で頼むと失敗するのか</h3>
         <p>「スライド作成を自動化して」「経理を自動化して」「動画作成を自動化して」── こういう<strong>大きなタスクを1発で自動化しようとすると、たいてい途中で崩れます</strong>。うまくいったように見えても、2回目・3回目で止まります。</p>
         <p>理由ははっきりしています。<strong>自動化が壊れるのは、平常時ではなく「例外」のときだから</strong>です。</p>
         <ul>
@@ -706,7 +844,7 @@
           <p>1つの巨大な指示は、<strong>例外が1個出た瞬間に、全体がダメになります</strong>。どこで壊れたのかも分かりません。<br/>でも01〜05に分けてあれば、<strong>壊れた工程だけを直せます</strong>。しかも他の工程はそのまま使い続けられます。── 分解とは、<strong>修理できる形に組み立てておくこと</strong>です。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">3-2</span>ステップ1：ストレートに「分解して」と頼む</h3>
+        <h3 class="sub3"><span class="tag">4-2</span>ステップ1：ストレートに「分解して」と頼む</h3>
         <p>難しいテクニックは要りません。<strong>そのまま頼みます。</strong>最初は大雑把な目的でかまいません。</p>
 
         <div class="copybox">
@@ -746,7 +884,7 @@
           <p><strong>「まずはタスクを分解してください」</strong>と<strong>「もうちょっと細かく分けてください」</strong>。この2文を言えるようになるだけで、AIの成功率は目に見えて変わります。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">3-3</span>ステップ2：1タスク1フォルダ（パッケージシステム）</h3>
+        <h3 class="sub3"><span class="tag">4-3</span>ステップ2：1タスク1フォルダ（パッケージシステム）</h3>
         <p>分解できたら、次が肝心です。<strong>全部を同じ場所でやらないでください。</strong>ステップごとに<strong>別のチャット・別のフォルダ</strong>を作り、そこで個別に壁打ち・作業をします。</p>
         <p>理由は2つあります。</p>
         <ul>
@@ -786,7 +924,7 @@
           <p>フォルダを分けるのは、整理整頓が好きだからではありません。<strong>AIの精度が、渡した箱の中身でほぼ決まるから</strong>です。散らかった机の上で仕事を頼めば、散らかった成果物が返ってきます。<strong>箱を綺麗にすることが、そのままチューニング</strong>になります。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">3-4</span>ステップ3：頭に「01」「02」と番号を振る</h3>
+        <h3 class="sub3"><span class="tag">4-4</span>ステップ3：頭に「01」「02」と番号を振る</h3>
         <p>順番に進めるステップを分けるときは、<strong>フォルダ名・チャット名・作業手順の頭に「01」「02」「03」と番号を振っておきます</strong>。</p>
         <p>理由は、<strong>AIエージェントがその順番に沿って正しく、スムーズに処理しやすくなるから</strong>です。「次は何をすればいいか」をAIに推測させないこと ── これだけで事故が減ります。</p>
 
@@ -797,7 +935,7 @@
           <div class="ci"><span class="cb"></span><span><b>人間にとっても効きます</b> ── いまどこで止まっているかが、フォルダを見るだけで分かります。</span></div>
         </div>
 
-        <h3 class="sub3"><span class="tag">3-5</span>ステップ4：最後に「ガッチャンコ」（結合）</h3>
+        <h3 class="sub3"><span class="tag">4-5</span>ステップ4：最後に「ガッチャンコ」（結合）</h3>
         <p>いきなり全自動を作ろうとしないでください。順番はこうです。</p>
 
         <div class="workflow">
@@ -827,7 +965,7 @@
           <p><strong>自動化とは、うまくいった手順を、そのまま文字にしたものです。</strong>まだ手でうまくいっていない工程を自動化しても、<strong>失敗が高速化するだけ</strong>です。順番を守ってください ── 手で成功させる → 文字にする → つなげる。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">3-6</span>第3回のあのパイプラインは、この分解の完成形でした</h3>
+        <h3 class="sub3"><span class="tag">4-6</span>第3回のあのパイプラインは、流れ＋分解の完成形でした</h3>
         <p>前回お見せした切り抜き工程を、番号で並べ直すとこうなります。まったく同じ構造です。</p>
 
         <div class="pipe">
@@ -848,18 +986,170 @@
           <p>オーナーの指示が1行で済むのは、AIが賢いからではありません。<strong>01〜05に分解され、各工程の4要素がすでに書かれているから</strong>です。魔法の呪文ではなく、<strong>事前の分解が効いています</strong>。<br/>逆に言えば ── いま君のAIが1行で動かないのは、まだ分解していないからです。それだけです。</p>
         </div>
 
-        <p class="bridge">→ <span class="arrow">では、この2つを"会社"に載せるとどうなるか。</span>ここが今日の本題です。</p>
+        <p class="bridge">→ <span class="arrow">手で回せるようになった工程は、次は"スキル"にして配れます。</span>ここからが、いちばん効く話です。</p>
       </section>
 
       <hr class="divider" />
 
-      <!-- PART 4 -->
-      <section id="s4" class="rv">
-        <div class="kicker"><span class="num acc">4</span><span class="time-pill">43–53分</span></div>
-        <h2 class="sec">第4部：AI会社の動かし方</h2>
+      <!-- PART 5 -->
+      <section id="s5" class="rv">
+        <div class="kicker"><span class="num acc">5</span><span class="time-pill">40–50分</span></div>
+        <h2 class="sec">第5部：★ スキルにして、配る</h2>
+        <p class="sec-aim">うまくいった工程は、パッケージにして固定できます。それが「スキル」という仕組みです。</p>
+
+        <h3 class="sub3"><span class="tag">5-1</span>スキルとは何か</h3>
+        <p>第4部の最後で「うまくいった手順を、そのまま文章にする」と言いました。<strong>その文章に、名前と"使いどころ"と"素材の置き場所"を添えて、1つのフォルダにまとめたもの</strong> ── それがスキルです。</p>
+        <p>呼び出すと、AIはその手順どおりに動きます。第3回でお見せした<strong>経営会議（<code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.82rem;background:var(--paper-2);border:1px solid var(--line);padding:1px 7px;border-radius:6px">/keiei-kaigi 議題</code>）</strong>も、<strong>サムネ生成（スキル化済み）</strong>も、正体はこれです。</p>
+
+        <div class="ladder">
+          <div class="lv"><span class="lvn">LEVEL 1</span><span class="lvt">プロンプト</span><span class="lvd">その場かぎり。毎回書く。自分しか使えない</span></div>
+          <div class="la">→</div>
+          <div class="lv"><span class="lvn">LEVEL 2</span><span class="lvt">手順書</span><span class="lvd">文章として保存。自分は再現できる</span></div>
+          <div class="la">→</div>
+          <div class="lv top"><span class="lvn">LEVEL 3</span><span class="lvt">スキル</span><span class="lvd">呼べば動く。素材の場所つき。<b>人に配れる</b></span></div>
+        </div>
+
+        <h3 class="sub3"><span class="tag">5-2</span>スキルの中身は、3点セット</h3>
+        <p>どんなスキルも、入っているものは同じです。この3つが揃って、はじめてスキルとして機能します。</p>
+
+        <div class="kit">
+          <div class="kitcard">
+            <p class="kn">PART 01</p>
+            <h4>いつ使うか（説明文）</h4>
+            <p>「本編動画ができて、ショートを作るとき」のように、<strong>呼び出す条件</strong>を書きます。これが曖昧だと、AIはスキルを持っていても使ってくれません。</p>
+          </div>
+          <div class="kitcard">
+            <p class="kn">PART 02</p>
+            <h4>手順（4要素＋01/02）</h4>
+            <p>第2部の4要素で書いた指示と、第4部で分解した<strong>01・02・03のステップ</strong>。今日の前半でやったことが、そのまま中身になります。</p>
+          </div>
+          <div class="kitcard key">
+            <p class="kn">PART 03 ── ここが肝</p>
+            <h4>素材へのアクセス</h4>
+            <p><strong>元データがどこにあるか</strong>を書きます。マスター動画、字幕、過去の実績、規程ファイル ── <strong>これが無いスキルは、絶対に動きません。</strong></p>
+            <span class="badge">いちばん大事</span>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <p class="rv-lab">今日いちばん大事なこと</p>
+          <h4>AIは、<span class="hot">見えているものしか使えません</span></h4>
+          <p>どんなに立派な手順書を書いても、<strong>実行するときに元の素材にアクセスできなければ、AIは何も作れません</strong>。逆に、素材の置き場所さえ書いてあれば、<strong>誰が呼んでも同じ品質のものが出ます</strong>。<br/>だから第4部でやった<strong>「01・02のフォルダを固定する」が、ここで効いてきます</strong>。フォルダを綺麗に切っておくことは、整理整頓ではなく<strong>スキルを配れるようにするための準備</strong>だったのです。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">5-3</span>スキルの雛形（そのまま埋められます）</h3>
+        <p>特別な書式は要りません。この5項目を書いたファイルが1枚あれば、それはもうスキルです。</p>
+
+        <div class="copybox">
+          <span class="cl">スキルの雛形 ── JDrama Shorts「切り抜き生成」の例</span>
+          <button class="copy-btn" type="button">コピー</button>
+          <span class="copy-src"><span class="k">【名前】</span>切り抜き生成
+
+<span class="k">【いつ使うか】</span>
+本編動画ができて、ショート用の切り抜きを作るとき
+
+<span class="k">【参照する素材】</span>  <span class="cmt">← ここが無いと動きません</span>
+・マスター動画：03_切り抜き生成/master/
+・字幕ファイル：01_情報収集/subs/
+・勝ちパターン一覧：05_計測レポート/winners.md
+・タイトル構文リスト：04_サムネ・投稿キット/titles.md
+
+<span class="k">【手順】</span>
+01. 字幕全文を読み、音声オフでも伝わる15〜30秒の候補を3つ選ぶ
+02. 各候補の開始・終了時刻を出し、ループが成立するか確認する
+03. 縦型変換・字幕焼き込み・フックテキスト・音量正規化をかける
+04. 投稿キット（タイトル・説明文・固定コメント）を作る
+05. 公開予定時刻を提案し、オーナーの承認を待つ
+
+<span class="k">【制約条件】</span>
+・素材はホワイトリストにあるものだけを使う
+・対外公開はオーナー承認を得てから
+・過激な表現は収益化基準に抵触するので不可</span>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">見比べてください</p>
+          <p>これは<strong>第2部の4要素そのもの</strong>です。【いつ使うか】＝目的、【参照する素材】＝インプット、【手順】＝アウトプットへの道筋、【制約条件】＝制約条件。<strong>スキルとは、4要素を1回書いて、置いておけるようにしたもの</strong>です ── 第2部で「4要素は会社に置くもの」と言った、その"置き方"がこれです。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">5-4</span>作り方は4ステップ ── 第4部の続きです</h3>
+        <div class="workflow">
+          <div class="step">
+            <div class="step-head"><span class="step-num">1</span><span class="step-t">手で3回、成功させる</span></div>
+            <div class="out"><span class="ol">手動</span>まだスキルにしません。第4部のとおり、4要素で手で回して、3回とも合格する頼み方を見つけます。<b>成功していない手順をスキルにしても、失敗が配られるだけ</b>です。</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step">
+            <div class="step-head"><span class="step-num">2</span><span class="step-t">手順を文章にする</span></div>
+            <div class="out"><span class="ol">記録</span>うまくいった頼み方を、01・02…の順で書き出します。</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step">
+            <div class="step-head"><span class="step-num">3</span><span class="step-t">素材の置き場所を書き添える</span></div>
+            <div class="out"><span class="ol">最重要</span>参照するファイル・フォルダ・データの場所を全部書きます。<b>ここを飛ばすと、自分の手元でしか動かないスキルになります</b>。</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step final">
+            <div class="step-head"><span class="step-num">4</span><span class="step-t">名前と「いつ使うか」を付けて、配る</span></div>
+            <div class="out"><span class="ol">配布</span>フォルダごと渡せば、相手の環境でも同じ品質で動きます。<b>教える必要がありません</b> ── これがスキルの本当の価値です。</div>
+          </div>
+        </div>
+
+        <h3 class="sub3"><span class="tag">5-5</span>スキルにすると、何が変わるか</h3>
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead><tr><th>効果</th><th>中身</th><th>第3回の実物でいうと</th></tr></thead>
+            <tbody>
+              <tr><td><b>再現性</b></td><td>誰がやっても同じ品質で出る</td><td class="tkw">サムネの「型」（顔アップ＋英語3語＋作品カラー帯）</td></tr>
+              <tr><td><b>配布</b></td><td>人に渡せる。教える手間が消える</td><td class="tkw">経営会議スキルを呼べば、誰でも会議を開ける</td></tr>
+              <tr><td><b>資産化</b></td><td>手順が会社に残る。人が抜けても消えない</td><td class="tkw">組織規程・制作ハンドブックがファイルとして存在する</td></tr>
+              <tr><td><b>指示が1行になる</b></td><td>毎回4要素を書かなくてよくなる</td><td class="tkw">「第2弾ショートを作成、投稿してください」で動く</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="concept">
+          <p class="ct">スキルにするかどうかの判断は、たった1つ</p>
+          <p><strong>「その作業、2回以上やりますか？」</strong> ── 1回きりならプロンプトで十分です。2回目があるなら、その時点でスキルにしてください。3回目からは、書いた自分が得をします。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">5-6</span>スキルが壊れる3つの原因</h3>
+        <div class="ngs">
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">素材の置き場所が変わった</p>
+              <p>フォルダ名を変えたり、ファイルを移動した瞬間にスキルは動かなくなります。<b>だから 01・02 の番号付きフォルダを固定するのです。</b>場所を変えるときは、スキル側も直します。</p>
+            </div>
+          </div>
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">1つのスキルに、詰め込みすぎた</p>
+              <p>「企画から投稿まで全部やるスキル」は、例外が出た瞬間に丸ごと壊れます。<b>1スキル1工程</b>。第4部の分解と同じ原則です。</p>
+            </div>
+          </div>
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">中身を確認せずに配った</p>
+              <p>スキルには素材の場所が書いてあります。<b>社外に出せない情報が含まれていないか、配る前に必ず自分の目で確認してください。</b>第3回の組織規程どおり、対外公開はオーナー（あなた）の承認事項です。</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="bridge">→ <span class="arrow">4要素 → 流れ → 分解 → スキル。</span>ここまでを"会社"に載せると、こうなります。</p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 6 -->
+      <section id="s6" class="rv">
+        <div class="kicker"><span class="num acc">6</span><span class="time-pill">50–56分</span></div>
+        <h2 class="sec">第6部：AI会社の動かし方</h2>
         <p class="sec-aim">4要素と分解を、第3回で作った組織に載せます。ここで「会社にする意味」が分かります。</p>
 
-        <h3 class="sub3"><span class="tag">4-1</span>4要素は、会社の"どこ"に置かれるのか</h3>
+        <h3 class="sub3"><span class="tag">6-1</span>4要素は、会社の"どこ"に置かれるのか</h3>
         <p>個人でAIを使うときは、4要素を毎回プロンプトに書きます。<strong>会社にすると、置き場所ができます。</strong>第3回の実物と対応させると、こうです。</p>
 
         <div class="components">
@@ -872,10 +1162,10 @@
 
         <div class="concept">
           <p class="ct">会社とは、"毎回言わなくて済むようにした指示"の集合</p>
-          <p>人間の会社に就業規則やマニュアルがあるのは、<strong>毎回説明しなくて済むようにするため</strong>です。AI会社もまったく同じです。<strong>4要素を一度書いて、会社に置いておく。</strong>それだけで、次からの指示は1行になります。<br/>── 第3回の「役割を文章で書けば組織になる」の続きが、これです。<strong>4要素を文章で書けば、組織は動き出します。</strong></p>
+          <p>人間の会社に就業規則やマニュアルがあるのは、<strong>毎回説明しなくて済むようにするため</strong>です。AI会社もまったく同じです。<strong>4要素を一度書いて、会社に置いておく。</strong>それだけで、次からの指示は1行になります。そして<strong>その"置いておく形式"が、第5部で見たスキル</strong>です。<br/>── 第3回の「役割を文章で書けば組織になる」の続きが、これです。<strong>4要素を文章で書けば、組織は動き出します。</strong></p>
         </div>
 
-        <h3 class="sub3"><span class="tag">4-2</span>オーナーの指示は、3種類しかない</h3>
+        <h3 class="sub3"><span class="tag">6-2</span>オーナーの指示は、3種類しかない</h3>
         <p>第3回で人間がやっていたことを数えてみると、本当にこの3つだけでした。</p>
 
         <div class="three">
@@ -904,7 +1194,7 @@
           <p>第2回で言った「ボタンを押すだけの労働者から、制作チームのボスへ」。<strong>ボスの仕事の中身が、今日ようやく具体的になりました</strong> ── <b>目的を決める・分解を頼む・承認する</b>。手はAIが動かします。決めるのは人間です。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">4-3</span>つまずきポイントと処方箋</h3>
+        <h3 class="sub3"><span class="tag">6-3</span>つまずきポイントと処方箋</h3>
         <p>ここからは、実際に動かし始めると必ず出る症状です。<strong>原因はほぼ決まっています。</strong></p>
 
         <div class="tt-wrap">
@@ -921,7 +1211,7 @@
           </table>
         </div>
 
-        <h3 class="sub3"><span class="tag">4-4</span>やってはいけない3つ</h3>
+        <h3 class="sub3"><span class="tag">6-4</span>やってはいけない3つ</h3>
         <div class="ngs">
           <div class="ngitem">
             <span class="x">✕</span>
@@ -951,12 +1241,12 @@
 
       <hr class="divider" />
 
-      <!-- PART 5 / CLOSING -->
-      <section id="s5" class="rv">
-        <div class="kicker"><span class="num acc">5</span><span class="time-pill">53–60分</span></div>
-        <h2 class="sec">第5部：演習＋クロージング</h2>
+      <!-- PART 7 / CLOSING -->
+      <section id="s7" class="rv">
+        <div class="kicker"><span class="num acc">7</span><span class="time-pill">56–60分</span></div>
+        <h2 class="sec">第7部：演習＋クロージング</h2>
 
-        <h3 class="sub3"><span class="tag">5-1</span>3分でやる演習 ── 自分の仕事で試す</h3>
+        <h3 class="sub3"><span class="tag">7-1</span>3分でやる演習 ── 自分の仕事で試す</h3>
         <p>いま、<strong>自分が自動化したい作業を1つ</strong>思い浮かべてください。何でも構いません。</p>
         <ul>
           <li>競合のリサーチ ／ ニュースの要約 ／ 営業資料の作成</li>
@@ -968,26 +1258,29 @@
         <div class="copybox">
           <span class="cl">今日の演習プロンプト（◯◯を自分の作業に置き換えてください）</span>
           <button class="copy-btn" type="button">コピー</button>
-          <span class="copy-src">◯◯を自動化したいのですが、まずはタスクを分解してください。
-分解したら、各ステップに 01, 02, 03… と番号を振ってください。
-そのうえで、ステップごとに「目的・インプット・アウトプット・制約条件」の
-4項目を埋めた表を作ってください。分からない項目は、勝手に決めずに質問してください。</span>
+          <span class="copy-src">◯◯を自動化したいのですが、まず「企画 → 商品化 → 提供 → フィードバック」の
+4段階に整理してください。
+そのうえで各段階をタスクに分解し、01, 02, 03… と番号を振ってください。
+各ステップには「目的・インプット・アウトプット・制約条件」の4項目を埋め、
+参照すべき素材（データ・ファイル）の置き場所も書き添えてください。
+分からない項目は、勝手に決めずに質問してください。</span>
         </div>
 
         <div class="lesson">
           <p class="lt">この1本に、今日の全部が入っています</p>
-          <p>1行目が<strong>分解</strong>（第3部）、2行目が<strong>番号</strong>（第3部）、3〜4行目が<strong>4要素</strong>（第2部）。<strong>今日の60分は、この4行を書けるようになるための時間</strong>でした。</p>
+          <p>1〜2行目が<strong>ワークフロー</strong>（第3部）、3行目が<strong>分解と番号</strong>（第4部）、4行目が<strong>4要素</strong>（第2部）、5行目が<strong>スキルの素材アクセス</strong>（第5部）。<strong>今日の60分は、この5行を書けるようになるための時間</strong>でした。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">5-2</span>今夜の宿題</h3>
+        <h3 class="sub3"><span class="tag">7-2</span>今夜の宿題</h3>
         <div class="check">
-          <div class="ci"><span class="cb"></span><span><b>① 01 と 02 のフォルダを、実際に作る</b> ── パソコンでもスマホのメモでも、AIツールのチャットでも構いません。</span></div>
-          <div class="ci"><span class="cb"></span><span><b>② 01 だけ、4要素を書いて手で回してみる</b> ── いきなり全工程はやらないでください。1つだけです。</span></div>
-          <div class="ci"><span class="cb"></span><span><b>③ うまくいった頼み方を、そのまま文章にして保存する</b> ── これが手順書になり、次からの自動化の材料になります。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>① 自分の仕事を、4段階に描かせる</b> ── 上の演習プロンプトを1回投げるだけです。地図がないまま割ってはいけません。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>② 01 と 02 のフォルダを、実際に作る</b> ── パソコンでもスマホのメモでも、AIツールのチャットでも構いません。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>③ 01 だけ、4要素を書いて手で回してみる</b> ── いきなり全工程はやらないでください。1つだけです。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>④ うまくいった頼み方を、スキルの雛形に書き写す</b> ── 【名前】【いつ使うか】【参照する素材】【手順】【制約条件】。これで1個目のスキルが完成です。</span></div>
         </div>
-        <p>3つ全部やらなくて大丈夫です。<strong>「01を1回、手で回す」ところまでで、今日は合格</strong>です。そこから先は、同じことの繰り返しでしかありません。</p>
+        <p>4つ全部やらなくて大丈夫です。<strong>「①の地図を描いて、01を1回、手で回す」ところまでで、今日は合格</strong>です。そこから先は、同じことの繰り返しでしかありません。</p>
 
-        <h3 class="sub3"><span class="tag">5-3</span>4回の旅をまとめると</h3>
+        <h3 class="sub3"><span class="tag">7-3</span>4回の旅をまとめると</h3>
         <div class="tt-wrap">
           <table class="tt">
             <thead><tr><th>回</th><th>テーマ</th><th>持ち帰り</th></tr></thead>
@@ -995,15 +1288,15 @@
               <tr><td class="tno">第1回</td><td class="ttime">作る</td><td>AIでコスト崩壊。個人がIPを作れる ── OPCという選択肢</td></tr>
               <tr><td class="tno">第2回</td><td class="ttime">売る</td><td>棚・盲点・分解。1本を10個のビジネスに</td></tr>
               <tr><td class="tno">第3回</td><td class="ttime">会社にする</td><td>役割を書けばAIは組織になる。分析も行動も自動で回る</td></tr>
-              <tr><td class="tno">第4回</td><td class="ttime">動かす</td><td><b>4要素で頼む。分解して番号を振る。1タスク1フォルダ。最後に結合する</b></td></tr>
+              <tr><td class="tno">第4回</td><td class="ttime">動かす</td><td><b>4要素で頼む。流れを描く。工程に割る。スキルにして配る</b></td></tr>
             </tbody>
           </table>
         </div>
 
         <div class="closing-q">
           <p class="lab">最後の問い</p>
-          <h3>君がAIに任せたい仕事は、<br/>3つに分けられますか？</h3>
-          <p>分けられたなら、その仕事はもう自動化できます。あとは01から、手で1回やるだけです。</p>
+          <h3>君がAIに任せたい仕事は、<br/>4段階に描けますか？</h3>
+          <p>描けたら、あとは工程に割って、手で1回まわして、スキルにするだけです。今夜、01から始めてください。</p>
         </div>
       </section>
 
@@ -1014,14 +1307,15 @@
         <div class="kicker"><span class="time-pill">まとめ</span></div>
         <h2 class="sec">持ち帰り</h2>
         <div class="takeaway">
-          <h3>4要素 × タスク分解 ＝ AI会社の動かし方</h3>
+          <h3>4要素 × ワークフロー × 分解 × スキル ＝ AI会社の動かし方</h3>
           <p class="ta-q">作る × 売る × 会社にする × 動かす ── シリーズ第4回の答え</p>
           <div class="ta-list">
             <p class="ti"><b>AIは察してくれない</b> ── <b>目的・インプット・アウトプット・制約条件</b>。この4つの抜けをなくすだけで、出力は別物になります。書く手間は2分、消えるやり直しは3時間です。</p>
-            <p class="ti"><b>大きい仕事は、一発では回らない</b> ── まず「分解してください」。<b>01・02と番号を振り、1タスク1フォルダ</b>で手で回し、確実になってから<b>結合</b>します。自動化とは、うまくいった手順を文字にしたものです。</p>
-            <p class="ti"><b>会社にすると、4要素が常設になる</b> ── ミッションとKPIが目的、フォルダがインプット、ハンドブックがアウトプット、組織規程が制約条件。だからオーナーの指示は<b>1行で済みます</b>。</p>
+            <p class="ti"><b>まず"輪"を描く</b> ── <b>企画 → 商品化 → 提供 → フィードバック → また企画へ</b>。地図が先、道順が後。先週の数字で今週の企画が変わっていないなら、輪は閉じていません。</p>
+            <p class="ti"><b>流れを工程に割る</b> ── 「分解してください」の一言から。<b>01・02と番号を振り、1タスク1フォルダ</b>で手で回し、確実になってから<b>結合</b>します。自動化とは、うまくいった手順を文字にしたものです。</p>
+            <p class="ti"><b>スキルにして、配る</b> ── 【いつ使うか】【手順】【素材の置き場所】の3点セット。<b>AIは見えているものしか使えない</b>ので、素材へのアクセスがすべてです。配れた瞬間、それは会社の資産になります。</p>
           </div>
-          <p class="ta-foot">人間の仕事は3つだけです ── <b>ミッションを与える／分解を頼む／承認する</b>。<br/>今日の演習プロンプトは4行。<b>それが、君のAI会社を動かす最初のスイッチ</b>です。</p>
+          <p class="ta-foot">人間の仕事は3つだけです ── <b>ミッションを与える／分解を頼む／承認する</b>。<br/>今日の演習プロンプトは5行。<b>それが、君のAI会社を動かす最初のスイッチ</b>です。</p>
         </div>
       </section>
 
@@ -1033,6 +1327,22 @@
         <details class="faq">
           <summary><span class="qm">Q.</span>4要素を全部書くと、プロンプトが長くなりませんか？</summary>
           <div class="ans">長くなります。でも書くのは<b>最初の1回だけ</b>です。うまくいった4要素はテンプレートとして保存し、次からは数字や素材名だけ差し替えます。慣れると2分が30秒になります。しかも「やり直し3回」が消えるので、トータルでは圧倒的に速いです。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>ワークフローとタスク分解は、何が違うんですか？</summary>
+          <div class="ans">ワークフローは<b>地図</b>、分解は<b>道順</b>です。ワークフローは「企画 → 商品化 → 提供 → フィードバック」という大きな4段階で、業種が違っても同じ形をしています。分解は、その1段階の中を「AIが確実にできる大きさ」まで割る作業です。<b>順番は必ず地図が先</b>。地図なしで割ると、細かいけれど何のためにやるのか分からない工程ができあがります。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>スキルを作るのに、プログラミングは必要ですか？</summary>
+          <div class="ans">不要です。第5部の雛形のとおり、<b>【名前】【いつ使うか】【参照する素材】【手順】【制約条件】</b>を書いた文章ファイルが1枚あれば、それがスキルです。第3回でも言いましたが、必要なのはコードを書く力ではなく<b>工程を言葉にする力</b>です。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>AIに素材へアクセスさせるのが、少し不安です。</summary>
+          <div class="ans">正しい感覚です。だから第3回の組織規程で<b>「素材はホワイトリスト方式」「対外公開はオーナー承認」</b>と決めてありました。スキルに書くのは<b>「使ってよい素材の置き場所」だけ</b>にしてください。何を見せて何を見せないかを決めるのは、常に人間の仕事です。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>スキルを配ったのに、相手の環境で動きません。</summary>
+          <div class="ans">ほぼ100%、<b>素材の置き場所の問題</b>です。3点セットの【参照する素材】が、自分のパソコンにしか無い場所を指していないか確認してください。共有フォルダに置き直して、スキル側のパスを書き換えれば動きます。<b>手順は配れても、素材は勝手についてきません。</b></div>
         </details>
         <details class="faq">
           <summary><span class="qm">Q.</span>どこまで細かく分解すればいいですか？</summary>
@@ -1074,6 +1384,8 @@
           <h4>今回の下敷き</h4>
           <ul>
             <li>社内メモ「AI壁打ちを成功させるプロンプト4要素と実践術」── 4要素（目的・インプット・アウトプット・制約条件）およびタスク分解4ステップ（分解依頼／1タスク1フォルダ／01・02の番号付与／結合）の出典</li>
+            <li>業務のワークフロー（企画 → 商品化 → 提供 → フィードバック → 企画）およびスキル化・配布の考え方 ── 第4回のために講師が追加したテーマ</li>
+            <li>スキルの仕組み（呼び出すと手順どおりに動く再利用可能なパッケージ）── 第3回で公開した経営会議スキル <code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.78rem">/keiei-kaigi</code>、サムネ生成スキル、切り抜き生成スクリプトが実例</li>
           </ul>
           <h4>第4部で参照した第3回の実物</h4>
           <ul>
@@ -1116,7 +1428,7 @@
 
   // TOC active state
   const tocLinks = document.querySelectorAll('.toc a, #mnav a');
-  const sections = ['aim','timetable','s1','s2','s3','s4','s5','summary','faq','refs']
+  const sections = ['aim','timetable','s1','s2','s3','s4','s5','s6','s7','summary','faq','refs']
     .map(id => document.getElementById(id)).filter(Boolean);
   const setActive = () => {
     let curr = sections[0]?.id;
