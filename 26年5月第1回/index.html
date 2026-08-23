@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>AIイノベーションとOPC ── エンタメ界にもたらすAI革命とその未来</title>
 <meta name="description" content="YDA・YCA統合1年生向け 60分講義｜OPC（一人会社）がエンタメの未来になる。AIの動画生成が"作り手"を自動で大量生産し、作る人の価値が下がる時代の人生設計を。" />
+<link rel="canonical" href="https://katsuagezzz.github.io/yca-lectures/26%E5%B9%B45%E6%9C%88%E7%AC%AC1%E5%9B%9E/" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="YCA 2026 講義シリーズ" />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:title" content="AIイノベーションとOPC ── エンタメ界にもたらすAI革命とその未来「OPC」" />
+<meta property="og:description" content="YCA 1年生向け 60分講義（第1回）｜AIで制作コストが崩れた世界で、個人がIP（資産）を作って売る「OPC」という生き方。" />
+<meta property="og:url" content="https://katsuagezzz.github.io/yca-lectures/26%E5%B9%B45%E6%9C%88%E7%AC%AC1%E5%9B%9E/" />
+<meta property="og:image" content="https://katsuagezzz.github.io/yca-lectures/26%E5%B9%B45%E6%9C%88%E7%AC%AC1%E5%9B%9E/hero_bg.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="AIイノベーションとOPC ── エンタメ界にもたらすAI革命とその未来「OPC」" />
+<meta name="twitter:description" content="YCA 1年生向け 60分講義（第1回）｜AIで制作コストが崩れた世界で、個人がIP（資産）を作って売る「OPC」という生き方。" />
+<meta name="twitter:image" content="https://katsuagezzz.github.io/yca-lectures/26%E5%B9%B45%E6%9C%88%E7%AC%AC1%E5%9B%9E/hero_bg.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet" />
@@ -312,10 +324,38 @@
 
   .backtop{position:fixed;right:18px;bottom:18px;z-index:120;background:var(--ink);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:1.1rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:var(--shadow)}
   .backtop.show{opacity:1;pointer-events:auto}
+
+  /* ===== 講義タブ ===== */
+  .lecnav{background:#0b0b10;border-bottom:1px solid rgba(255,255,255,.10)}
+  .lecnav-in{max-width:1180px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:16px}
+  .lecnav-brand{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:.72rem;letter-spacing:.16em;color:#63636f;white-space:nowrap;flex:0 0 auto}
+  .lecnav-tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex:1 1 auto;min-width:0}
+  .lecnav-tabs::-webkit-scrollbar{display:none}
+  .ltab{flex:0 0 auto;display:flex;flex-direction:column;gap:1px;padding:7px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);text-decoration:none;line-height:1.4}
+  .ltab b{font-family:"Zen Kaku Gothic New",sans-serif;font-size:.78rem;font-weight:900;letter-spacing:.06em;color:#fff}
+  .ltab span{font-size:.7rem;color:#8b8b98;white-space:nowrap}
+  .ltab:hover{background:rgba(255,255,255,.12);text-decoration:none}
+  .ltab.is-current{background:var(--accent);border-color:var(--accent)}
+  .ltab.is-current b{color:#fff}
+  .ltab.is-current span{color:#ffdcd3}
+  @media(max-width:640px){.lecnav-brand{display:none}.lecnav-in{padding:9px 12px}}
+
 </style>
 </head>
 <body>
 <div id="progress"></div>
+
+<nav class="lecnav" aria-label="講義一覧">
+  <div class="lecnav-in">
+    <span class="lecnav-brand">YCA 2026 ／ 全4回</span>
+    <div class="lecnav-tabs">
+      <a class="ltab is-current" href="./" aria-current="page"><b>第1回</b><span>AIイノベーションとOPC</span></a>
+      <a class="ltab" href="../"><b>第2回</b><span>ヒットの解剖学</span></a>
+      <a class="ltab" href="../26年第3回/"><b>第3回</b><span>AI会社を作ってみる</span></a>
+      <a class="ltab" href="../26年第4回/"><b>第4回</b><span>自分のAIカンパニー</span></a>
+    </div>
+  </div>
+</nav>
 
 <header class="hero">
   <div class="hero-inner">
@@ -770,7 +810,8 @@
 
 <footer>
   <p><b>AIイノベーションとOPC</b> ── エンタメ界にもたらすAI革命とその未来<br/>
-  YDA・YCA統合1年生 講義教材 ／ 60分・オンライン</p>
+  YDA・YCA統合1年生 講義教材 ／ 60分・オンライン<br/>
+  <b>第1回（このページ）</b>　／　<a href="../" style="color:#fff">第2回</a>　／　<a href="../26年第3回/" style="color:#fff">第3回</a>　／　<a href="../26年第4回/" style="color:#fff">第4回</a></p>
 </footer>
 
 <script>
@@ -826,6 +867,16 @@
     document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});
   }
 })();
+</script>
+
+<script>
+  // 現在の回のタブを、横スクロール内で見える位置に寄せます
+  (function(){
+    var c = document.querySelector('.lecnav-tabs');
+    var a = c && c.querySelector('.is-current');
+    if (!c || !a) return;
+    c.scrollLeft = Math.max(0, a.offsetLeft - (c.clientWidth - a.offsetWidth) / 2);
+  })();
 </script>
 </body>
 </html>
