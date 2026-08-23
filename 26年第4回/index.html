@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI会社を、動かす ── プロンプト4要素とタスク分解</title>
+<meta name="description" content="YCA 1年生向け 60分講義(第4回・実践編)｜第3回で作ったAI会社を実際に動かす技術。プロンプトに入れるべき4要素(目的・インプット・アウトプット・制約条件)と、大きな仕事を回すためのタスク分解4ステップを、具体例つきで解説します。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#15151a;
+    --ink-soft:#3a3a44;
+    --paper:#fbfaf7;
+    --paper-2:#f3f1ea;
+    --line:#e3dfd4;
+    --accent:#ff4d2e;
+    --accent-2:#2b2bff;
+    --gold:#c79a3a;
+    --green:#1f7a4d;
+    --red:#c0392b;
+    --dark:#0e0e13;
+    --maxread:760px;
+    --sidebar:264px;
+    --shadow:0 18px 48px -24px rgba(20,20,30,.45);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-weight:400;line-height:1.95;letter-spacing:.01em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  h1,h2,h3,h4{font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif;line-height:1.4;letter-spacing:.02em}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* progress bar */
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--gold));z-index:200;transition:width .08s linear}
+
+  /* HERO */
+  .hero{position:relative;background:radial-gradient(1200px 600px at 80% -10%,rgba(255,77,46,.22),transparent 60%),radial-gradient(900px 500px at 0% 110%,rgba(43,43,255,.18),transparent 55%),linear-gradient(rgba(14,14,19,.72),rgba(14,14,19,.86)),url("hero_bg.png") center/cover no-repeat,var(--dark);color:#fff;padding:88px 24px 72px;overflow:hidden}
+  .hero-inner{max-width:920px;margin:0 auto;position:relative;z-index:2}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;letter-spacing:.18em;color:#ffd9cf;border:1px solid rgba(255,255,255,.22);padding:7px 14px;border-radius:999px;text-transform:uppercase;margin-bottom:26px}
+  .eyebrow b{color:#fff;font-weight:700}
+  .hero h1{font-weight:900;font-size:clamp(1.85rem,4.6vw,3rem);margin:.1em 0 .25em;color:#fff;letter-spacing:.01em}
+  .hero h1 .q{color:var(--accent)}
+  .hero .sub{font-size:clamp(1rem,2.1vw,1.25rem);color:#cfcfd8;font-weight:500;margin:0 0 30px;line-height:1.65}
+  .hero .sub b{color:#fff}
+  .hero .sub .hot{color:var(--accent);font-weight:700}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#eee;font-size:.82rem;padding:8px 14px;border-radius:999px;font-weight:500}
+  .chip b{color:#fff}
+  .hero-msg{margin-top:30px;padding:18px 22px;border-left:4px solid var(--accent);background:rgba(255,255,255,.06);border-radius:0 12px 12px 0;color:#e9e9f0;font-size:clamp(.98rem,2vw,1.08rem);line-height:1.9;max-width:730px}
+  .hero-msg b{color:#fff;font-weight:700}
+  .hero-msg .hot{color:var(--accent);font-weight:700}
+  .scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#777;font-size:.72rem;letter-spacing:.2em;z-index:2}
+  .prev-link{display:inline-flex;align-items:center;gap:7px;margin-top:18px;margin-right:10px;font-size:.82rem;color:#9a9aa6;background:rgba(255,255,255,.06);padding:7px 13px;border-radius:999px;text-decoration:none;border:1px solid rgba(255,255,255,.14)}
+  .prev-link:hover{color:#fff;background:rgba(255,255,255,.12);text-decoration:none}
+  .prev-link .arr{color:var(--accent)}
+
+  /* LAYOUT */
+  .layout{max-width:1180px;margin:0 auto;display:block;padding:0 20px}
+  .sidebar{display:none}
+  .content{min-width:0;padding:0 0 120px}
+  .reading{max-width:var(--maxread);margin:0 auto}
+  @media(min-width:1080px){
+    .layout{display:grid;grid-template-columns:var(--sidebar) minmax(0,1fr);gap:48px;padding:0 28px}
+    .sidebar{display:block;position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:48px 4px 48px 0;border-right:1px solid var(--line)}
+    .reading{margin:0;max-width:var(--maxread)}
+    .content{padding-top:8px}
+  }
+  .toc-title{font-size:.72rem;letter-spacing:.16em;color:#a39c8c;text-transform:uppercase;margin:0 0 14px;font-weight:700}
+  .toc a{display:block;color:var(--ink-soft);font-size:.86rem;padding:7px 12px 7px 14px;border-left:2px solid transparent;border-radius:0 6px 6px 0;line-height:1.45;transition:all .15s}
+  .toc a .n{color:#b9b1a0;font-weight:700;margin-right:8px;font-size:.78rem}
+  .toc a:hover{background:var(--paper-2);text-decoration:none;color:var(--ink)}
+  .toc a.active{border-left-color:var(--accent);background:var(--paper-2);color:var(--ink);font-weight:700}
+  .toc a.active .n{color:var(--accent)}
+
+  #mnav{position:sticky;top:0;z-index:120;background:rgba(251,250,247,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;gap:8px;overflow-x:auto;padding:11px 14px;scrollbar-width:none}
+  #mnav::-webkit-scrollbar{display:none}
+  #mnav a{flex:0 0 auto;font-size:.78rem;color:var(--ink-soft);background:var(--paper-2);padding:6px 13px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
+  #mnav a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  @media(min-width:1080px){#mnav{display:none}}
+
+  /* sections */
+  section{padding-top:64px;scroll-margin-top:70px}
+  @media(min-width:1080px){section{scroll-margin-top:24px}}
+  .kicker{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+  .num{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1.05rem;color:#fff;background:var(--ink);width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .num.acc{background:var(--accent)}
+  .time-pill{font-size:.74rem;letter-spacing:.08em;color:#8a8475;background:var(--paper-2);border:1px solid var(--line);padding:4px 11px;border-radius:999px;font-weight:700}
+  h2.sec{font-size:clamp(1.5rem,3.4vw,2.05rem);font-weight:900;margin:.15em 0 .1em;letter-spacing:.01em}
+  .sec-aim{color:var(--ink-soft);font-size:.95rem;border-left:3px solid var(--gold);padding:2px 0 2px 14px;margin:14px 0 26px;background:linear-gradient(90deg,rgba(199,154,58,.07),transparent)}
+  h3.sub3{font-size:1.18rem;font-weight:700;margin:38px 0 12px;padding-top:4px}
+  h3.sub3 .tag{font-size:.72rem;color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px;margin-right:9px;vertical-align:middle;font-family:"Noto Sans JP";letter-spacing:.04em}
+  p{margin:0 0 16px}
+  .content ul{margin:0 0 18px;padding-left:1.25em}
+  .content li{margin-bottom:9px}
+  strong{font-weight:700;background:linear-gradient(transparent 62%,rgba(255,77,46,.22) 62%);padding:0 .05em}
+  .lead{font-size:1.06rem;color:var(--ink)}
+  .divider{height:1px;background:var(--line);border:0;margin:0}
+
+  .concept{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:24px 0}
+  .concept .ct{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.05rem;margin:0 0 6px;display:flex;align-items:center;gap:9px}
+  .concept .ct::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--accent-2);transform:rotate(45deg)}
+  .concept p:last-child{margin-bottom:0}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:24px 0}
+  .stat{background:var(--dark);color:#fff;border-radius:14px;padding:18px 18px 16px}
+  .stat .v{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.55rem;line-height:1.1;color:#fff}
+  .stat .v .u{font-size:.85rem;color:var(--accent);margin-left:2px}
+  .stat .l{font-size:.8rem;color:#b7b7c2;margin-top:7px}
+  .stat .src{font-size:.68rem;color:#7a7a86;margin-top:4px}
+  .stat.alt{background:var(--accent)}
+  .stat.alt .v,.stat.alt .v .u{color:#fff}
+  .stat.alt .l{color:#ffe2db}
+  .stat.win{background:linear-gradient(120deg,#1f7a4d,#2d9968)}
+  .stat.lose{background:linear-gradient(120deg,#7a1f1f,#9c2929)}
+
+  .message{background:linear-gradient(120deg,#15151a,#26262f);color:#fff;border-radius:16px;padding:24px 26px;margin:26px 0 0;box-shadow:var(--shadow)}
+  .message .msg-lab{font-size:.7rem;letter-spacing:.14em;color:var(--accent);font-weight:700;text-transform:uppercase;margin:0 0 9px}
+  .message p{margin:0 0 12px;font-size:1.05rem;line-height:1.95;color:#eaeaf0}
+  .message p:last-child{margin-bottom:0}
+  .message p strong{color:#fff;background:linear-gradient(transparent 58%,rgba(255,77,46,.5) 58%);padding:0 .05em}
+
+  .tt-wrap{overflow-x:auto;margin:22px 0}
+  table.tt{border-collapse:collapse;width:100%;font-size:.85rem;min-width:540px}
+  table.tt th,table.tt td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.tt thead th{background:var(--ink);color:#fff;font-weight:700;font-size:.8rem;letter-spacing:.04em}
+  table.tt tbody tr:hover{background:var(--paper-2)}
+  table.tt .tno{font-family:"Zen Kaku Gothic New";font-weight:900;color:var(--accent)}
+  table.tt .ttime{white-space:nowrap;color:var(--ink-soft);font-weight:700}
+  table.tt .tkw{color:#8a8475;font-size:.78rem}
+
+  /* component matrix */
+  .components{margin:24px 0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .components-row{display:grid;grid-template-columns:150px 1fr 1fr;border-bottom:1px solid var(--line);align-items:start}
+  .components-row:last-child{border-bottom:0}
+  .components-row.header{background:var(--ink);color:#fff;font-weight:700;font-size:.85rem}
+  .components-row.header > div{padding:11px 14px}
+  .components-row > div{padding:12px 14px;font-size:.88rem;line-height:1.65}
+  .components-row .lbl{font-weight:700;color:var(--accent-2);background:var(--paper-2);font-size:.88rem}
+  @media(max-width:680px){.components-row{grid-template-columns:1fr}.components-row.header{display:none}.components-row > div{padding:8px 14px}.components-row .lbl{padding-top:14px;font-weight:900;border-top:1px solid var(--line)}}
+
+  /* step workflow */
+  .workflow{margin:24px 0}
+  .step{background:#fff;border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:0 14px 14px 0;padding:18px 22px 18px 22px;margin:0 0 14px;box-shadow:var(--shadow);position:relative}
+  .step .step-head{display:flex;align-items:center;gap:12px;margin:0 0 10px}
+  .step .step-num{background:var(--accent);color:#fff;font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.1rem;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .step .step-t{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.08rem;color:var(--ink)}
+  .step .prompt{background:var(--dark);color:#fff;border-radius:10px;padding:14px 16px;font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.85rem;line-height:1.75;margin:10px 0 14px;border-left:3px solid var(--gold)}
+  .step .prompt .pl{display:block;color:var(--gold);font-size:.7rem;font-family:"Noto Sans JP";letter-spacing:.1em;margin-bottom:6px;text-transform:uppercase;font-weight:700}
+  .step .out{background:var(--paper-2);border:1px solid var(--line);border-radius:10px;padding:13px 16px;font-size:.88rem;line-height:1.7}
+  .step .out .ol{display:block;font-size:.7rem;color:#8a8475;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+  .step .out ol,.step .out ul{margin:0;padding-left:1.25em}
+  .step .out li{margin-bottom:4px}
+  .step .arrow-next{text-align:center;color:var(--accent);font-family:"Zen Kaku Gothic New";font-weight:900;margin:6px 0 0}
+  .step.final{border-left-color:var(--green)}
+  .step.final .step-num{background:var(--green)}
+
+  /* answer-reveal callout */
+  .reveal{background:linear-gradient(120deg,#15151a,#26262f);color:#fff;border-radius:18px;padding:28px;margin:28px 0;box-shadow:var(--shadow);position:relative}
+  .reveal .rv-lab{font-size:.74rem;letter-spacing:.18em;color:var(--gold);font-weight:900;text-transform:uppercase;margin:0 0 10px}
+  .reveal h4{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.3rem;color:#fff;margin:0 0 12px;line-height:1.4}
+  .reveal h4 .hot{color:var(--accent)}
+  .reveal p{color:#cfcfd8;font-size:.96rem;line-height:1.85;margin:0 0 10px}
+  .reveal p:last-child{margin:0}
+  .reveal p strong{color:#fff;background:linear-gradient(transparent 58%,rgba(255,77,46,.5) 58%);padding:0 .05em}
+
+  /* org chart (b2opc流用) */
+  .b2opc{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:24px 22px;margin:24px 0}
+  .b2opc h4{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.05rem;margin:0 0 16px;color:var(--ink);text-align:center}
+  .b2opc-flow{display:flex;align-items:stretch;justify-content:center;gap:14px;flex-wrap:wrap}
+  .b2opc-node{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:13px 16px;font-size:.85rem;text-align:center;line-height:1.45;flex:1 1 150px;max-width:220px;font-weight:700}
+  .b2opc-node.you{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .b2opc-node.opc{background:#fff;border-color:var(--accent);color:var(--accent)}
+  .b2opc-node.agency{background:#fff;border-color:var(--accent-2);color:var(--accent-2)}
+  .b2opc-node.g{border-color:var(--green);color:var(--green)}
+  .b2opc-node small{display:block;font-size:.7rem;color:#8a8475;font-weight:500;margin-top:5px}
+  .b2opc-node.you small{color:#9a9aa6}
+  .b2opc-arrow{font-family:"Zen Kaku Gothic New";font-weight:900;color:var(--accent);font-size:1.3rem;flex:0 0 auto;align-self:center}
+  .b2opc-boss{display:flex;justify-content:center;margin-bottom:14px}
+  .b2opc-vline{width:2px;height:18px;background:var(--ink);margin:0 auto 14px}
+
+  /* screenshot placeholder */
+  .shot{margin:22px 0;background:#fff;border:2px dashed #c9c1ae;border-radius:14px;padding:0;overflow:hidden}
+  .shot .shot-body{min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:34px 20px;color:#a39c8c;text-align:center}
+  .shot .shot-icon{font-size:1.8rem;line-height:1}
+  .shot .shot-t{font-family:"Zen Kaku Gothic New";font-weight:900;font-size:.98rem;color:#8a8475}
+  .shot .shot-d{font-size:.8rem;line-height:1.7;max-width:520px}
+  .shot .shot-file{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.72rem;background:var(--paper-2);border:1px solid var(--line);padding:3px 10px;border-radius:999px;color:#8a8475}
+  .shot img{display:block;width:100%;height:auto}
+  .shot figcaption{padding:10px 16px;font-size:.8rem;color:var(--ink-soft);border-top:1px solid var(--line);background:var(--paper-2)}
+
+  /* session screen reproduction */
+  .session-win{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin:22px 0}
+  .session-win .win-bar{display:flex;align-items:center;gap:8px;background:var(--paper-2);border-bottom:1px solid var(--line);padding:9px 14px}
+  .session-win .dot{width:11px;height:11px;border-radius:50%}
+  .session-win .dot.r{background:#ff5f57}
+  .session-win .dot.y{background:#febc2e}
+  .session-win .dot.g{background:#28c840}
+  .session-win .win-t{font-size:.76rem;color:#8a8475;font-weight:700;margin-left:6px}
+  .session-win .win-body{padding:18px 20px;font-size:.88rem;line-height:1.85}
+  .user-bubble{background:#ececec;border-radius:14px;padding:12px 16px;max-width:560px;margin-left:auto;color:#222;font-size:.88rem;line-height:1.8}
+  .ai-reply{margin-top:16px;color:var(--ink);font-size:.88rem}
+  .ai-reply code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.76rem;background:var(--paper-2);border:1px solid var(--line);padding:1px 7px;border-radius:6px}
+  .ai-reply ul{margin:8px 0 0;padding-left:1.25em}
+  .ai-reply li{margin-bottom:7px;font-size:.85rem}
+  .org-tree{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.8rem;line-height:1.9;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:12px 0;white-space:pre;overflow-x:auto}
+  .session-cap{padding:10px 16px;font-size:.8rem;color:var(--ink-soft);border-top:1px solid var(--line);background:var(--paper-2)}
+
+  /* clip embeds */
+  .clip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:22px 0}
+  .clip-grid figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;box-shadow:var(--shadow)}
+  .clip-grid iframe{width:100%;aspect-ratio:9/16;border:0;border-radius:10px;background:#000}
+  .clip-grid figcaption{font-size:.8rem;color:var(--ink-soft);margin-top:9px;line-height:1.65;text-align:left}
+  .clip-grid figcaption b{color:var(--ink)}
+
+  /* meeting stage labels */
+  .stage-lab{display:flex;align-items:center;gap:11px;margin:30px 0 0;font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif;font-weight:900;font-size:1.02rem;color:var(--ink)}
+  .stage-lab .sn{background:var(--accent);color:#fff;width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.92rem;flex:0 0 auto}
+  .stage-lab.fin .sn{background:var(--green)}
+  .stage-lab .sd{font-size:.78rem;color:#8a8475;font-weight:500;font-family:"Noto Sans JP",sans-serif}
+  .stage-arrow{text-align:center;color:var(--accent);font-family:"Zen Kaku Gothic New";font-weight:900;font-size:1.2rem;margin:2px 0}
+
+  /* code block */
+  .codebox{background:var(--dark);color:#e8e8f0;border-radius:12px;padding:16px 18px;font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.8rem;line-height:1.8;overflow-x:auto;margin:18px 0;border-left:3px solid var(--gold)}
+  .codebox .cl{display:block;color:var(--gold);font-size:.68rem;font-family:"Noto Sans JP";letter-spacing:.1em;margin-bottom:8px;text-transform:uppercase;font-weight:700}
+  .codebox em{color:#ff9a85;font-style:normal}
+
+  /* takeaway dark card */
+  .takeaway{background:var(--dark);color:#fff;border-radius:20px;padding:34px 30px;margin:30px 0}
+  .takeaway h3{color:#fff;font-size:1.35rem;font-weight:900;margin:0 0 6px}
+  .takeaway .ta-q{color:var(--accent);font-weight:700;margin:0 0 22px;font-size:.98rem}
+  .takeaway .ta-list{counter-reset:t;display:grid;gap:14px;margin:0 0 22px}
+  .takeaway .ta-list .ti{position:relative;padding-left:42px;color:#eaeaf0}
+  .takeaway .ta-list .ti::before{counter-increment:t;content:counter(t);position:absolute;left:0;top:-2px;width:28px;height:28px;border:2px solid var(--accent);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"Zen Kaku Gothic New";font-weight:900;font-size:.9rem}
+  .takeaway .ta-list .ti b{color:#fff}
+  .takeaway .ta-foot{border-top:1px solid rgba(255,255,255,.16);padding-top:16px;color:#bdbdc8;font-size:.92rem;line-height:1.85}
+  .takeaway .ta-foot b{color:#fff}
+
+  /* bridge line */
+  .bridge{margin:26px 0 0;font-family:"Zen Kaku Gothic New";font-weight:900;font-size:clamp(1.05rem,2.4vw,1.25rem);line-height:1.62;color:var(--ink)}
+  .bridge .arrow{color:var(--accent)}
+
+  /* lesson box */
+  .lesson{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:0 12px 12px 0;padding:14px 18px;margin:16px 0 22px;box-shadow:var(--shadow);font-size:.96rem}
+  .lesson .lt{font-family:"Zen Kaku Gothic New";font-weight:900;color:var(--gold);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;margin:0 0 5px}
+
+  /* closing question */
+  .closing-q{background:linear-gradient(120deg,var(--accent),#ff7a4d);color:#fff;border-radius:20px;padding:36px 30px;margin:34px 0;text-align:center;box-shadow:var(--shadow)}
+  .closing-q .lab{font-size:.74rem;letter-spacing:.2em;color:#ffd9cf;font-weight:700;text-transform:uppercase;margin:0 0 12px}
+  .closing-q h3{font-family:"Zen Kaku Gothic New";font-weight:900;color:#fff;font-size:clamp(1.3rem,3.8vw,1.9rem);margin:0 0 14px;line-height:1.45}
+  .closing-q p{color:#fff;margin:0;font-size:.96rem;opacity:.9}
+
+  /* FAQ */
+  details.faq{background:#fff;border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden}
+  details.faq summary{cursor:pointer;padding:16px 46px 16px 18px;font-weight:700;position:relative;list-style:none;font-size:.96rem}
+  details.faq summary::-webkit-details-marker{display:none}
+  details.faq summary::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:1.3rem;color:var(--accent);font-weight:700;transition:transform .2s}
+  details.faq[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+  details.faq summary .qm{color:var(--accent);font-weight:900;margin-right:8px}
+  details.faq .ans{padding:0 18px 18px;color:var(--ink-soft);font-size:.93rem;line-height:1.85}
+
+  /* references */
+  .refs{font-size:.82rem;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-top:20px;line-height:1.75}
+  .refs h4{margin:14px 0 10px;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:#a39c8c}
+  .refs h4:first-child{margin-top:0}
+  .refs ul{padding-left:1.1em;margin:0 0 14px}
+  .refs li{margin-bottom:7px}
+  .refs .note{color:#a39c8c;font-size:.78rem;margin-top:10px}
+
+  /* footer */
+  footer{background:var(--dark);color:#9a9aa6;text-align:center;padding:40px 20px;font-size:.82rem}
+  footer b{color:#fff}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+  .rv.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+  .backtop{position:fixed;right:18px;bottom:18px;z-index:120;background:var(--ink);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:1.1rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:var(--shadow)}
+  .backtop.show{opacity:1;pointer-events:auto}
+
+  /* ===== 第4回で追加したコンポーネント ===== */
+
+  /* 4要素カード */
+  .four{display:grid;grid-template-columns:1fr;gap:14px;margin:26px 0}
+  @media(min-width:560px){.four{grid-template-columns:1fr 1fr}}
+  .fcard{background:#fff;border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:14px;padding:18px 18px 16px;box-shadow:var(--shadow)}
+  .fcard .fn{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:.74rem;color:var(--accent);letter-spacing:.14em;margin:0 0 5px}
+  .fcard h4{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1.16rem;margin:0 0 9px;color:var(--ink)}
+  .fcard .fd{font-size:.87rem;line-height:1.75;margin:0 0 11px;color:var(--ink-soft)}
+  .fcard .ex{background:var(--paper-2);border-radius:9px;padding:10px 13px;font-size:.81rem;line-height:1.75;color:var(--ink)}
+  .fcard .ex .exl{display:block;font-size:.66rem;letter-spacing:.12em;color:#8a8475;font-weight:700;text-transform:uppercase;margin-bottom:4px}
+  .fcard.c2{border-top-color:var(--accent-2)} .fcard.c2 .fn{color:var(--accent-2)}
+  .fcard.c3{border-top-color:var(--green)}   .fcard.c3 .fn{color:var(--green)}
+  .fcard.c4{border-top-color:var(--gold)}    .fcard.c4 .fn{color:var(--gold)}
+
+  /* Before / After */
+  .ba{display:grid;grid-template-columns:1fr;gap:14px;margin:24px 0}
+  @media(min-width:860px){.ba{grid-template-columns:1fr 1fr}}
+  .ba-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+  .ba-card .bl{font-size:.7rem;letter-spacing:.16em;font-weight:900;text-transform:uppercase;margin:0 0 10px}
+  .ba-card.bad{border-left:5px solid var(--red)}
+  .ba-card.bad .bl{color:var(--red)}
+  .ba-card.good{border-left:5px solid var(--green)}
+  .ba-card.good .bl{color:var(--green)}
+  .ba-card .pq{background:var(--paper-2);border-radius:10px;padding:12px 14px;margin:0 0 11px;font-size:.86rem;line-height:1.8;white-space:pre-wrap}
+  .ba-card .res{margin:0;font-size:.84rem;line-height:1.75;color:var(--ink-soft)}
+  .ba-card .res b{color:var(--ink)}
+
+  /* コピーできるプロンプト箱 */
+  .copybox{position:relative;background:var(--dark);color:#e8e8f0;border-radius:12px;padding:16px 18px 17px;margin:20px 0;border-left:3px solid var(--gold);font-size:.86rem;line-height:1.95}
+  .copybox .cl{display:block;color:var(--gold);font-size:.68rem;letter-spacing:.1em;margin-bottom:9px;text-transform:uppercase;font-weight:700;padding-right:74px}
+  .copybox .copy-src{display:block;white-space:pre-wrap;font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN",sans-serif}
+  .copybox .k{color:var(--gold);font-weight:700}
+  .copybox .cmt{color:#8f8fa0}
+  .copy-btn{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#fff;font-family:"Noto Sans JP",sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.06em;padding:5px 12px;border-radius:999px;cursor:pointer;transition:all .18s}
+  .copy-btn:hover{background:rgba(255,255,255,.2)}
+  .copy-btn.done{background:var(--green);border-color:var(--green)}
+
+  /* 症状→処方の表を見やすく */
+  table.tt td .sym{color:var(--red);font-weight:700}
+  table.tt td .fix{color:var(--green);font-weight:700}
+
+  /* チェックリスト */
+  .check{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px 20px;margin:22px 0;box-shadow:var(--shadow)}
+  .check .ci{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px dashed var(--line);font-size:.93rem;line-height:1.75}
+  .check .ci:last-child{border-bottom:0}
+  .check .cb{flex:0 0 auto;width:19px;height:19px;border:2px solid var(--accent);border-radius:5px;margin-top:4px}
+  .check .ci b{font-weight:700}
+
+  /* フォルダ構成の良い例／悪い例 */
+  .tree-pair{display:grid;grid-template-columns:1fr;gap:14px;margin:22px 0}
+  @media(min-width:860px){.tree-pair{grid-template-columns:1fr 1fr}}
+  .tree-card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+  .tree-card .th{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:.92rem;padding:11px 16px;color:#fff}
+  .tree-card.ng .th{background:var(--red)}
+  .tree-card.ok .th{background:var(--green)}
+  .tree-card .org-tree{margin:0;border:0;border-radius:0;background:#fff;font-size:.76rem}
+  .tree-card .tc{padding:11px 16px;font-size:.8rem;line-height:1.7;color:var(--ink-soft);border-top:1px solid var(--line);background:var(--paper-2)}
+
+  /* 3つの指示 */
+  .three{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:24px 0}
+  .tcard{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:17px 18px;display:flex;flex-direction:column}
+  .tcard .tn{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1.6rem;color:var(--accent);line-height:1;margin:0 0 7px}
+  .tcard h4{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1rem;margin:0 0 7px}
+  .tcard p{font-size:.84rem;line-height:1.7;color:var(--ink-soft);margin:0 0 12px}
+  .tcard .say{display:block;margin:auto 0 0;background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 11px;font-size:.8rem;color:var(--ink);line-height:1.65}
+
+  /* NG3つ */
+  .ngs{margin:22px 0;display:grid;gap:11px}
+  .ngitem{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-left:5px solid var(--red);border-radius:0 12px 12px 0;padding:14px 18px;box-shadow:var(--shadow)}
+  .ngitem .x{flex:0 0 auto;color:var(--red);font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1.15rem;line-height:1.5}
+  .ngitem .ngt{font-weight:700;margin:0 0 4px;font-size:.98rem}
+  .ngitem p{margin:0;font-size:.86rem;line-height:1.75;color:var(--ink-soft)}
+
+  /* パイプライン横並び */
+  .pipe{display:flex;flex-wrap:wrap;align-items:stretch;gap:6px;margin:22px 0;justify-content:center}
+  .pipe .pn{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:10px 8px;font-size:.74rem;font-weight:700;text-align:center;line-height:1.45;flex:1 1 96px;max-width:150px}
+  .pipe .pn i{display:block;font-style:normal;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;color:var(--accent);font-size:.9rem;margin-bottom:3px}
+  .pipe .pn.loop{border-color:var(--green);color:var(--green)}
+  .pipe .pn.loop i{color:var(--green)}
+  .pipe .pa{align-self:center;color:var(--accent);font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;flex:0 0 auto;font-size:.9rem}
+  @media(max-width:560px){.pipe{flex-direction:column;align-items:stretch;gap:4px}.pipe .pn{flex:0 0 auto;max-width:none;font-size:.82rem;padding:11px 12px}.pipe .pn i{display:inline;margin:0 8px 0 0}.pipe .pa{transform:rotate(90deg);align-self:center}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow"><b>YCA</b> 1年生 ／ 60分講義 ／ 第4回・実践編</span>
+    <h1>AI会社を、<span class="q">動かす</span></h1>
+    <p class="sub"><b>プロンプト4要素 × タスク分解</b> ── <span class="hot">指示の技術。</span></p>
+    <div class="meta-row">
+      <span class="chip">⏱ <b>60分</b></span>
+      <span class="chip">📅 <b>日程調整中</b></span>
+      <span class="chip">💻 オンライン</span>
+    </div>
+    <p class="hero-msg">前回、<b>AI会社は作れる</b>ことを実物で見せました。役割を文章で書けば、AIは組織になります。<br/>でも、正直に言います。<span class="hot">作った会社の多くは、動きません。</span>原因はAIの性能ではなく、<b>投げ方</b>です。<br/>今日は、その会社を実際に走らせる技術を2つだけ渡します ── <b>プロンプトの4要素</b>と、<b>タスクの分解</b>。今日から使えて、今日から結果が変わります。</p>
+    <a href="../26年第3回/" class="prev-link"><span class="arr">←</span> 第3回「AI会社を作ってみる」を見る</a>
+    <a href="../" class="prev-link"><span class="arr">←</span> 第2回「ショートドラマヒットの解剖学」を見る</a>
+    <a href="../26年5月第1回/" class="prev-link"><span class="arr">←</span> 第1回「AIイノベーションとOPC」を見る</a>
+  </div>
+  <div class="scroll-hint">SCROLL ↓</div>
+</header>
+
+<nav id="mnav" aria-label="セクション">
+  <a href="#aim">狙い</a>
+  <a href="#s1">1 なぜ動かないか</a>
+  <a href="#s2">2 プロンプト4要素</a>
+  <a href="#s3">3 タスク分解</a>
+  <a href="#s4">4 会社の動かし方</a>
+  <a href="#s5">5 演習・クロージング</a>
+  <a href="#summary">まとめ</a>
+  <a href="#faq">Q&amp;A</a>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="toc" aria-label="目次">
+      <p class="toc-title">目次 / Contents</p>
+      <a href="#aim">この講義の狙い</a>
+      <a href="#timetable">60分タイムテーブル</a>
+      <a href="#s1"><span class="n">1</span>なぜ"それっぽい答え"しか返らないのか</a>
+      <a href="#s2"><span class="n">2</span>プロンプトに入れるべき4要素</a>
+      <a href="#s3"><span class="n">3</span>タスク分解 ── 大きい仕事の壊し方</a>
+      <a href="#s4"><span class="n">4</span>AI会社の動かし方</a>
+      <a href="#s5"><span class="n">5</span>演習＋クロージング</a>
+      <a href="#summary">まとめ（持ち帰り）</a>
+      <a href="#faq">よくある質問</a>
+      <a href="#refs">出典</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="reading">
+
+      <!-- AIM -->
+      <section id="aim" class="rv">
+        <div class="kicker"><span class="time-pill">この講義の狙い</span></div>
+        <h2 class="sec">覚えて帰って欲しい2つ</h2>
+        <ul class="lead">
+          <li><strong>AIは察してくれない</strong>：プロンプトに<b>目的・インプット・アウトプット・制約条件</b>の4つを入れるだけで、返ってくるものが別物になります。魔法の呪文は要りません。抜けをなくすだけです。</li>
+          <li><strong>大きい仕事は、一発では回らない</strong>：まず<b>分解を頼む</b>。<b>01・02と番号を振る</b>。<b>1タスク1フォルダ</b>で回す。最後に<b>結合する</b>。この順番だけで、自動化は成功率が変わります。</li>
+        </ul>
+        <div class="message">
+          <p class="msg-lab">この講義のメッセージ</p>
+          <p><strong>「同じAIを使っているのに、なぜ人によって結果がこんなに違うのか？」</strong></p>
+          <p>差がついているのは、AIの性能ではありません。<strong>指示です。</strong></p>
+          <p>前回作った会社を、今日は実際に<strong>動かす</strong>ところまで持っていきます。</p>
+        </div>
+      </section>
+
+      <!-- TIMETABLE -->
+      <section id="timetable" class="rv">
+        <div class="kicker"><span class="time-pill">全体の流れ</span></div>
+        <h2 class="sec">60分タイムテーブル</h2>
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead>
+              <tr><th>区切り</th><th>時間</th><th>内容</th><th>キーワード</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="tno">1</td><td class="ttime">0–7分</td><td>振り返り＋今日の問い ── なぜ"それっぽい答え"しか返らないのか</td><td class="tkw">AIは中途入社の部下</td></tr>
+              <tr><td class="tno">2</td><td class="ttime">7–25分</td><td>★ プロンプトに入れるべき4要素</td><td class="tkw">目的／インプット／アウトプット／制約条件</td></tr>
+              <tr><td class="tno">3</td><td class="ttime">25–43分</td><td>★ タスク分解 ── 大きい仕事の壊し方（4ステップ）</td><td class="tkw">分解・1タスク1フォルダ・01/02・結合</td></tr>
+              <tr><td class="tno">4</td><td class="ttime">43–53分</td><td>AI会社の動かし方 ── 4要素を"会社に置く"</td><td class="tkw">指示は3種類しかない</td></tr>
+              <tr><td class="tno">5</td><td class="ttime">53–60分</td><td>演習＋クロージング</td><td class="tkw">その仕事、3つに分けられる？</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 1 -->
+      <section id="s1" class="rv">
+        <div class="kicker"><span class="num acc">1</span><span class="time-pill">0–7分</span></div>
+        <h2 class="sec">第1部：なぜ"それっぽい答え"しか返らないのか</h2>
+        <p class="sec-aim">前回、会社は作れました。今日はその会社が"動かない"理由から始めます。</p>
+
+        <h3 class="sub3"><span class="tag">1-1</span>ここまでの3回を3行で</h3>
+        <ul>
+          <li><strong>第1回（作る）</strong>：AIで制作コストが崩壊。個人がIP＝資産を作れる ── それがOPC（一人会社）</li>
+          <li><strong>第2回（売る）</strong>：売れるには公式がある ── 棚・盲点・分解。1本は10個のビジネスになる</li>
+          <li><strong>第3回（会社にする）</strong>：役割を文章で書けば、AIは組織になる ── 実物を見せました</li>
+        </ul>
+        <p>そして今日、<strong>第4回は「動かす」</strong>です。会社は作れても、指示ができなければ1円も生みません。</p>
+
+        <h3 class="sub3"><span class="tag">1-2</span>たぶん、こうなっています</h3>
+        <p>前回のあと、実際にAIに何か頼んでみた人もいると思います。おそらく、こんな感じだったのではないでしょうか。</p>
+
+        <div class="session-win">
+          <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-t">よくあるAIとの会話</span></div>
+          <div class="win-body">
+            <div class="user-bubble">ショートドラマの企画を10個考えて</div>
+            <div class="ai-reply">
+              <p style="margin-top:0">承知しました。ショートドラマの企画を10案ご提案します。</p>
+              <ul>
+                <li>① 高校生の青春ラブストーリー</li>
+                <li>② 記憶を失った主人公のミステリー</li>
+                <li>③ タイムスリップした侍が現代へ</li>
+                <li>④ 御曹司と平凡な女性の身分差ラブ …（以下同様）</li>
+              </ul>
+            </div>
+          </div>
+          <div class="session-cap">▲ 出てきたのは、<b>どこかで見たような10案</b>。読んで「なるほど」とは思うけれど、どれを選べばいいか分からない。結局、使わないまま閉じる。── これが"それっぽい答え"です。</div>
+        </div>
+
+        <p>ここで多くの人が「やっぱりAIはまだ使えないな」と結論を出します。でも、<strong>悪いのはAIの性能ではありません</strong>。渡した情報が「ショートドラマ」「10個」の2つだけなら、返ってくるのが世界の平均値なのは当たり前です。</p>
+
+        <h3 class="sub3"><span class="tag">1-3</span>今日の問い ── AIをどう捉えるか</h3>
+        <div class="message">
+          <p class="msg-lab">今日の問い</p>
+          <p><strong>AIは「検索」ではなく「部下」です。 ── では、部下に仕事を頼むとき、あなたは何を伝えますか？</strong></p>
+        </div>
+
+        <div class="concept">
+          <p class="ct">AI＝「超優秀だけど、あなたを何も知らない、今日入った中途社員」</p>
+          <p>能力は十分です。むしろ社内の誰よりも速い。ただしこの新人は、<strong>あなたの目的も、手元のデータも、提出形式も、社内の禁止事項も、何ひとつ知りません</strong>。人間の新人なら3か月かけて覚えることを、AIには毎回、指示のなかで渡す必要があります。<br/>逆に言えば ── <strong>渡しさえすれば、初日から即戦力</strong>です。「AIと向き合う」とは、この新人への引き継ぎを丁寧にやる、という意味です。</p>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">Point</p>
+          <p>「AIに聞く」をやめて、<strong>「AIに任せる」</strong>に切り替えてください。聞くだけなら検索で足ります。任せるなら、引き継ぎが要ります。<strong>今日の60分は、その引き継ぎの型</strong>を渡す時間です。</p>
+        </div>
+
+        <p class="bridge">→ <span class="arrow">引き継ぎに必要な項目は、たった4つです。</span></p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 2 -->
+      <section id="s2" class="rv">
+        <div class="kicker"><span class="num acc">2</span><span class="time-pill">7–25分</span></div>
+        <h2 class="sec">第2部：★ プロンプトに入れるべき「4つの要素」</h2>
+        <p class="sec-aim">長い呪文も、役割演技も要りません。この4つの<strong>抜けをなくす</strong>だけです。</p>
+
+        <h3 class="sub3"><span class="tag">2-1</span>4要素 ── 目的・インプット・アウトプット・制約条件</h3>
+
+        <div class="four">
+          <div class="fcard">
+            <p class="fn">ELEMENT 01</p>
+            <h4>目的</h4>
+            <p class="fd">何のためにその作業を行うのか。<strong>背景と、最終的なゴール</strong>を伝えます。AIが迷ったときの判断基準になる、いちばん効く一文です。</p>
+            <p class="ex"><span class="exl">書き方の例</span>「英語圏向けチャンネルの登録者を増やすために使います。今週中に1本撮る前提です」</p>
+          </div>
+          <div class="fcard c2">
+            <p class="fn">ELEMENT 02</p>
+            <h4>インプット</h4>
+            <p class="fd">AIに<strong>どんなデータ・情報・前提知識を与えるか</strong>を指定します。これが無いと、AIは「ネットの平均値」で答えるしかありません。</p>
+            <p class="ex"><span class="exl">書き方の例</span>「以下の実績データを前提にしてください：登録者9人／動画76本／人気ショート上位5本は874〜1,262回」</p>
+          </div>
+          <div class="fcard c3">
+            <p class="fn">ELEMENT 03</p>
+            <h4>アウトプット</h4>
+            <p class="fd">入れたデータから、<strong>最終的にどんな形式・内容で出してほしいか</strong>を指定します。形を決めると、そのまま次の作業に使えます。</p>
+            <p class="ex"><span class="exl">書き方の例</span>「表形式で5案。各案は『タイトル／最初の1.5秒／30秒の展開／伸びる根拠』の4項目」</p>
+          </div>
+          <div class="fcard c4">
+            <p class="fn">ELEMENT 04</p>
+            <h4>制約条件</h4>
+            <p class="fd"><strong>外してはいけないルール、守るべき制限</strong>を指定します。ビジネスの文脈なら「日本国内のプロダクトだけに限定する」のような線引きです。</p>
+            <p class="ex"><span class="exl">書き方の例</span>「撮影は1日・出演2名以内で撮れる規模に限る。既存IPのパロディは除く」</p>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">覚え方</p>
+          <p><strong>「なんのために（目的）／なにを渡して（インプット）／どんな形で（アウトプット）／どこまで（制約条件）」</strong>。順番は自由です。大事なのは4つとも書いてあることです。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">2-2</span>実例①：同じ依頼を、Before / After で比べる</h3>
+        <p>さっきの「ショートドラマの企画を10個考えて」を、4要素で書き直してみます。</p>
+
+        <div class="ba">
+          <div class="ba-card bad">
+            <p class="bl">✕ Before ── 4要素なし</p>
+            <p class="pq">ショートドラマの企画を10個考えて</p>
+            <p class="res"><b>返ってくるもの：</b>高校生の恋愛、記憶喪失、タイムスリップ…… 世界のどこにでもある10案。<b>選ぶ基準がないので選べません。</b>結局もう一度聞き直すことになります。<br/>書く時間：<b>10秒</b>／その後にかかる時間：<b>数時間</b></p>
+          </div>
+          <div class="ba-card good">
+            <p class="bl">◯ After ── 4要素あり</p>
+            <p class="pq">【目的】英語圏向けYouTubeショートの登録者を増やしたい……
+【インプット】登録者9人／人気ショート上位5本は874〜1,262回……
+【アウトプット】表で5案、各案4項目で……
+【制約条件】1日・2名以内で撮れる規模に限る……</p>
+            <p class="res"><b>返ってくるもの：</b><b>自分のチャンネルの数字に紐づいた5案。</b>「なぜ今のデータ上これが伸びると言えるか」まで書いてあるので、その場で1案を選んで撮影に入れます。<br/>書く時間：<b>2分</b>／その後にかかる時間：<b>ほぼゼロ</b></p>
+          </div>
+        </div>
+
+        <p>実際のプロンプトの全文がこちらです。長く見えますが、<strong>埋めるだけ</strong>です。</p>
+
+        <div class="copybox">
+          <span class="cl">4要素で書いた実物（そのままコピーして使えます）</span>
+          <button class="copy-btn" type="button">コピー</button>
+          <span class="copy-src"><span class="k">【目的】</span>
+英語圏向けYouTubeショート「JDrama Shorts」の登録者を増やすため、
+次に撮る新シリーズの企画を決めたい。今週中に1本撮影する前提です。
+
+<span class="k">【インプット】</span>
+・現在の登録者9人／公開動画76本
+・人気ショート上位5本は874〜1,262回。伸びているのは「has no idea」構文のタイトル（971→982回と伸長中）
+・発見経路の94.1%はショートフィード／視聴継続率は41.3%（合格ラインは70%）
+・自社保有の作品なので、切り抜き・再編集・多プラットフォーム展開は自由
+
+<span class="k">【アウトプット】</span>
+・企画を5案、表形式で
+・各案は「タイトル案（英語7語以内）／最初の1.5秒に映すもの／
+　30秒の展開／今のデータ上なぜ伸びると言えるか」の4項目
+・専門用語は使わず、高校生でも分かる言葉で
+
+<span class="k">【制約条件】</span>
+・撮影は1日・出演者2名以内で撮り切れる規模に限る
+・既存IPのパロディ、実在の事件を想起させる題材は除く
+・YouTubeの収益化基準に抵触する過激な表現は不可</span>
+        </div>
+
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead><tr><th>観点</th><th>Before（4要素なし）</th><th>After（4要素あり）</th></tr></thead>
+            <tbody>
+              <tr><td><b>中身</b></td><td>一般論・どこかで見た案</td><td>自分のチャンネルの数字に紐づいた案</td></tr>
+              <tr><td><b>選べるか</b></td><td>基準がないので選べない</td><td>「なぜ伸びるか」が書いてあるので選べる</td></tr>
+              <tr><td><b>次の一手</b></td><td>また聞き直す（往復が増える）</td><td>そのまま撮影・投稿に進める</td></tr>
+              <tr><td><b>書く手間</b></td><td class="ttime">10秒</td><td class="ttime">2分</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="lesson">
+          <p class="lt">Point</p>
+          <p><strong>最初の2分をケチると、あとの3時間が溶けます。</strong>「やり直しを3回した」経験があるなら、それは能力ではなく、この2分を書かなかったコストです。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">2-3</span>実例②：4要素は"毎回"書かなくていい</h3>
+        <p>ここで前回の話に戻ります。第3回で見せた、オーナーの指示はたった1行でした。</p>
+
+        <div class="session-win">
+          <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-t">第3回で見せた実物のログ</span></div>
+          <div class="win-body">
+            <div class="user-bubble">第2弾ショートを作成、投稿してください。現在再生が伸びているショートを参考にしてください</div>
+          </div>
+          <div class="session-cap">▲ この1行で、AIは「今どのショートが伸びているか」を数字で確認し、勝ちパターンを踏襲した第2弾を<b>予約投稿まで完了</b>しました。</div>
+        </div>
+
+        <p>「4要素なんて書いてないじゃないか」と思った人 ── 鋭いです。<strong>書いてあります。ただし、指示ではなく"会社の側"に。</strong></p>
+
+        <div class="components">
+          <div class="components-row header"><div>4要素</div><div>この1行のどこにある？</div><div>実は、どこに書いてあったか</div></div>
+          <div class="components-row"><div class="lbl">目的</div><div>書いていない</div><div>経営会議の議事録に決定済み ── <b>KPIは週間総再生数と純増フォロワー数</b></div></div>
+          <div class="components-row"><div class="lbl">インプット</div><div>「伸びているショートを参考に」</div><div>チャンネルのアナリティクス。AIが自分で取りに行く経路が用意してある</div></div>
+          <div class="components-row"><div class="lbl">アウトプット</div><div>「ショートを作成、投稿」</div><div>制作ハンドブック ── <b>15–30秒／フックテキスト／投稿キット</b>の型が固定済み</div></div>
+          <div class="components-row"><div class="lbl">制約条件</div><div>書いていない</div><div>組織規程・決裁権限表 ── <b>素材はホワイトリスト方式、対外公開はオーナー承認</b></div></div>
+        </div>
+
+        <div class="reveal">
+          <p class="rv-lab">Point</p>
+          <h4>4要素は「毎回書く」ものではなく、<span class="hot">1回書いて、会社に置いておく</span>もの</h4>
+          <p>だから慣れた人の指示は短いのです。短いのは手抜きではなく、<strong>前もって4要素を仕込んである</strong>から。逆に、まだ何も仕込んでいない最初の1回は、面倒でも全部書いてください。<strong>そこで書いた4要素が、そのまま会社の資産になります。</strong></p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">2-4</span>コピーして使うテンプレート</h3>
+        <p>今日から使えるように、空欄のテンプレートを置いておきます。埋めるだけです。</p>
+
+        <div class="copybox">
+          <span class="cl">4要素テンプレート（空欄）</span>
+          <button class="copy-btn" type="button">コピー</button>
+          <span class="copy-src"><span class="k">【目的】</span>
+（何のために／最終的にどうなったら成功か）
+
+<span class="k">【インプット】</span>
+（渡すデータ・現状の数字・前提。分かっている事実を箇条書きで）
+
+<span class="k">【アウトプット】</span>
+（形式：表／箇条書き／何案／各何文字。誰が読むか）
+
+<span class="k">【制約条件】</span>
+（やってはいけないこと／範囲の限定／予算・期間・人数）
+
+<span class="cmt">※分からない項目があれば、勝手に決めずに質問してください。</span></span>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">最後の1行が効きます</p>
+          <p><strong>「分からない項目があれば、勝手に決めずに質問してください」</strong> ── これを付けるだけで、AIが思い込みで突っ走るのを止められます。壁打ちのつもりが「勝手に完成品を作られていた」という事故が減ります。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">2-5</span>抜けると、こういう症状が出ます</h3>
+        <p>4要素は、どれが抜けたかで<strong>症状がはっきり違います</strong>。返ってきた答えに違和感があったら、この表で診断してください。</p>
+
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead><tr><th>抜けた要素</th><th>出てくる症状</th><th>処方（足す一言）</th></tr></thead>
+            <tbody>
+              <tr><td><b>目的</b></td><td><span class="sym">無難で平均的な答え。方向がそもそもズレる</span></td><td><span class="fix">「〜のために使います」「最終的に〜したい」</span></td></tr>
+              <tr><td><b>インプット</b></td><td><span class="sym">一般論・ネットの平均値が返る。自分に関係ない</span></td><td><span class="fix">「以下のデータを前提に」「現状は〜です」</span></td></tr>
+              <tr><td><b>アウトプット</b></td><td><span class="sym">長い作文が返ってきて、そのままでは使えない</span></td><td><span class="fix">「表で」「5案」「各50字」「箇条書きで」</span></td></tr>
+              <tr><td><b>制約条件</b></td><td><span class="sym">使えない案が混ざる。読んでから捨てる手間が出る</span></td><td><span class="fix">「〜は除く」「〜に限る」「予算は0円」</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="bridge">→ <span class="arrow">ここまでが「1つの仕事」の頼み方です。</span>では、仕事が大きいときは？</p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 3 -->
+      <section id="s3" class="rv">
+        <div class="kicker"><span class="num acc">3</span><span class="time-pill">25–43分</span></div>
+        <h2 class="sec">第3部：★ タスク分解 ── 大きい仕事の壊し方</h2>
+        <p class="sec-aim">4要素を完璧に書いても、仕事が大きすぎると失敗します。理由と、その壊し方を4ステップで。</p>
+
+        <h3 class="sub3"><span class="tag">3-1</span>なぜ、一発で頼むと失敗するのか</h3>
+        <p>「スライド作成を自動化して」「経理を自動化して」「動画作成を自動化して」── こういう<strong>大きなタスクを1発で自動化しようとすると、たいてい途中で崩れます</strong>。うまくいったように見えても、2回目・3回目で止まります。</p>
+        <p>理由ははっきりしています。<strong>自動化が壊れるのは、平常時ではなく「例外」のときだから</strong>です。</p>
+        <ul>
+          <li><b>スライド作成</b>：文章ページは通るのに、<strong>図が必要な1ページ</strong>だけ型に収まらない</li>
+          <li><b>経理業務</b>：毎月の請求書は処理できるのに、<strong>年に数回のイレギュラーな1件</strong>で止まる</li>
+          <li><b>動画作成</b>：ふつうの素材は通るのに、<strong>音が小さい回・テロップが被る回</strong>で崩れる</li>
+        </ul>
+
+        <div class="concept">
+          <p class="ct">分解の本当の目的は「速さ」ではなく「直せること」</p>
+          <p>1つの巨大な指示は、<strong>例外が1個出た瞬間に、全体がダメになります</strong>。どこで壊れたのかも分かりません。<br/>でも01〜05に分けてあれば、<strong>壊れた工程だけを直せます</strong>。しかも他の工程はそのまま使い続けられます。── 分解とは、<strong>修理できる形に組み立てておくこと</strong>です。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">3-2</span>ステップ1：ストレートに「分解して」と頼む</h3>
+        <p>難しいテクニックは要りません。<strong>そのまま頼みます。</strong>最初は大雑把な目的でかまいません。</p>
+
+        <div class="copybox">
+          <span class="cl">最初に投げる一文（これだけでいい）</span>
+          <button class="copy-btn" type="button">コピー</button>
+          <span class="copy-src">動画作成を自動化したいのですが、まずはタスクを分解してください。</span>
+        </div>
+
+        <p>AIは、こういう形で返してきます。</p>
+
+        <div class="session-win">
+          <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-t">分解を頼んだときの応答（例）</span></div>
+          <div class="win-body">
+            <p class="ai-reply" style="margin-top:0">動画作成の自動化を、以下の5ステップに分解しました。</p>
+            <ul class="ai-reply">
+              <li><b>① 情報を集める</b> ── 素材動画・台本・過去の実績データを揃える</li>
+              <li><b>② 構成を作る</b> ── どのシーンを、どの順で、何秒使うかを決める</li>
+              <li><b>③ 制作する</b> ── 切り出し・字幕・音量調整・書き出し</li>
+              <li><b>④ 仕上げる</b> ── サムネイル、タイトル、説明文をセットにする</li>
+              <li><b>⑤ 出して、測る</b> ── 投稿し、1週間後に数字を確認して次に反映する</li>
+            </ul>
+          </div>
+          <div class="session-cap">▲ ここで大事なのは、<b>この分解が完璧かどうかではありません</b>。「手を動かせる単位まで降りた」ことが大事です。</div>
+        </div>
+
+        <p><strong>最初はでかく、雑に作ってみるのも手です。</strong>そのうえで、もしブレたり、うまくいかなかった場合は、追撃の一文を投げます。</p>
+
+        <div class="copybox">
+          <span class="cl">うまくいかないときの追撃（今日いちばん使う一文）</span>
+          <button class="copy-btn" type="button">コピー</button>
+          <span class="copy-src">うまくいっていないので、もうちょっと細かいタスクに分解して、
+ステップ（1, 2, 3…）に分けてください。</span>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">今日持ち帰る武器は、実質この2文です</p>
+          <p><strong>「まずはタスクを分解してください」</strong>と<strong>「もうちょっと細かく分けてください」</strong>。この2文を言えるようになるだけで、AIの成功率は目に見えて変わります。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">3-3</span>ステップ2：1タスク1フォルダ（パッケージシステム）</h3>
+        <p>分解できたら、次が肝心です。<strong>全部を同じ場所でやらないでください。</strong>ステップごとに<strong>別のチャット・別のフォルダ</strong>を作り、そこで個別に壁打ち・作業をします。</p>
+        <p>理由は2つあります。</p>
+        <ul>
+          <li>1つのフォルダに関係のないファイルや<strong>過去の失敗データが混ざっていると、AIが勝手にそれを読み込んで間違った処理をします</strong></li>
+          <li>読まなくていいものを読む分、<strong>無駄なトークンを消費して精度が落ちます</strong></li>
+        </ul>
+        <p>だから鉄則は <strong>「1タスク1フォルダ」＝パッケージシステム</strong>です。</p>
+
+        <div class="tree-pair">
+          <div class="tree-card ng">
+            <p class="th">✕ よくある「全部入り」フォルダ</p>
+            <div class="org-tree">マイドライブ/
+  └── 動画/
+        ├── 企画メモ.txt
+        ├── 企画メモ_旧.txt
+        ├── ボツ_サムネ案.png
+        ├── 台本ver3.docx
+        ├── 台本ver1(ボツ).docx
+        ├── 経理_7月.xlsx   ← 無関係
+        └── master.mov</div>
+            <p class="tc">「サムネを作って」と頼むと、<b>ボツ案や無関係の経理ファイルまで読みに行きます</b>。しかも本人は読んだことを教えてくれません。</p>
+          </div>
+          <div class="tree-card ok">
+            <p class="th">◯ 1タスク1フォルダ</p>
+            <div class="org-tree">JDramaShorts/
+  ├── 01_情報収集/
+  ├── 02_構成作成/
+  ├── 03_切り抜き生成/
+  ├── 04_サムネ・投稿キット/
+  └── 05_計測レポート/</div>
+            <p class="tc">各フォルダには<b>その工程に必要なものだけ</b>。前の工程からは「完成した成果物」だけを次に渡します。人間の引き継ぎとまったく同じです。</p>
+          </div>
+        </div>
+
+        <div class="concept">
+          <p class="ct">綺麗に保つのは、几帳面さではなく性能の問題</p>
+          <p>フォルダを分けるのは、整理整頓が好きだからではありません。<strong>AIの精度が、渡した箱の中身でほぼ決まるから</strong>です。散らかった机の上で仕事を頼めば、散らかった成果物が返ってきます。<strong>箱を綺麗にすることが、そのままチューニング</strong>になります。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">3-4</span>ステップ3：頭に「01」「02」と番号を振る</h3>
+        <p>順番に進めるステップを分けるときは、<strong>フォルダ名・チャット名・作業手順の頭に「01」「02」「03」と番号を振っておきます</strong>。</p>
+        <p>理由は、<strong>AIエージェントがその順番に沿って正しく、スムーズに処理しやすくなるから</strong>です。「次は何をすればいいか」をAIに推測させないこと ── これだけで事故が減ります。</p>
+
+        <div class="check">
+          <div class="ci"><span class="cb"></span><span><b>2桁で振る（01, 02, 03…）</b> ── あとから工程を差し込んでも並び順が壊れません。10工程を超えても揃います。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>フォルダ名だけでなく、チャット名にも振る</b> ── フォルダ機能がないAIツールでも、チャットのタイトルを「01_情報収集」にするだけで効果があります。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>手順書の見出しにも振る</b> ── 「01. 文字起こし → 02. 切り出し → 03. 生成」と書いてあれば、AIはその通りに動きます。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>人間にとっても効きます</b> ── いまどこで止まっているかが、フォルダを見るだけで分かります。</span></div>
+        </div>
+
+        <h3 class="sub3"><span class="tag">3-5</span>ステップ4：最後に「ガッチャンコ」（結合）</h3>
+        <p>いきなり全自動を作ろうとしないでください。順番はこうです。</p>
+
+        <div class="workflow">
+          <div class="step">
+            <div class="step-head"><span class="step-num">1</span><span class="step-t">各フォルダで、手動で壁打ちする</span></div>
+            <div class="out"><span class="ol">手動</span>01なら01だけ。第2部の4要素を使って、その工程だけをAIと往復します。まだ自動化のことは考えません。</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step">
+            <div class="step-head"><span class="step-num">2</span><span class="step-t">「確実に良いものができるフロー」を固める</span></div>
+            <div class="out"><span class="ol">手動</span>同じ頼み方で3回やって、3回とも合格ならOK。1回でもコケるなら、まだ分解が粗いか、4要素が足りていません。</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step">
+            <div class="step-head"><span class="step-num">3</span><span class="step-t">うまくいった手順を、そのまま文章にする</span></div>
+            <div class="out"><span class="ol">記録</span>4要素と手順をファイルに書き出します。これが<b>手順書</b>です。第3回で言った「役割を文章で書く」と同じ行為です。</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step final">
+            <div class="step-head"><span class="step-num">4</span><span class="step-t">手順書どうしをガッチャンコ（結合）する</span></div>
+            <div class="out"><span class="ol">自動</span>01→02→03…をつなげて、1本のパイプラインにします。<b>ここまで来て初めて「指示1行で動く自動化」</b>になります。</div>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">いちばん大事な原則</p>
+          <p><strong>自動化とは、うまくいった手順を、そのまま文字にしたものです。</strong>まだ手でうまくいっていない工程を自動化しても、<strong>失敗が高速化するだけ</strong>です。順番を守ってください ── 手で成功させる → 文字にする → つなげる。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">3-6</span>第3回のあのパイプラインは、この分解の完成形でした</h3>
+        <p>前回お見せした切り抜き工程を、番号で並べ直すとこうなります。まったく同じ構造です。</p>
+
+        <div class="pipe">
+          <div class="pn"><i>01</i>文字起こし＆英訳字幕</div>
+          <div class="pa">→</div>
+          <div class="pn"><i>02</i>切り出し所の選定</div>
+          <div class="pa">→</div>
+          <div class="pn"><i>03</i>切り抜き生成</div>
+          <div class="pa">→</div>
+          <div class="pn"><i>04</i>サムネ・投稿キット</div>
+          <div class="pa">→</div>
+          <div class="pn loop"><i>05</i>計測 →01へ戻る</div>
+        </div>
+
+        <div class="reveal">
+          <p class="rv-lab">Point</p>
+          <h4>「指示1行で動く」の<span class="hot">正体</span></h4>
+          <p>オーナーの指示が1行で済むのは、AIが賢いからではありません。<strong>01〜05に分解され、各工程の4要素がすでに書かれているから</strong>です。魔法の呪文ではなく、<strong>事前の分解が効いています</strong>。<br/>逆に言えば ── いま君のAIが1行で動かないのは、まだ分解していないからです。それだけです。</p>
+        </div>
+
+        <p class="bridge">→ <span class="arrow">では、この2つを"会社"に載せるとどうなるか。</span>ここが今日の本題です。</p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 4 -->
+      <section id="s4" class="rv">
+        <div class="kicker"><span class="num acc">4</span><span class="time-pill">43–53分</span></div>
+        <h2 class="sec">第4部：AI会社の動かし方</h2>
+        <p class="sec-aim">4要素と分解を、第3回で作った組織に載せます。ここで「会社にする意味」が分かります。</p>
+
+        <h3 class="sub3"><span class="tag">4-1</span>4要素は、会社の"どこ"に置かれるのか</h3>
+        <p>個人でAIを使うときは、4要素を毎回プロンプトに書きます。<strong>会社にすると、置き場所ができます。</strong>第3回の実物と対応させると、こうです。</p>
+
+        <div class="components">
+          <div class="components-row header"><div>4要素</div><div>会社での置き場所</div><div>第3回で見せた実物</div></div>
+          <div class="components-row"><div class="lbl">目的</div><div>ミッションとKPI（経営会議で決定し、議事録に残す）</div><div>「フォロワーと再生数を増やせ」＋KPIは<b>週間総再生数・純増フォロワー数</b></div></div>
+          <div class="components-row"><div class="lbl">インプット</div><div>工程ごとのフォルダと、データへの接続経路</div><div>アナリティクス、マスター動画、字幕ファイル、過去の実績データ</div></div>
+          <div class="components-row"><div class="lbl">アウトプット</div><div>役員の回答フォーマットと、制作ハンドブック</div><div>投稿キット（タイトル・説明文・固定コメント）、サムネの「型」</div></div>
+          <div class="components-row"><div class="lbl">制約条件</div><div>組織規程・決裁権限表</div><div>素材はホワイトリスト方式／<b>支出と対外公開はオーナー承認</b></div></div>
+        </div>
+
+        <div class="concept">
+          <p class="ct">会社とは、"毎回言わなくて済むようにした指示"の集合</p>
+          <p>人間の会社に就業規則やマニュアルがあるのは、<strong>毎回説明しなくて済むようにするため</strong>です。AI会社もまったく同じです。<strong>4要素を一度書いて、会社に置いておく。</strong>それだけで、次からの指示は1行になります。<br/>── 第3回の「役割を文章で書けば組織になる」の続きが、これです。<strong>4要素を文章で書けば、組織は動き出します。</strong></p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">4-2</span>オーナーの指示は、3種類しかない</h3>
+        <p>第3回で人間がやっていたことを数えてみると、本当にこの3つだけでした。</p>
+
+        <div class="three">
+          <div class="tcard">
+            <p class="tn">01</p>
+            <h4>ミッションを与える</h4>
+            <p>＝ 目的を渡す。何を目指すかはオーナー（人間）の仕事です。AIは目標を与えられて初めて動きます。</p>
+            <span class="say">「JDrama Shortsのフォロワーと再生数を増やせ」</span>
+          </div>
+          <div class="tcard">
+            <p class="tn">02</p>
+            <h4>分解を頼む</h4>
+            <p>＝ 設計を渡す。自分で工程表を書く必要はありません。分解そのものをAIに頼み、番号を振らせます。</p>
+            <span class="say">「まずタスクを分解して、01から番号を振ってください」</span>
+          </div>
+          <div class="tcard">
+            <p class="tn">03</p>
+            <h4>承認する</h4>
+            <p>＝ 責任を取る。事業の決定・支出・対外公開の最終判断。責任だけはAIに渡せません。</p>
+            <span class="say">「方針承認します。Phase0開始してください」</span>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">シリーズを通しての答え合わせ</p>
+          <p>第2回で言った「ボタンを押すだけの労働者から、制作チームのボスへ」。<strong>ボスの仕事の中身が、今日ようやく具体的になりました</strong> ── <b>目的を決める・分解を頼む・承認する</b>。手はAIが動かします。決めるのは人間です。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">4-3</span>つまずきポイントと処方箋</h3>
+        <p>ここからは、実際に動かし始めると必ず出る症状です。<strong>原因はほぼ決まっています。</strong></p>
+
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead><tr><th>症状</th><th>原因</th><th>処方</th></tr></thead>
+            <tbody>
+              <tr><td><span class="sym">それっぽいけど、使えない</span></td><td>目的とアウトプットが抜けている</td><td><span class="fix">「何のために」と「どんな形で」を1行ずつ足す</span></td></tr>
+              <tr><td><span class="sym">途中で話が変わる／前を忘れる</span></td><td>1つのチャットに詰め込みすぎ</td><td><span class="fix">工程ごとにチャットを分ける（1タスク1チャット）</span></td></tr>
+              <tr><td><span class="sym">昔のボツ案を引きずってくる</span></td><td>フォルダが汚れている</td><td><span class="fix">新しい箱を作り、必要なファイルだけ入れ直す</span></td></tr>
+              <tr><td><span class="sym">例外が出ると止まる</span></td><td>分解の粒度が粗い</td><td><span class="fix">「もうちょっと細かく分けて」でもう1段下げる</span></td></tr>
+              <tr><td><span class="sym">毎回、同じ説明をしている</span></td><td>制約が"その場かぎり"になっている</td><td><span class="fix">手順書・規程ファイルに書き出して常設にする</span></td></tr>
+              <tr><td><span class="sym">だんだん精度が落ちてきた</span></td><td>会話が長くなりすぎ／不要ファイルの蓄積</td><td><span class="fix">工程が終わったらチャットを閉じ、次の箱へ移る</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="sub3"><span class="tag">4-4</span>やってはいけない3つ</h3>
+        <div class="ngs">
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">全部を1つのチャットでやる</p>
+              <p>企画も、制作も、投稿も、反省会も同じ場所。文脈が混ざり、AIはどの話をしているか分からなくなります。<b>分けるだけで直ります。</b></p>
+            </div>
+          </div>
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">目的を言わずに、作業だけ頼む</p>
+              <p>「まとめて」「いい感じにして」は、目的が無いので"平均的にいい感じ"が返ってきます。<b>一言「〜のために使います」を足すだけ</b>で別物になります。</p>
+            </div>
+          </div>
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">一発で完成品を求める</p>
+              <p>大きいまま投げて、例外で崩れて、「AIは使えない」と結論を出す ── いちばんもったいないパターンです。<b>まず分解を頼んでください。</b></p>
+            </div>
+          </div>
+        </div>
+
+        <p class="bridge">→ <span class="arrow">では、実際にやってみましょう。</span></p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 5 / CLOSING -->
+      <section id="s5" class="rv">
+        <div class="kicker"><span class="num acc">5</span><span class="time-pill">53–60分</span></div>
+        <h2 class="sec">第5部：演習＋クロージング</h2>
+
+        <h3 class="sub3"><span class="tag">5-1</span>3分でやる演習 ── 自分の仕事で試す</h3>
+        <p>いま、<strong>自分が自動化したい作業を1つ</strong>思い浮かべてください。何でも構いません。</p>
+        <ul>
+          <li>競合のリサーチ ／ ニュースの要約 ／ 営業資料の作成</li>
+          <li>SNSの投稿 ／ 動画の切り抜き ／ サムネ制作</li>
+          <li>授業のレポートの下調べ ／ バイトのシフト表作り</li>
+        </ul>
+        <p>決まったら、この3行を投げるだけです。<strong>フォルダ構成の設計案まで返ってきます。</strong></p>
+
+        <div class="copybox">
+          <span class="cl">今日の演習プロンプト（◯◯を自分の作業に置き換えてください）</span>
+          <button class="copy-btn" type="button">コピー</button>
+          <span class="copy-src">◯◯を自動化したいのですが、まずはタスクを分解してください。
+分解したら、各ステップに 01, 02, 03… と番号を振ってください。
+そのうえで、ステップごとに「目的・インプット・アウトプット・制約条件」の
+4項目を埋めた表を作ってください。分からない項目は、勝手に決めずに質問してください。</span>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">この1本に、今日の全部が入っています</p>
+          <p>1行目が<strong>分解</strong>（第3部）、2行目が<strong>番号</strong>（第3部）、3〜4行目が<strong>4要素</strong>（第2部）。<strong>今日の60分は、この4行を書けるようになるための時間</strong>でした。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">5-2</span>今夜の宿題</h3>
+        <div class="check">
+          <div class="ci"><span class="cb"></span><span><b>① 01 と 02 のフォルダを、実際に作る</b> ── パソコンでもスマホのメモでも、AIツールのチャットでも構いません。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>② 01 だけ、4要素を書いて手で回してみる</b> ── いきなり全工程はやらないでください。1つだけです。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>③ うまくいった頼み方を、そのまま文章にして保存する</b> ── これが手順書になり、次からの自動化の材料になります。</span></div>
+        </div>
+        <p>3つ全部やらなくて大丈夫です。<strong>「01を1回、手で回す」ところまでで、今日は合格</strong>です。そこから先は、同じことの繰り返しでしかありません。</p>
+
+        <h3 class="sub3"><span class="tag">5-3</span>4回の旅をまとめると</h3>
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead><tr><th>回</th><th>テーマ</th><th>持ち帰り</th></tr></thead>
+            <tbody>
+              <tr><td class="tno">第1回</td><td class="ttime">作る</td><td>AIでコスト崩壊。個人がIPを作れる ── OPCという選択肢</td></tr>
+              <tr><td class="tno">第2回</td><td class="ttime">売る</td><td>棚・盲点・分解。1本を10個のビジネスに</td></tr>
+              <tr><td class="tno">第3回</td><td class="ttime">会社にする</td><td>役割を書けばAIは組織になる。分析も行動も自動で回る</td></tr>
+              <tr><td class="tno">第4回</td><td class="ttime">動かす</td><td><b>4要素で頼む。分解して番号を振る。1タスク1フォルダ。最後に結合する</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="closing-q">
+          <p class="lab">最後の問い</p>
+          <h3>君がAIに任せたい仕事は、<br/>3つに分けられますか？</h3>
+          <p>分けられたなら、その仕事はもう自動化できます。あとは01から、手で1回やるだけです。</p>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- SUMMARY -->
+      <section id="summary" class="rv">
+        <div class="kicker"><span class="time-pill">まとめ</span></div>
+        <h2 class="sec">持ち帰り</h2>
+        <div class="takeaway">
+          <h3>4要素 × タスク分解 ＝ AI会社の動かし方</h3>
+          <p class="ta-q">作る × 売る × 会社にする × 動かす ── シリーズ第4回の答え</p>
+          <div class="ta-list">
+            <p class="ti"><b>AIは察してくれない</b> ── <b>目的・インプット・アウトプット・制約条件</b>。この4つの抜けをなくすだけで、出力は別物になります。書く手間は2分、消えるやり直しは3時間です。</p>
+            <p class="ti"><b>大きい仕事は、一発では回らない</b> ── まず「分解してください」。<b>01・02と番号を振り、1タスク1フォルダ</b>で手で回し、確実になってから<b>結合</b>します。自動化とは、うまくいった手順を文字にしたものです。</p>
+            <p class="ti"><b>会社にすると、4要素が常設になる</b> ── ミッションとKPIが目的、フォルダがインプット、ハンドブックがアウトプット、組織規程が制約条件。だからオーナーの指示は<b>1行で済みます</b>。</p>
+          </div>
+          <p class="ta-foot">人間の仕事は3つだけです ── <b>ミッションを与える／分解を頼む／承認する</b>。<br/>今日の演習プロンプトは4行。<b>それが、君のAI会社を動かす最初のスイッチ</b>です。</p>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="rv">
+        <div class="kicker"><span class="time-pill">Q&amp;A</span></div>
+        <h2 class="sec">よくある質問</h2>
+
+        <details class="faq">
+          <summary><span class="qm">Q.</span>4要素を全部書くと、プロンプトが長くなりませんか？</summary>
+          <div class="ans">長くなります。でも書くのは<b>最初の1回だけ</b>です。うまくいった4要素はテンプレートとして保存し、次からは数字や素材名だけ差し替えます。慣れると2分が30秒になります。しかも「やり直し3回」が消えるので、トータルでは圧倒的に速いです。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>どこまで細かく分解すればいいですか？</summary>
+          <div class="ans">目安は<b>「その1ステップだけをAIに頼んだら、確実にできると言い切れるか」</b>。言い切れないなら、もう1段細かくします。逆に、工程が20個を超えたら分けすぎです。最初は<b>5〜7ステップ</b>を狙ってください。第3回のパイプラインも5工程です。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>フォルダを分けると、AIが前の工程を知らなくて困りませんか？</summary>
+          <div class="ans">困りません。前の工程の<b>「結果」だけ</b>を次のフォルダに置けば十分です。むしろ前の工程の試行錯誤（ボツ案・失敗ログ）まで持ち込むと精度が落ちます。人間の引き継ぎと同じで、渡すのは<b>成果物と申し送りだけ</b>です。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>途中でAIが違う方向に行ってしまったら？</summary>
+          <div class="ans">その場で直そうと会話を続けるより、<b>チャットを閉じて、4要素を直したうえで新しいチャットで投げ直す</b>方が速いことが多いです。ズレた文脈は、修正するほど会話のなかに残り続けます。捨てる勇気が精度を上げます。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>4要素の順番は決まっていますか？</summary>
+          <div class="ans">決まっていません。大事なのは順番ではなく、<b>4つとも書いてあること</b>です。迷ったら目的から書いてください。目的が決まると、必要なインプットも、出してほしい形も、守るべき制約も、自然に決まります。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>無料のAIでもできますか？</summary>
+          <div class="ans">できます。4要素も分解も、特別な機能ではなく<b>「書き方」</b>です。フォルダ機能がないツールなら、チャットのタイトルを「01_情報収集」にするだけでも十分効果があります。お金ではなく、順番の問題です。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>結局、AIに任せられない仕事は何ですか？</summary>
+          <div class="ans">第3回で見たとおり、<b>ミッションを決めること・どの瞬間を選ぶかというセンス・最終責任</b>の3つです。今日の話で言えば、<b>「目的」を書くのは常に人間</b>です。残り3要素はAIに下書きさせても構いませんが、目的だけは自分で決めてください。そこが君の仕事です。</div>
+        </details>
+      </section>
+
+      <!-- REFS -->
+      <section id="refs" class="rv">
+        <div class="kicker"><span class="time-pill">出典・参照</span></div>
+        <h2 class="sec">出典</h2>
+        <div class="refs">
+          <h4>シリーズ教材</h4>
+          <ul>
+            <li>第1回：<a href="../26年5月第1回/">AIイノベーションとOPC ── エンタメ界にもたらすAI革命とその未来「OPC」</a></li>
+            <li>第2回：<a href="../">ショートドラマヒットの解剖学 ── AIで分析、AIで制作。OPCで生きる道</a></li>
+            <li>第3回：<a href="../26年第3回/">AI会社を作ってみる ── 組織を作る、ミッションで動かす</a></li>
+          </ul>
+          <h4>今回の下敷き</h4>
+          <ul>
+            <li>社内メモ「AI壁打ちを成功させるプロンプト4要素と実践術」── 4要素（目的・インプット・アウトプット・制約条件）およびタスク分解4ステップ（分解依頼／1タスク1フォルダ／01・02の番号付与／結合）の出典</li>
+          </ul>
+          <h4>第4部で参照した第3回の実物</h4>
+          <ul>
+            <li>経営会議 議事録（実物）：<a href="https://github.com/katsuagezzz/yca-lectures/blob/main/company/minutes/2026-07-24_JDramaShorts成長施策.md" target="_blank" rel="noopener">2026-07-24_JDramaShorts成長施策.md</a> ── KPI（週間総再生数・純増フォロワー数）、素材のホワイトリスト方式、オーナー承認事項の出典</li>
+            <li>JDrama Shorts（<a href="https://www.youtube.com/@JDramaShorts">youtube.com/@JDramaShorts</a>）── 本文中の登録者数・再生数・視聴継続率は第3回講義時点（2026年7月26日）の数字です</li>
+            <li>切り抜きパイプライン（01 文字起こし → 05 計測）── 第3回・第4部で公開した制作工程</li>
+          </ul>
+          <p class="note">※本文中の「セッション画面」は、実際のやりとりをもとにした再現です（第3回のログを除く）。プロンプト例は、そのままコピーして使えるように調整しています。</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<button class="backtop" id="backtop" aria-label="ページ上部へ戻る">↑</button>
+
+<footer>
+  <p>YCA 第4回講義 60分 ／ <b>AI会社を、動かす</b><br/>
+  ── プロンプト4要素 × タスク分解 ──<br/>
+  第1回：<a href="../26年5月第1回/" style="color:#fff">AIイノベーションとOPC</a>　／　第2回：<a href="../" style="color:#fff">ショートドラマヒットの解剖学</a>　／　第3回：<a href="../26年第3回/" style="color:#fff">AI会社を作ってみる</a></p>
+</footer>
+
+<script>
+  // progress bar
+  const progress = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+    progress.style.width = (scrolled * 100) + '%';
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // reveal-on-scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  // TOC active state
+  const tocLinks = document.querySelectorAll('.toc a, #mnav a');
+  const sections = ['aim','timetable','s1','s2','s3','s4','s5','summary','faq','refs']
+    .map(id => document.getElementById(id)).filter(Boolean);
+  const setActive = () => {
+    let curr = sections[0]?.id;
+    const y = window.scrollY + 120;
+    for (const s of sections) { if (s.offsetTop <= y) curr = s.id; else break; }
+    tocLinks.forEach(a => {
+      const href = a.getAttribute('href');
+      a.classList.toggle('active', href === '#' + curr);
+    });
+  };
+  window.addEventListener('scroll', setActive, { passive: true });
+  setActive();
+
+  // back to top
+  const backtop = document.getElementById('backtop');
+  window.addEventListener('scroll', () => {
+    backtop.classList.toggle('show', window.scrollY > 600);
+  }, { passive: true });
+  backtop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // copy buttons for prompt boxes
+  document.querySelectorAll('.copybox .copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const src = btn.parentElement.querySelector('.copy-src');
+      if (!src) return;
+      const text = src.textContent;
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+        btn.textContent = 'コピーしました';
+        btn.classList.add('done');
+      } catch (e) {
+        btn.textContent = '手動でコピーしてください';
+      }
+      setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('done'); }, 2200);
+    });
+  });
+</script>
+</body>
+</html>
