@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI会社を、動かす ── プロンプト4要素からスキル化まで</title>
-<meta name="description" content="YCA 1年生向け 60分講義(第4回・実践編)｜第3回で作ったAI会社を実際に動かす技術。プロンプト4要素(目的・インプット・アウトプット・制約条件)、業務のワークフロー(企画→商品化→提供→フィードバック)、タスク分解、そしてスキル化と配布までを具体例つきで解説します。" />
+<title>AI会社を、動かす ── 4要素・分解・スキル・ループエンジニアリング</title>
+<meta name="description" content="YCA 1年生向け 60分講義(第4回・実践編)｜第3回で作ったAI会社を実際に動かす技術。プロンプト4要素、業務のワークフロー、タスク分解、スキル化、そしてループエンジニアリング（AIとの作業距離の設計とCLAUDE.mdの書き方）までを具体例つきで解説します。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet" />
@@ -385,6 +385,31 @@
   .kitcard.key .kn{color:var(--accent)}
   .kitcard .badge{display:inline-block;margin-top:11px;background:var(--accent);color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.08em;padding:4px 10px;border-radius:999px;align-self:flex-start}
 
+  /* 2つのループ */
+  .loops{display:grid;grid-template-columns:1fr;gap:14px;margin:24px 0}
+  @media(min-width:820px){.loops{grid-template-columns:1fr 1fr}}
+  .loopcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .loopcard .lk{font-size:.68rem;letter-spacing:.14em;font-weight:900;text-transform:uppercase;margin:0 0 5px;color:#a39c8c}
+  .loopcard h4{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1.06rem;margin:0 0 3px;color:var(--ink)}
+  .loopcard .lsp{font-size:.75rem;color:#8a8475;margin:0 0 13px}
+  .loopcard ol{margin:0 0 12px;padding-left:1.35em;font-size:.86rem;line-height:1.85}
+  .loopcard li{margin-bottom:3px}
+  .loopcard .lret{margin:auto 0 0;border-top:1px dashed var(--line);padding-top:11px;font-size:.8rem;font-weight:700;color:var(--accent);line-height:1.6}
+  .loopcard.inner{border:2px solid var(--accent)}
+  .loopcard.inner .lk{color:var(--accent)}
+  .loops-note{background:var(--dark);color:#fff;border-radius:12px;padding:14px 18px;margin:0 0 24px;font-size:.92rem;font-weight:700;text-align:center;line-height:1.7}
+  .loops-note b{color:var(--accent)}
+
+  /* 作業距離 */
+  .dist{display:grid;grid-template-columns:1fr;gap:12px;margin:24px 0}
+  @media(min-width:820px){.dist{grid-template-columns:repeat(3,1fr)}}
+  .distcard{background:#fff;border:1px solid var(--line);border-top:5px solid var(--red);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+  .distcard .dl{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1.02rem;margin:0 0 3px;color:var(--red)}
+  .distcard .dm{font-size:.73rem;color:#8a8475;margin:0 0 11px;line-height:1.6}
+  .distcard p{font-size:.85rem;line-height:1.75;color:var(--ink-soft);margin:0}
+  .distcard.ok{border-top-color:var(--green);background:linear-gradient(180deg,rgba(31,122,77,.05),#fff)}
+  .distcard.ok .dl{color:var(--green)}
+
   /* 昇格ステップ（プロンプト→手順書→スキル） */
   .ladder{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:22px 0;justify-content:center}
   .ladder .lv{flex:1 1 150px;max-width:230px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:13px 14px;text-align:center}
@@ -409,13 +434,13 @@
   <div class="hero-inner">
     <span class="eyebrow"><b>YCA</b> 1年生 ／ 60分講義 ／ 第4回・実践編</span>
     <h1>AI会社を、<span class="q">動かす</span></h1>
-    <p class="sub"><b>4要素 × ワークフロー × 分解 × スキル</b> ── <span class="hot">指示の技術。</span></p>
+    <p class="sub"><b>4要素 × ワークフロー × 分解 × スキル × ループ</b> ── <span class="hot">指示の技術。</span></p>
     <div class="meta-row">
       <span class="chip">⏱ <b>60分</b></span>
       <span class="chip">📅 <b>日程調整中</b></span>
       <span class="chip">💻 オンライン</span>
     </div>
-    <p class="hero-msg">前回、<b>AI会社は作れる</b>ことを実物で見せました。役割を文章で書けば、AIは組織になります。<br/>でも、正直に言います。<span class="hot">作った会社の多くは、動きません。</span>原因はAIの性能ではなく、<b>投げ方</b>です。<br/>今日は、その会社を実際に走らせる道具を4つ渡します ── <b>プロンプトの4要素</b>、<b>業務のワークフロー</b>、<b>タスクの分解</b>、そして<b>スキル化</b>。今日から使えて、今日から結果が変わります。</p>
+    <p class="hero-msg">前回、<b>AI会社は作れる</b>ことを実物で見せました。役割を文章で書けば、AIは組織になります。<br/>でも、正直に言います。<span class="hot">作った会社の多くは、動きません。</span>原因はAIの性能ではなく、<b>投げ方</b>です。<br/>今日は、その会社を実際に走らせる道具を渡します ── <b>プロンプトの4要素</b>、<b>業務のワークフロー</b>、<b>タスクの分解</b>、<b>スキル化</b>、そして<span class="hot">ループエンジニアリング</span>。<b>最初にClaudeへ何を書き込むのか</b>まで、実物でお見せします。</p>
     <a href="../26年第3回/" class="prev-link"><span class="arr">←</span> 第3回「AI会社を作ってみる」を見る</a>
     <a href="../" class="prev-link"><span class="arr">←</span> 第2回「ショートドラマヒットの解剖学」を見る</a>
     <a href="../26年5月第1回/" class="prev-link"><span class="arr">←</span> 第1回「AIイノベーションとOPC」を見る</a>
@@ -430,8 +455,9 @@
   <a href="#s3">3 ワークフロー</a>
   <a href="#s4">4 タスク分解</a>
   <a href="#s5">5 スキルにして配る</a>
-  <a href="#s6">6 会社の動かし方</a>
-  <a href="#s7">7 演習・クロージング</a>
+  <a href="#s6">6 ループエンジニアリング</a>
+  <a href="#s7">7 会社の動かし方</a>
+  <a href="#s8">8 演習・クロージング</a>
   <a href="#summary">まとめ</a>
   <a href="#faq">Q&amp;A</a>
 </nav>
@@ -447,8 +473,9 @@
       <a href="#s3"><span class="n">3</span>業務のワークフロー ── まず流れを描く</a>
       <a href="#s4"><span class="n">4</span>タスク分解 ── 流れを工程に割る</a>
       <a href="#s5"><span class="n">5</span>スキルにして、配る</a>
-      <a href="#s6"><span class="n">6</span>AI会社の動かし方</a>
-      <a href="#s7"><span class="n">7</span>演習＋クロージング</a>
+      <a href="#s6"><span class="n">6</span>ループエンジニアリング ── 作業距離を設計する</a>
+      <a href="#s7"><span class="n">7</span>AI会社の動かし方</a>
+      <a href="#s8"><span class="n">8</span>演習＋クロージング</a>
       <a href="#summary">まとめ（持ち帰り）</a>
       <a href="#faq">よくある質問</a>
       <a href="#refs">出典</a>
@@ -461,11 +488,12 @@
       <!-- AIM -->
       <section id="aim" class="rv">
         <div class="kicker"><span class="time-pill">この講義の狙い</span></div>
-        <h2 class="sec">覚えて帰って欲しい3つ</h2>
+        <h2 class="sec">覚えて帰って欲しい4つ</h2>
         <ul class="lead">
           <li><strong>AIは察してくれない</strong>：プロンプトに<b>目的・インプット・アウトプット・制約条件</b>の4つを入れるだけで、返ってくるものが別物になります。魔法の呪文は要りません。抜けをなくすだけです。</li>
           <li><strong>仕事は「点」ではなく「輪」</strong>：<b>企画 → 商品化 → 提供 → フィードバック → また企画へ</b>。この流れ（ワークフロー）をまず描き、それからAIが回せる単位に<b>分解</b>します。地図が先、道順が後です。</li>
           <li><strong>うまくいった工程は、スキルにして配れる</strong>：手順に名前と使いどころ、そして<b>素材の置き場所</b>を添えれば「スキル」になります。<b>AIは、見えているものしか使えません</b> ── ここがいちばん大事です。</li>
+          <li><strong>出力を直すな、ループを直せ</strong>：AIとの距離は<b>「入口（目的・素材）と出口（承認）に立つ」</b>。ズレたときに直すのは、返ってきた文章ではなく<b>指示ファイル（CLAUDE.md）</b>です。同じことを2回言ったら、書く ── それだけで指示は1行に近づきます。</li>
         </ul>
         <div class="message">
           <p class="msg-lab">この講義のメッセージ</p>
@@ -485,13 +513,14 @@
               <tr><th>区切り</th><th>時間</th><th>内容</th><th>キーワード</th></tr>
             </thead>
             <tbody>
-              <tr><td class="tno">1</td><td class="ttime">0–6分</td><td>振り返り＋今日の問い ── なぜ"それっぽい答え"しか返らないのか</td><td class="tkw">AIは中途入社の部下</td></tr>
-              <tr><td class="tno">2</td><td class="ttime">6–18分</td><td>★ プロンプトに入れるべき4要素</td><td class="tkw">目的／インプット／アウトプット／制約条件</td></tr>
-              <tr><td class="tno">3</td><td class="ttime">18–28分</td><td>★ 業務のワークフロー ── まず"流れ"を描く</td><td class="tkw">企画→商品化→提供→フィードバック→企画</td></tr>
-              <tr><td class="tno">4</td><td class="ttime">28–40分</td><td>★ タスク分解 ── 流れをAIが回せる単位に割る</td><td class="tkw">1タスク1フォルダ・01/02・結合</td></tr>
-              <tr><td class="tno">5</td><td class="ttime">40–50分</td><td>★ スキルにして、配る</td><td class="tkw">3点セット・素材へのアクセス</td></tr>
-              <tr><td class="tno">6</td><td class="ttime">50–56分</td><td>AI会社の動かし方 ── 4要素を"会社に置く"</td><td class="tkw">指示は3種類しかない</td></tr>
-              <tr><td class="tno">7</td><td class="ttime">56–60分</td><td>演習＋クロージング</td><td class="tkw">その仕事、4段階に描ける？</td></tr>
+              <tr><td class="tno">1</td><td class="ttime">0–5分</td><td>振り返り＋今日の問い ── なぜ"それっぽい答え"しか返らないのか</td><td class="tkw">AIは中途入社の部下</td></tr>
+              <tr><td class="tno">2</td><td class="ttime">5–15分</td><td>★ プロンプトに入れるべき4要素</td><td class="tkw">目的／インプット／アウトプット／制約条件</td></tr>
+              <tr><td class="tno">3</td><td class="ttime">15–23分</td><td>★ 業務のワークフロー ── まず"流れ"を描く</td><td class="tkw">企画→商品化→提供→フィードバック→企画</td></tr>
+              <tr><td class="tno">4</td><td class="ttime">23–32分</td><td>★ タスク分解 ── 流れをAIが回せる単位に割る</td><td class="tkw">1タスク1フォルダ・01/02・結合</td></tr>
+              <tr><td class="tno">5</td><td class="ttime">32–40分</td><td>★ スキルにして、配る</td><td class="tkw">3点セット・素材へのアクセス</td></tr>
+              <tr><td class="tno">6</td><td class="ttime">40–50分</td><td>★ ループエンジニアリング ── 作業距離と、CLAUDE.md に何を書くか</td><td class="tkw">出力を直すな、ループを直せ</td></tr>
+              <tr><td class="tno">7</td><td class="ttime">50–56分</td><td>AI会社の動かし方 ── 4要素を"会社に置く"</td><td class="tkw">指示は3種類しかない</td></tr>
+              <tr><td class="tno">8</td><td class="ttime">56–60分</td><td>演習＋クロージング</td><td class="tkw">その仕事、4段階に描ける？</td></tr>
             </tbody>
           </table>
         </div>
@@ -501,7 +530,7 @@
 
       <!-- PART 1 -->
       <section id="s1" class="rv">
-        <div class="kicker"><span class="num acc">1</span><span class="time-pill">0–6分</span></div>
+        <div class="kicker"><span class="num acc">1</span><span class="time-pill">0–5分</span></div>
         <h2 class="sec">第1部：なぜ"それっぽい答え"しか返らないのか</h2>
         <p class="sec-aim">前回、会社は作れました。今日はその会社が"動かない"理由から始めます。</p>
 
@@ -558,7 +587,7 @@
 
       <!-- PART 2 -->
       <section id="s2" class="rv">
-        <div class="kicker"><span class="num acc">2</span><span class="time-pill">6–18分</span></div>
+        <div class="kicker"><span class="num acc">2</span><span class="time-pill">5–15分</span></div>
         <h2 class="sec">第2部：★ プロンプトに入れるべき「4つの要素」</h2>
         <p class="sec-aim">長い呪文も、役割演技も要りません。この4つの<strong>抜けをなくす</strong>だけです。</p>
 
@@ -733,7 +762,7 @@
 
       <!-- PART 3 -->
       <section id="s3" class="rv">
-        <div class="kicker"><span class="num acc">3</span><span class="time-pill">18–28分</span></div>
+        <div class="kicker"><span class="num acc">3</span><span class="time-pill">15–23分</span></div>
         <h2 class="sec">第3部：★ 業務のワークフロー ── まず"流れ"を描く</h2>
         <p class="sec-aim">分解する前に、地図を描きます。仕事は点ではなく、ぐるぐる回る輪だからです。</p>
 
@@ -826,7 +855,7 @@
 
       <!-- PART 4 -->
       <section id="s4" class="rv">
-        <div class="kicker"><span class="num acc">4</span><span class="time-pill">28–40分</span></div>
+        <div class="kicker"><span class="num acc">4</span><span class="time-pill">23–32分</span></div>
         <h2 class="sec">第4部：★ タスク分解 ── 流れを、AIが回せる単位に割る</h2>
         <p class="sec-aim">第3部で描いた流れを、今度は工程単位まで割ります。4要素を完璧に書いても、仕事が大きすぎると失敗するからです。</p>
 
@@ -993,7 +1022,7 @@
 
       <!-- PART 5 -->
       <section id="s5" class="rv">
-        <div class="kicker"><span class="num acc">5</span><span class="time-pill">40–50分</span></div>
+        <div class="kicker"><span class="num acc">5</span><span class="time-pill">32–40分</span></div>
         <h2 class="sec">第5部：★ スキルにして、配る</h2>
         <p class="sec-aim">うまくいった工程は、パッケージにして固定できます。それが「スキル」という仕組みです。</p>
 
@@ -1138,18 +1167,232 @@
           </div>
         </div>
 
-        <p class="bridge">→ <span class="arrow">4要素 → 流れ → 分解 → スキル。</span>ここまでを"会社"に載せると、こうなります。</p>
+        <p class="bridge">→ <span class="arrow">道具は4つ揃いました。</span>最後は、これを"続けられる形"にする技術です。</p>
       </section>
 
       <hr class="divider" />
 
       <!-- PART 6 -->
       <section id="s6" class="rv">
-        <div class="kicker"><span class="num acc">6</span><span class="time-pill">50–56分</span></div>
-        <h2 class="sec">第6部：AI会社の動かし方</h2>
+        <div class="kicker"><span class="num acc">6</span><span class="time-pill">40–50分</span></div>
+        <h2 class="sec">第6部：★ ループエンジニアリング ── AIとの"作業距離"を設計する</h2>
+        <p class="sec-aim">「ワークフローを視覚化して、AIにやってもらう」を、<strong>続けられる形</strong>にする技術です。ここが今日の到達点です。</p>
+
+        <h3 class="sub3"><span class="tag">6-1</span>ループは、2つあります</h3>
+        <p>第3部で描いたのは<strong>外側のループ</strong>でした。実はもう1つ、<strong>あなたとAIのあいだで回る内側のループ</strong>があります。</p>
+
+        <div class="loops">
+          <div class="loopcard">
+            <p class="lk">OUTER LOOP</p>
+            <h4>業務のループ</h4>
+            <p class="lsp">週・月の単位で回る ── 第3部で描いたもの</p>
+            <ol>
+              <li>企画を立てる</li>
+              <li>商品化する</li>
+              <li>お客様に届ける</li>
+              <li>フィードバックを受け取る</li>
+            </ol>
+            <p class="lret">↺ 04 → 01 へ戻す</p>
+          </div>
+          <div class="loopcard inner">
+            <p class="lk">INNER LOOP ── 今日の主題</p>
+            <h4>対話のループ</h4>
+            <p class="lsp">分・時間の単位で回る ── あなたとAIのあいだ</p>
+            <ol>
+              <li>指示を出す</li>
+              <li>出力が返ってくる</li>
+              <li>ズレを見つける</li>
+              <li><b>指示そのものを直す</b></li>
+            </ol>
+            <p class="lret">↺ 04 → 01 へ戻す</p>
+          </div>
+        </div>
+        <p class="loops-note"><b>内側が速く正確に回るほど、外側が速く回ります。</b><br/>ループエンジニアリングとは、この内側のループを設計し、1周ごとに良くしていく仕事です。</p>
+
+        <div class="concept">
+          <p class="ct">多くの人は、内側のループを"回していない"</p>
+          <p>毎回ゼロから説明し、毎回同じ訂正を打ち、毎回同じ失敗をする ── これは<strong>ループではなく、直線を何度も引き直しているだけ</strong>です。回数を重ねても、1周目と100周目の精度が変わりません。<br/>逆に、1周ごとに指示が育っていれば、<strong>3周目にはもう別のAI</strong>になっています。使っているモデルは同じなのに、です。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">6-2</span>作業距離感 ── 近すぎても、遠すぎてもダメ</h3>
+        <p>ループを回すとき、あなたはAIからどのくらいの距離に立つべきでしょうか。よくある失敗は、両極端です。</p>
+
+        <div class="dist">
+          <div class="distcard">
+            <p class="dl">✕ 近すぎる</p>
+            <p class="dm">1文ずつ指示し、返ってきたものを自分で書き直す</p>
+            <p>結局あなたが書いています。AIは高級な下書きマシンになり、速くなりません。しかも<strong>直した内容がどこにも残らない</strong>ので、次も同じことをします。</p>
+          </div>
+          <div class="distcard">
+            <p class="dl">✕ 遠すぎる</p>
+            <p class="dm">「いい感じにやっといて」で投げて、確認しない</p>
+            <p>平常時は動いて見えますが、<strong>例外が出た瞬間に崩れます</strong>。しかも何が起きたか説明できないので、直せません。責任も取れません。</p>
+          </div>
+          <div class="distcard ok">
+            <p class="dl">◯ ちょうどいい</p>
+            <p class="dm">入口（目的・素材）と出口（承認）に立ち、間は任せる</p>
+            <p>途中には手を出しません。代わりに<strong>ズレを見つけたら、出力ではなく"指示"を直します</strong>。1周ごとに手順が言葉になり、次が速くなります。</p>
+          </div>
+        </div>
+
+        <div class="check">
+          <div class="ci"><span class="cb"></span><span>あなたが<b>書いている</b>なら ── 近すぎます。</span></div>
+          <div class="ci"><span class="cb"></span><span>あなたが<b>見ていない</b>なら ── 遠すぎます。</span></div>
+          <div class="ci"><span class="cb"></span><span>あなたが直している場所が<b>出力ではなく「指示ファイル」</b>なら ── ちょうどいい距離です。</span></div>
+        </div>
+
+        <div class="reveal">
+          <p class="rv-lab">今日いちばん覚えて帰ってほしい一行</p>
+          <h4>出力を直すな。<span class="hot">ループを直せ。</span></h4>
+          <p>返ってきた文章を自分で書き直すと、<strong>その1回だけ</strong>良くなります。<br/>指示・素材・手順を直すと、<strong>次から全部</strong>良くなります。<br/>同じ10分を使うなら、後者に使ってください。それがループエンジニアリングです。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">6-3</span>では、実際に「何を」書き込むところから始まるのか</h3>
+        <p>ここからが本題です。答えを先に言います ── <strong>最初に書き込むのは、チャットではありません。1枚のファイルです。</strong></p>
+        <p>Claude Code では、そのファイルの名前が <strong><code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.85rem;background:var(--paper-2);border:1px solid var(--line);padding:2px 8px;border-radius:6px">CLAUDE.md</code></strong> です。プロジェクトのフォルダに置いておくと、<strong>Claudeが毎回のセッションの最初に、必ず読みます</strong>。つまり「毎回説明しなくてよくなる場所」です。<br/>── 第3回で見せた<strong>組織規程</strong>が、まさにこれにあたります。</p>
+
+        <div class="workflow">
+          <div class="step">
+            <div class="step-head"><span class="step-num">1</span><span class="step-t">箱を作る ── フォルダと CLAUDE.md</span></div>
+            <div class="out"><span class="ol">Day 0</span>第4部で決めた番号付きフォルダを作り、いちばん上に <code>CLAUDE.md</code> を1枚置きます。これがプロジェクトの"表紙"になります。</div>
+            <div class="org-tree">JDramaShorts/
+  ├── CLAUDE.md          ← 毎回読ませたいこと
+  ├── 01_情報収集/
+  ├── 02_構成作成/
+  ├── 03_切り抜き生成/
+  ├── 04_サムネ・投稿キット/
+  └── 05_計測レポート/</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step">
+            <div class="step-head"><span class="step-num">2</span><span class="step-t">CLAUDE.md に、4つだけ書く</span></div>
+            <div class="out"><span class="ol">Day 0</span>凝った書式は要りません。見出しと箇条書きだけです。<b>目的・素材の置き場所・進め方・守ってほしいこと</b> ── そう、また4要素です。</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step">
+            <div class="step-head"><span class="step-num">3</span><span class="step-t">最初のセッションで、3行だけ投げる</span></div>
+            <div class="out"><span class="ol">Day 0</span>いきなり作業を頼みません。まず<b>「ちゃんと伝わったか」を確認する</b>ところから始めます。</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step final">
+            <div class="step-head"><span class="step-num">4</span><span class="step-t">ズレていたら、チャットではなく CLAUDE.md を直す</span></div>
+            <div class="out"><span class="ol">ここが1周目</span>返ってきた理解がズレていたら、その場で言い直したくなります。<b>我慢してください。</b>CLAUDE.md を直して、もう一度読ませます ── これがループエンジニアリングの最初の1周です。</div>
+          </div>
+        </div>
+
+        <p>ステップ2で書く <code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.82rem;background:var(--paper-2);border:1px solid var(--line);padding:1px 7px;border-radius:6px">CLAUDE.md</code> の実物がこちらです。<strong>これで全部です</strong> ── 25行しかありません。</p>
+
+        <div class="copybox">
+          <span class="cl">CLAUDE.md ── そのままコピーして、中身を自分の仕事に置き換えてください</span>
+          <button class="copy-btn" type="button">コピー</button>
+          <span class="copy-src"># このプロジェクトについて
+
+<span class="k">## 目的（ミッション）</span>
+JDrama Shorts（英語圏向け日本ショートドラマのYouTubeチャンネル）の
+フォロワーと再生数を増やす。
+KPIは「週間総再生数」と「純増フォロワー数」の2つだけ。
+
+<span class="k">## 素材の置き場所</span>
+- マスター動画：03_切り抜き生成/master/
+- 字幕ファイル：01_情報収集/subs/
+- 勝ちパターン一覧：05_計測レポート/winners.md
+- タイトル構文リスト：04_サムネ・投稿キット/titles.md
+
+<span class="k">## 進め方（ワークフロー）</span>
+01 情報収集 → 02 構成作成 → 03 切り抜き生成 → 04 投稿キット → 05 計測
+05 の結果は必ず 01 に戻すこと。数字を見たら、次に変える1変数を決める。
+
+<span class="k">## 守ってほしいこと</span>
+- 素材はホワイトリストにあるものだけを使う
+- 対外公開（投稿・公開）は、必ずオーナーの承認を得てから
+- 分からないことは推測せず、質問する
+- 一度に全工程をやらない。工程ごとに区切って報告する</span>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">また出てきました</p>
+          <p>【目的】【素材の置き場所】【進め方】【守ってほしいこと】── <strong>第2部の4要素そのもの</strong>です。今日ずっと同じ話をしています。違うのは<strong>書く場所</strong>だけ ── チャットに書けば1回きり、CLAUDE.md に書けば毎回効きます。</p>
+        </div>
+
+        <p>そしてステップ3で投げる、最初の3行がこちらです。</p>
+
+        <div class="copybox">
+          <span class="cl">最初のセッションで投げる3行（作業をいきなり頼まない）</span>
+          <button class="copy-btn" type="button">コピー</button>
+          <span class="copy-src">CLAUDE.md を読んでください。
+そのうえで、このプロジェクトのワークフローを
+「企画 → 商品化 → 提供 → フィードバック」の4段階で整理して見せてください。
+足りない情報があれば、推測せずに質問してください。</span>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">なぜ作業を頼まないのか</p>
+          <p>返ってくるのは<strong>「AIがあなたの仕事をどう理解したか」</strong>です。ここがズレたまま作業を頼むと、ズレたものが大量に出てきます。<strong>最初の1周は、成果物ではなく"理解"を確認する周</strong>にしてください。ここで質問が返ってきたら大成功です ── その質問の答えが、そのまま CLAUDE.md に追記すべき内容です。</p>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">ゼロから書けない人へ</p>
+          <p>Claude Code には <strong><code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.82rem">/init</code></strong> というコマンドがあります。いまあるフォルダの中身を見て、<strong>CLAUDE.md の下書きを自動で作ってくれます</strong>。まずこれを走らせて、あとから目的と制約条件を自分の言葉で足すのが最短です。<br/>書いたファイルが実際に読み込まれたかは <code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.82rem">/context</code>、開いて編集したいときは <code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.82rem">/memory</code> で確認できます。</p>
+        </div>
+
+        <div class="concept">
+          <p class="ct">他のAIツールを使っている人へ</p>
+          <p>名前が違うだけで、<strong>同じ役割の場所が必ずあります</strong>。ChatGPTなら「プロジェクトの指示」やカスタム指示の欄、Geminiなら Gem の指示欄。<strong>「毎回読まれる場所に、目的・素材・進め方・制約条件を書いておく」</strong> ── これが本質で、ツールは何でも構いません。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">6-4</span>どこに書くか、迷ったときの早見表</h3>
+        <p>チャット・CLAUDE.md・スキル・フォルダ。書く場所は4つあり、<strong>「いつ読まれるか」が違います</strong>。ここを間違えると、書いたのに効かない、という事故が起きます。</p>
+
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead><tr><th>書く内容</th><th>書く場所</th><th>いつ読まれるか</th></tr></thead>
+            <tbody>
+              <tr><td>毎回守ってほしい事実・ルール（目的・KPI・素材の場所・禁止事項）</td><td><b>CLAUDE.md</b></td><td class="tkw">セッションの最初に<b>毎回</b></td></tr>
+              <tr><td>2回以上やる、決まった手順（第5部のスキル）</td><td><b>SKILL.md</b></td><td class="tkw">呼んだとき／AIが必要と判断したときだけ</td></tr>
+              <tr><td>今回だけの指示・その場の追加注文</td><td><b>チャット</b></td><td class="tkw">その場かぎり（次回は消える）</td></tr>
+              <tr><td>素材・データ・過去の実績</td><td><b>01〜05の番号付きフォルダ</b></td><td class="tkw">手順から参照されたとき</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">CLAUDE.md が長くなってきたら、それは合図です</p>
+          <p>目安は<strong>200行以内</strong>。長いほど1回あたりの読み込みが重くなり、かえって守られにくくなります。<br/>そして<strong>「気づいたら手順書になっていた」なら、それはスキルに移すサイン</strong>です ── CLAUDE.md には<strong>「毎回持っていてほしい事実」</strong>を、スキルには<strong>「必要なときだけ開く手順」</strong>を。この住み分けが、ループを軽く保つコツです。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">6-5</span>追記のタイミング ── 「2回目」がスイッチです</h3>
+        <p>ループエンジニアリングの本体は、<strong>いつ書き足すか</strong>の判断です。基準ははっきりしています。次の4つが起きたら、その場で CLAUDE.md（か、スキル）に書き足してください。</p>
+
+        <div class="check">
+          <div class="ci"><span class="cb"></span><span><b>同じ間違いを、2回された</b> ── 1回目は事故。<b>2回目はループの穴</b>です。塞いでください。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>前回も打った訂正を、また打っている</b> ── その文章は、チャットではなくファイルに置くべきものです。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>新しく入った人にも、同じ説明が必要だ</b> ── 人に説明することは、AIにも説明することです。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>「それ知っておいてほしかった」が出た</b> ── 知らせていなかったのは、AIの責任ではありません。</span></div>
+        </div>
+
+        <div class="concept">
+          <p class="ct">AI側も、勝手にメモを取っています</p>
+          <p>Claude Code には<strong>オートメモリ</strong>という仕組みもあり、あなたの訂正や好みから<strong>Claude自身がメモを書いて次のセッションに持ち越します</strong>。放っておいても、ループは少しずつ賢くなります。<br/>ただし ── <strong>自動で貯まるのは"学習"、あなたが書くのは"方針"</strong>です。何を目指すか、何を禁止するかを決めるのは、いつまでも人間の仕事です。</p>
+        </div>
+
+        <div class="reveal">
+          <p class="rv-lab">まとめ</p>
+          <h4>ループエンジニアリングとは、<span class="hot">「毎回言っていること」を減らしていく作業</span>です</h4>
+          <p>1周目：全部説明する。<br/>3周目：CLAUDE.md に半分が書いてある。<br/>10周目：指示は1行で済む ── <strong>第3回でお見せしたあの1行の正体が、これです。</strong><br/>特別な才能も、プログラミングも要りません。<strong>「同じことを2回言ったら、書く」</strong>を続けただけです。</p>
+        </div>
+
+        <p class="bridge">→ <span class="arrow">では、このループを"会社"に載せると。</span></p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 7 -->
+      <section id="s7" class="rv">
+        <div class="kicker"><span class="num acc">7</span><span class="time-pill">50–56分</span></div>
+        <h2 class="sec">第7部：AI会社の動かし方</h2>
         <p class="sec-aim">4要素と分解を、第3回で作った組織に載せます。ここで「会社にする意味」が分かります。</p>
 
-        <h3 class="sub3"><span class="tag">6-1</span>4要素は、会社の"どこ"に置かれるのか</h3>
+        <h3 class="sub3"><span class="tag">7-1</span>4要素は、会社の"どこ"に置かれるのか</h3>
         <p>個人でAIを使うときは、4要素を毎回プロンプトに書きます。<strong>会社にすると、置き場所ができます。</strong>第3回の実物と対応させると、こうです。</p>
 
         <div class="components">
@@ -1165,7 +1408,7 @@
           <p>人間の会社に就業規則やマニュアルがあるのは、<strong>毎回説明しなくて済むようにするため</strong>です。AI会社もまったく同じです。<strong>4要素を一度書いて、会社に置いておく。</strong>それだけで、次からの指示は1行になります。そして<strong>その"置いておく形式"が、第5部で見たスキル</strong>です。<br/>── 第3回の「役割を文章で書けば組織になる」の続きが、これです。<strong>4要素を文章で書けば、組織は動き出します。</strong></p>
         </div>
 
-        <h3 class="sub3"><span class="tag">6-2</span>オーナーの指示は、3種類しかない</h3>
+        <h3 class="sub3"><span class="tag">7-2</span>オーナーの指示は、3種類しかない</h3>
         <p>第3回で人間がやっていたことを数えてみると、本当にこの3つだけでした。</p>
 
         <div class="three">
@@ -1194,7 +1437,7 @@
           <p>第2回で言った「ボタンを押すだけの労働者から、制作チームのボスへ」。<strong>ボスの仕事の中身が、今日ようやく具体的になりました</strong> ── <b>目的を決める・分解を頼む・承認する</b>。手はAIが動かします。決めるのは人間です。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">6-3</span>つまずきポイントと処方箋</h3>
+        <h3 class="sub3"><span class="tag">7-3</span>つまずきポイントと処方箋</h3>
         <p>ここからは、実際に動かし始めると必ず出る症状です。<strong>原因はほぼ決まっています。</strong></p>
 
         <div class="tt-wrap">
@@ -1211,7 +1454,7 @@
           </table>
         </div>
 
-        <h3 class="sub3"><span class="tag">6-4</span>やってはいけない3つ</h3>
+        <h3 class="sub3"><span class="tag">7-4</span>やってはいけない3つ</h3>
         <div class="ngs">
           <div class="ngitem">
             <span class="x">✕</span>
@@ -1241,12 +1484,12 @@
 
       <hr class="divider" />
 
-      <!-- PART 7 / CLOSING -->
-      <section id="s7" class="rv">
-        <div class="kicker"><span class="num acc">7</span><span class="time-pill">56–60分</span></div>
-        <h2 class="sec">第7部：演習＋クロージング</h2>
+      <!-- PART 8 / CLOSING -->
+      <section id="s8" class="rv">
+        <div class="kicker"><span class="num acc">8</span><span class="time-pill">56–60分</span></div>
+        <h2 class="sec">第8部：演習＋クロージング</h2>
 
-        <h3 class="sub3"><span class="tag">7-1</span>3分でやる演習 ── 自分の仕事で試す</h3>
+        <h3 class="sub3"><span class="tag">8-1</span>3分でやる演習 ── 自分の仕事で試す</h3>
         <p>いま、<strong>自分が自動化したい作業を1つ</strong>思い浮かべてください。何でも構いません。</p>
         <ul>
           <li>競合のリサーチ ／ ニュースの要約 ／ 営業資料の作成</li>
@@ -1271,16 +1514,17 @@
           <p>1〜2行目が<strong>ワークフロー</strong>（第3部）、3行目が<strong>分解と番号</strong>（第4部）、4行目が<strong>4要素</strong>（第2部）、5行目が<strong>スキルの素材アクセス</strong>（第5部）。<strong>今日の60分は、この5行を書けるようになるための時間</strong>でした。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">7-2</span>今夜の宿題</h3>
+        <h3 class="sub3"><span class="tag">8-2</span>今夜の宿題</h3>
         <div class="check">
           <div class="ci"><span class="cb"></span><span><b>① 自分の仕事を、4段階に描かせる</b> ── 上の演習プロンプトを1回投げるだけです。地図がないまま割ってはいけません。</span></div>
           <div class="ci"><span class="cb"></span><span><b>② 01 と 02 のフォルダを、実際に作る</b> ── パソコンでもスマホのメモでも、AIツールのチャットでも構いません。</span></div>
           <div class="ci"><span class="cb"></span><span><b>③ 01 だけ、4要素を書いて手で回してみる</b> ── いきなり全工程はやらないでください。1つだけです。</span></div>
-          <div class="ci"><span class="cb"></span><span><b>④ うまくいった頼み方を、スキルの雛形に書き写す</b> ── 【名前】【いつ使うか】【参照する素材】【手順】【制約条件】。これで1個目のスキルが完成です。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>④ CLAUDE.md（または「毎回読まれる指示欄」）を1枚書く</b> ── 目的・素材の置き場所・進め方・守ってほしいこと。25行で足ります。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>⑤ うまくいった頼み方を、スキルの雛形に書き写す</b> ── 【名前】【いつ使うか】【参照する素材】【手順】【制約条件】。これで1個目のスキルが完成です。</span></div>
         </div>
-        <p>4つ全部やらなくて大丈夫です。<strong>「①の地図を描いて、01を1回、手で回す」ところまでで、今日は合格</strong>です。そこから先は、同じことの繰り返しでしかありません。</p>
+        <p>5つ全部やらなくて大丈夫です。<strong>「①の地図を描いて、01を1回、手で回す」ところまでで、今日は合格</strong>です。そこから先は、同じことの繰り返しでしかありません。<br/>そして次にAIがズレたとき ── <strong>チャットで言い直さず、④のファイルを直してください</strong>。それがあなたの、ループの1周目です。</p>
 
-        <h3 class="sub3"><span class="tag">7-3</span>4回の旅をまとめると</h3>
+        <h3 class="sub3"><span class="tag">8-3</span>4回の旅をまとめると</h3>
         <div class="tt-wrap">
           <table class="tt">
             <thead><tr><th>回</th><th>テーマ</th><th>持ち帰り</th></tr></thead>
@@ -1288,7 +1532,7 @@
               <tr><td class="tno">第1回</td><td class="ttime">作る</td><td>AIでコスト崩壊。個人がIPを作れる ── OPCという選択肢</td></tr>
               <tr><td class="tno">第2回</td><td class="ttime">売る</td><td>棚・盲点・分解。1本を10個のビジネスに</td></tr>
               <tr><td class="tno">第3回</td><td class="ttime">会社にする</td><td>役割を書けばAIは組織になる。分析も行動も自動で回る</td></tr>
-              <tr><td class="tno">第4回</td><td class="ttime">動かす</td><td><b>4要素で頼む。流れを描く。工程に割る。スキルにして配る</b></td></tr>
+              <tr><td class="tno">第4回</td><td class="ttime">動かす</td><td><b>4要素で頼む。流れを描く。工程に割る。スキルにして配る。そしてループを直し続ける</b></td></tr>
             </tbody>
           </table>
         </div>
@@ -1307,15 +1551,16 @@
         <div class="kicker"><span class="time-pill">まとめ</span></div>
         <h2 class="sec">持ち帰り</h2>
         <div class="takeaway">
-          <h3>4要素 × ワークフロー × 分解 × スキル ＝ AI会社の動かし方</h3>
+          <h3>4要素 × ワークフロー × 分解 × スキル × ループ ＝ AI会社の動かし方</h3>
           <p class="ta-q">作る × 売る × 会社にする × 動かす ── シリーズ第4回の答え</p>
           <div class="ta-list">
             <p class="ti"><b>AIは察してくれない</b> ── <b>目的・インプット・アウトプット・制約条件</b>。この4つの抜けをなくすだけで、出力は別物になります。書く手間は2分、消えるやり直しは3時間です。</p>
             <p class="ti"><b>まず"輪"を描く</b> ── <b>企画 → 商品化 → 提供 → フィードバック → また企画へ</b>。地図が先、道順が後。先週の数字で今週の企画が変わっていないなら、輪は閉じていません。</p>
             <p class="ti"><b>流れを工程に割る</b> ── 「分解してください」の一言から。<b>01・02と番号を振り、1タスク1フォルダ</b>で手で回し、確実になってから<b>結合</b>します。自動化とは、うまくいった手順を文字にしたものです。</p>
             <p class="ti"><b>スキルにして、配る</b> ── 【いつ使うか】【手順】【素材の置き場所】の3点セット。<b>AIは見えているものしか使えない</b>ので、素材へのアクセスがすべてです。配れた瞬間、それは会社の資産になります。</p>
+            <p class="ti"><b>出力を直すな、ループを直せ</b> ── 入口と出口に立ち、途中は任せる。ズレたら<b>チャットではなく CLAUDE.md を直す</b>。<b>同じことを2回言ったら書く</b>を続けるだけで、10周目には指示が1行になります。</p>
           </div>
-          <p class="ta-foot">人間の仕事は3つだけです ── <b>ミッションを与える／分解を頼む／承認する</b>。<br/>今日の演習プロンプトは5行。<b>それが、君のAI会社を動かす最初のスイッチ</b>です。</p>
+          <p class="ta-foot">人間の仕事は3つだけです ── <b>ミッションを与える／分解を頼む／承認する</b>。<br/>最初に書き込むのは、チャットではなく<b>1枚のファイル（CLAUDE.md）</b>。たった25行です。<br/><b>それが、君のAI会社を動かす最初のスイッチ</b>です。</p>
         </div>
       </section>
 
@@ -1331,6 +1576,22 @@
         <details class="faq">
           <summary><span class="qm">Q.</span>ワークフローとタスク分解は、何が違うんですか？</summary>
           <div class="ans">ワークフローは<b>地図</b>、分解は<b>道順</b>です。ワークフローは「企画 → 商品化 → 提供 → フィードバック」という大きな4段階で、業種が違っても同じ形をしています。分解は、その1段階の中を「AIが確実にできる大きさ」まで割る作業です。<b>順番は必ず地図が先</b>。地図なしで割ると、細かいけれど何のためにやるのか分からない工程ができあがります。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>結局、いちばん最初に何をすればいいんですか？</summary>
+          <div class="ans">フォルダを1つ作り、その中に <b>CLAUDE.md を1枚書く</b>。これだけです（第6部の実物で25行）。書けなければ <code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.8rem">/init</code> で下書きを作らせて、目的と制約条件だけ自分の言葉に直してください。<b>作業を頼むのは、そのあと</b>です。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>CLAUDE.md とスキルは、どう使い分けるんですか？</summary>
+          <div class="ans">読まれるタイミングが違います。<b>CLAUDE.md は毎回のセッションの最初に必ず読まれる</b>ので、「常に持っていてほしい事実」（目的・KPI・素材の場所・禁止事項）を書きます。<b>スキルは使うときだけ読まれる</b>ので、「必要なときに開く手順」を書きます。目安は200行 ── CLAUDE.md が手順書になってきたら、それはスキルに移すサインです。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>その場で言い直した方が早くないですか？</summary>
+          <div class="ans">その1回は早いです。でも<b>次も、その次も同じ説明をすることになります</b>。ファイルを直すのは1回だけ。3回目までにはお釣りが来ます。判断基準はシンプルで、<b>「同じことを2回言ったら書く」</b>。1回目は事故、2回目はループの穴です。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>近すぎる／遠すぎる、いま自分がどっちか分かりません。</summary>
+          <div class="ans">3行で判定できます。<b>自分が書いているなら近すぎ／自分が見ていないなら遠すぎ／直している場所が出力ではなく指示ファイルなら、ちょうどいい距離</b>です。いちばん多いのは「近すぎる」── AIの出力を自分で書き直して、それを"AIを使った"と思っているパターンです。</div>
         </details>
         <details class="faq">
           <summary><span class="qm">Q.</span>スキルを作るのに、プログラミングは必要ですか？</summary>
@@ -1384,10 +1645,15 @@
           <h4>今回の下敷き</h4>
           <ul>
             <li>社内メモ「AI壁打ちを成功させるプロンプト4要素と実践術」── 4要素（目的・インプット・アウトプット・制約条件）およびタスク分解4ステップ（分解依頼／1タスク1フォルダ／01・02の番号付与／結合）の出典</li>
-            <li>業務のワークフロー（企画 → 商品化 → 提供 → フィードバック → 企画）およびスキル化・配布の考え方 ── 第4回のために講師が追加したテーマ</li>
+            <li>業務のワークフロー（企画 → 商品化 → 提供 → フィードバック → 企画）、スキル化・配布、およびループエンジニアリング（AIとの作業距離の設計）── 第4回のために講師が追加したテーマ</li>
             <li>スキルの仕組み（呼び出すと手順どおりに動く再利用可能なパッケージ）── 第3回で公開した経営会議スキル <code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.78rem">/keiei-kaigi</code>、サムネ生成スキル、切り抜き生成スクリプトが実例</li>
           </ul>
-          <h4>第4部で参照した第3回の実物</h4>
+          <h4>Claude Code の仕組み（第6部の記述の出典）</h4>
+          <ul>
+            <li>CLAUDE.md ── <a href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener">How Claude remembers your project</a>（公式ドキュメント）。置き場所は <code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.78rem">./CLAUDE.md</code> または <code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.78rem">./.claude/CLAUDE.md</code>、毎セッションの冒頭に読み込まれる。目安は200行以内、<code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.78rem">/init</code> で下書き生成、<code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.78rem">/memory</code> で編集、<code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.78rem">/context</code> で読み込み確認。「同じ間違いを2回された／前回と同じ訂正をまた打った／新しく入った人にも同じ説明が要る」ときに書き足す、という追記基準、およびオートメモリの記述も同ドキュメントに基づく。</li>
+            <li>スキル ── <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Extend Claude with skills</a>（公式ドキュメント）。<code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.78rem">.claude/skills/&lt;名前&gt;/SKILL.md</code> に置き、フロントマターの <code style="font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.78rem">description</code> が「いつ使うか」を担う。本体は<b>使うときだけ</b>読み込まれ、参照ファイルを同じフォルダに同梱できる。「CLAUDE.md の一節が手順になってきたらスキルに移す」も同ドキュメントの指針。</li>
+          </ul>
+          <h4>本文で参照した第3回の実物</h4>
           <ul>
             <li>経営会議 議事録（実物）：<a href="https://github.com/katsuagezzz/yca-lectures/blob/main/company/minutes/2026-07-24_JDramaShorts成長施策.md" target="_blank" rel="noopener">2026-07-24_JDramaShorts成長施策.md</a> ── KPI（週間総再生数・純増フォロワー数）、素材のホワイトリスト方式、オーナー承認事項の出典</li>
             <li>JDrama Shorts（<a href="https://www.youtube.com/@JDramaShorts">youtube.com/@JDramaShorts</a>）── 本文中の登録者数・再生数・視聴継続率は第3回講義時点（2026年7月26日）の数字です</li>
@@ -1428,7 +1694,7 @@
 
   // TOC active state
   const tocLinks = document.querySelectorAll('.toc a, #mnav a');
-  const sections = ['aim','timetable','s1','s2','s3','s4','s5','s6','s7','summary','faq','refs']
+  const sections = ['aim','timetable','s1','s2','s3','s4','s5','s6','s7','s8','summary','faq','refs']
     .map(id => document.getElementById(id)).filter(Boolean);
   const setActive = () => {
     let curr = sections[0]?.id;
