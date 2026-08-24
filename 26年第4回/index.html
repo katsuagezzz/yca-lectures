@@ -282,6 +282,9 @@
 
   /* ===== 第4回で追加したコンポーネント ===== */
 
+  /* 節の中の中見出し */
+  h4.mini{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1.02rem;margin:30px 0 10px;color:var(--ink);padding-left:13px;border-left:4px solid var(--accent-2)}
+
   /* 4要素カード */
   .four{display:grid;grid-template-columns:1fr;gap:14px;margin:26px 0}
   @media(min-width:560px){.four{grid-template-columns:1fr 1fr}}
@@ -491,7 +494,7 @@
       <a href="#aim">この講義の狙い</a>
       <a href="#timetable">60分タイムテーブル</a>
       <a href="#s1"><span class="n">1</span>なぜ"それっぽい答え"しか返らないのか</a>
-      <a href="#s2"><span class="n">2</span>プロンプトに入れるべき4要素</a>
+      <a href="#s2"><span class="n">2</span>プロンプトに入れるべき4要素／企画は「集めて」</a>
       <a href="#s3"><span class="n">3</span>業務のワークフロー ── まず流れを描く</a>
       <a href="#s4"><span class="n">4</span>タスク分解 ── 流れを工程に割る／フォルダはどこに作るか</a>
       <a href="#s5"><span class="n">5</span>スキルにして、配る</a>
@@ -535,7 +538,7 @@
             </thead>
             <tbody>
               <tr><td class="tno">1</td><td class="ttime">0–6分</td><td>振り返り＋今日の問い ── なぜ"それっぽい答え"しか返らないのか</td><td class="tkw">AIは中途入社の部下</td></tr>
-              <tr><td class="tno">2</td><td class="ttime">6–18分</td><td>★ プロンプトに入れるべき4要素</td><td class="tkw">目的／インプット／アウトプット／制約条件</td></tr>
+              <tr><td class="tno">2</td><td class="ttime">6–18分</td><td>★ プロンプトに入れるべき4要素</td><td class="tkw">目的／インプット／アウトプット／制約条件・企画は「集めて」</td></tr>
               <tr><td class="tno">3</td><td class="ttime">18–28分</td><td>★ 業務のワークフロー ── まず"流れ"を描く</td><td class="tkw">企画→商品化→提供→フィードバック→企画</td></tr>
               <tr><td class="tno">4</td><td class="ttime">28–40分</td><td>★ タスク分解 ── 流れをAIが回せる単位に割る</td><td class="tkw">1タスク1フォルダ・置き場所の決め方・01/02・結合</td></tr>
               <tr><td class="tno">5</td><td class="ttime">40–50分</td><td>★ スキルにして、配る</td><td class="tkw">3点セット・素材へのアクセス・配る先の違い</td></tr>
@@ -609,7 +612,7 @@
       <section id="s2" class="rv">
         <div class="kicker"><span class="num acc">2</span><span class="time-pill">6–18分</span></div>
         <h2 class="sec">第2部：★ プロンプトに入れるべき「4つの要素」</h2>
-        <p class="sec-aim">長い呪文も、役割演技も要りません。この4つの<strong>抜けをなくす</strong>だけです。</p>
+        <p class="sec-aim">長い呪文も、役割演技も要りません。この4つの<strong>抜けをなくす</strong>だけです。<b>企画がゼロから思いつかない人の突破口</b>も、ここで渡します。</p>
 
         <h3 class="sub3"><span class="tag">2-1</span>4要素 ── 目的・インプット・アウトプット・制約条件</h3>
 
@@ -707,7 +710,94 @@
           <p><strong>最初の2分をケチると、あとの3時間が溶けます。</strong>「やり直しを3回した」経験があるなら、それは能力ではなく、この2分を書かなかったコストです。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">2-3</span>実例②：4要素は"毎回"書かなくていい</h3>
+        <h3 class="sub3"><span class="tag">2-3</span>そもそも企画が思いつかない人へ ──「考えて」ではなく「集めて」</h3>
+        <p>ここまでは<strong>「作りたい方向が決まっている人」</strong>の話でした。でも、正直こう思った人がいるはずです。</p>
+        <p class="lead" style="border-left:3px solid var(--line);padding-left:14px;color:var(--ink-soft)">「4要素を書けと言われても、<b>そもそもどんな企画にしたいのかが無い</b>」</p>
+        <p>これは能力の問題ではありません。<strong>ゼロから生み出そうとしているのが原因</strong>です。プロもゼロからは作っていません。<strong>今売れているものを大量に見てから、決めています。</strong>だったら、その「大量に見る」をAIにやらせてください。</p>
+
+        <div class="concept">
+          <p class="ct">動詞を1つ変えるだけです ──「考えて」→「集めて」</p>
+          <p><strong>「企画を考えて」と頼むと、返ってくるのはAIの想像</strong>です。どこかで見た平均値が並びます（第1部で見たあれです）。<br/><strong>「いまバズっている企画を集めて」と頼むと、返ってくるのは世の中の事実</strong>です。<br/>AIは<strong>無から発想する道具ではなく、世界中を見て回って持ち帰る道具</strong>だと考えてください。発想ではなく、<strong>調査</strong>を頼むのです。</p>
+        </div>
+
+        <p>実際に投げる一文が、これです。<strong>そのままコピーして使えます。</strong></p>
+
+        <div class="copybox">
+          <span class="cl">ゼロイチ突破の一文 ── まず100個集めさせる</span>
+          <button class="copy-btn" type="button">コピー</button>
+          <span class="copy-src">世界中のGitHubやWebから、ショートドラマの企画に関して
+現在バズっている企画を100個集めて。
+サブエージェント10体で同時にリサーチ。
+集めた企画は5分類に分け、タイトルと内容を明示。
+アウトプットはhtmlで。</span>
+        </div>
+
+        <p>短く見えますが、<strong>これも4要素でできています</strong>。分解するとこうです。</p>
+
+        <div class="components">
+          <div class="components-row header"><div>4要素</div><div>この一文のどこにある？</div><div>書かないと、こうなる</div></div>
+          <div class="components-row"><div class="lbl">目的</div><div>「現在バズっている企画を」集めたい</div><div>自分の好みで探し始め、<b>流行と関係ない案</b>が並ぶ</div></div>
+          <div class="components-row"><div class="lbl">インプット</div><div>「世界中のGitHubやWebから」</div><div>探しに行かず<b>記憶の中だけで答える</b>。去年の話が混ざる</div></div>
+          <div class="components-row"><div class="lbl">アウトプット</div><div>「100個／5分類／タイトルと内容／html」</div><div>長い作文が返ってきて、<b>見比べられない</b></div></div>
+          <div class="components-row"><div class="lbl">制約条件</div><div>「現在」バズっているもの</div><div>名作・定番が混ざり、<b>いま空いている棚が見えない</b></div></div>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">いちばん効いているのは「インプット」です</p>
+          <p><strong>「世界中のGitHubやWebから」と、探す場所を名指ししている</strong>ところ。ここを書かないと、AIは<strong>覚えていることを思い出して答えるだけ</strong>になります。<strong>「どこを見て」と書いた瞬間に、調べに行く動きに変わります。</strong></p>
+        </div>
+
+        <h4 class="mini">この一文が効く、4つの指定</h4>
+        <div class="check">
+          <div class="ci"><span class="cb"></span><span><b>「100個」── 数を大きく切る</b>　10個だと、誰でも知っている定番しか出ません。100個要求されると、AIは<b>端のほうまで探しに行きます</b>。変わった企画は、その端に落ちています。<b>量が、質を連れてきます。</b></span></div>
+          <div class="ci"><span class="cb"></span><span><b>「サブエージェント10体で同時にリサーチ」── 手分けさせる</b>　1体で100件調べると、全部が浅くなります。分身させると<b>担当ごとに違う角度から掘る</b>ので、偏りが減って速くなります。第4部でやる「タスク分解」の、いちばん簡単な形です。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>「5分類に分け」── 地図にさせる</b>　100個を生で渡されても選べません。分類させると<b>「どのジャンルが厚くて、どこが薄いか」が見えます</b>。薄いところが、あなたの空いている棚です。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>「アウトプットはhtmlで」── 見比べられる形にする</b>　チャットの中の箇条書きは、100件も並ぶと読めません。HTMLなら<b>1枚のページとして眺めて、行き来できます</b>。人に見せるのもそのままです。</span></div>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">「サブエージェント」が使えないツールのとき</p>
+          <p>この言い方が通じないAIもあります。そのときは<strong>「10個の切り口に分けて、順番に調べて」</strong>と書いてください。<strong>やらせたいことは同じ ── 1回で雑に済ませず、角度を変えて何度も探させること</strong>です。</p>
+        </div>
+
+        <h4 class="mini">集まった100個を、どうするか</h4>
+        <p>ここからが本番です。<strong>集めただけでは、まだ企画ではありません。</strong>3ステップで自分のものにします。</p>
+
+        <div class="workflow">
+          <div class="step">
+            <div class="step-head"><span class="step-num">1</span><span class="step-t">5分類を眺めて、「棚」を1つ選ぶ</span></div>
+            <div class="out"><span class="ol">選ぶ</span>100個を1つずつ読む必要はありません。<b>分類だけを見て、自分が撮れそう／勝てそうな棚を1つ</b>決めます。「厚い棚（激戦）」を避けて「薄い棚」を狙うのも手です。</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step">
+            <div class="step-head"><span class="step-num">2</span><span class="step-t">その棚から、刺さった企画を3つ選ぶ</span></div>
+            <div class="out"><span class="ol">絞る</span>理由は「なんとなく面白い」で構いません。<b>3つ選べれば、自分の好みの共通点が見えます</b> ── それがあなたの企画の芯になります。</div>
+            <p class="arrow-next">↓</p>
+          </div>
+          <div class="step final">
+            <div class="step-head"><span class="step-num">3</span><span class="step-t">その3つを【インプット】に入れて、4要素で練り直す</span></div>
+            <div class="out"><span class="ol">つなぐ</span>2-2で見た4要素の書き方に戻ります（空欄のテンプレートは2-5にあります）。<b>【インプット】に「参考にしたい企画3つ」と自分の数字を入れて、5案出させる。</b>ここでようやく、<b>あなたのチャンネルの企画</b>になります。</div>
+          </div>
+        </div>
+
+        <div class="ngs">
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">集めた企画を、そのまま作る</p>
+              <p>100個は<b>素材であって、企画ではありません</b>。丸ごと真似すると、二番煎じになるだけでなく<b>権利の問題にもなります</b>。借りるのは<b>「型」だけ</b> ── 展開の速さ、最初の1.5秒の作り方、タイトルの構文です。<b>中身は自分のものに置き換えてください。</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <p class="rv-lab">Point</p>
+          <h4>企画力とは、<span class="hot">無から生む力ではなく、大量に並べて選ぶ力</span></h4>
+          <p>今日やったのは <strong>ゼロ → イチ</strong> ではありません。<strong>100 → 5 → 1</strong> です。<br/>集めるのはAIが得意で、しかも一瞬です。<strong>人間の仕事は「どれを選ぶか」だけ残ります。</strong>選ぶのは、あなたが何を面白いと思うかの話なので ── <strong>そこはAIに渡せませんし、渡す必要もありません。</strong></p>
+          <p>「企画が思いつかない」の正体は、発想力の不足ではなく、<strong>見た量の不足</strong>です。まず100個、並べてください。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">2-4</span>実例②：4要素は"毎回"書かなくていい</h3>
         <p>ここで前回の話に戻ります。第3回で見せた、オーナーの指示はたった1行でした。</p>
 
         <div class="session-win">
@@ -734,7 +824,7 @@
           <p>だから慣れた人の指示は短いのです。短いのは手抜きではなく、<strong>前もって4要素を仕込んである</strong>から。逆に、まだ何も仕込んでいない最初の1回は、面倒でも全部書いてください。<strong>そこで書いた4要素が、そのまま会社の資産になります。</strong></p>
         </div>
 
-        <h3 class="sub3"><span class="tag">2-4</span>コピーして使うテンプレート</h3>
+        <h3 class="sub3"><span class="tag">2-5</span>コピーして使うテンプレート</h3>
         <p>今日から使えるように、空欄のテンプレートを置いておきます。埋めるだけです。</p>
 
         <div class="copybox">
@@ -760,7 +850,7 @@
           <p><strong>「分からない項目があれば、勝手に決めずに質問してください」</strong> ── これを付けるだけで、AIが思い込みで突っ走るのを止められます。壁打ちのつもりが「勝手に完成品を作られていた」という事故が減ります。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">2-5</span>抜けると、こういう症状が出ます</h3>
+        <h3 class="sub3"><span class="tag">2-6</span>抜けると、こういう症状が出ます</h3>
         <p>4要素は、どれが抜けたかで<strong>症状がはっきり違います</strong>。返ってきた答えに違和感があったら、この表で診断してください。</p>
 
         <div class="tt-wrap">
