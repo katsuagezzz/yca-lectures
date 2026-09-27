@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>AIを、使い切る ── 最新AI×エンタメ／ビジネス と、5回分の総まとめ</title>
-<meta name="description" content="YCA 1年生向け 60分講義(第5回・最終回)｜2026年9月時点の最新AI活用を「エンタメ」と「ビジネス」の2つに分けて整理し、第1回〜第4回(OPC／ヒットの解剖／AI会社を作る／AI会社を動かす)を1枚にまとめます。動画生成の量産化、YouTubeの新ルール、エージェントのチーム化、そして卒業後に何を持ち帰るか。" />
+<meta name="description" content="YCA 1年生向け 60分講義(第5回・最終回)｜2026年9月時点の最新AI活用を「エンタメ」と「ビジネス」に分けて整理し、第1回〜第4回(OPC／ヒットの解剖／AI会社を作る／AI会社を動かす)を1枚にまとめます。中国のAIエンタメ最前線(43万作品・9割超がAI・投流が売上の8割)とエンタメ産業サプライチェーン7レイヤ分析、動画生成の量産化、YouTubeの新ルール、エージェントのチーム化、そして「自分はどのレイヤに立つか」。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet" />
@@ -113,6 +113,8 @@
   .stat.alt .v,.stat.alt .v .u{color:#fff}
   .stat.alt .l{color:#ffe2db}
   .stat.alt .src{color:#ffd0c4}
+  .stat.lose .l,.stat.win .l{color:#e8dedd}
+  .stat.lose .src,.stat.win .src{color:#d3b6b2}
   .stat.win{background:linear-gradient(120deg,#1f7a4d,#2d9968)}
   .stat.lose{background:linear-gradient(120deg,#7a1f1f,#9c2929)}
 
@@ -451,6 +453,42 @@
 
   .pipe .pa{align-self:center;color:var(--accent);font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;flex:0 0 auto;font-size:.9rem}
   @media(max-width:560px){.pipe{flex-direction:column;align-items:stretch;gap:4px}.pipe .pn{flex:0 0 auto;max-width:none;font-size:.82rem;padding:11px 12px}.pipe .pn i{display:inline;margin:0 8px 0 0}.pipe .pa{transform:rotate(90deg);align-self:center}}
+
+  /* 第3部：サプライチェーン分析 */
+  .layers{display:grid;gap:8px;margin:22px 0}
+  .lay{display:grid;grid-template-columns:42px minmax(0,1fr) 128px;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-left:5px solid var(--line);border-radius:12px;padding:13px 16px}
+  .lay .lno{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1.05rem;color:#b9b1a0}
+  .lay h4{margin:0 0 3px;font-size:1rem}
+  .lay p{margin:0;font-size:.84rem;line-height:1.7;color:var(--ink-soft)}
+  .lay .lstat{justify-self:end;text-align:center;font-size:.76rem;font-weight:700;border-radius:999px;padding:6px 12px;white-space:nowrap}
+  .lay.up{border-left-color:var(--green)}
+  .lay.up .lstat{background:rgba(31,122,77,.1);color:var(--green)}
+  .lay.up .lno{color:var(--green)}
+  .lay.mid{border-left-color:var(--gold)}
+  .lay.mid .lstat{background:rgba(199,154,58,.16);color:#8a6a1f}
+  .lay.mid .lno{color:var(--gold)}
+  .lay.down{border-left-color:var(--red)}
+  .lay.down .lstat{background:rgba(192,57,43,.1);color:var(--red)}
+  .lay.down .lno{color:var(--red)}
+  @media(max-width:680px){.lay{grid-template-columns:34px minmax(0,1fr);gap:4px 12px}.lay .lstat{grid-column:2;justify-self:start;margin-top:7px}}
+
+  /* 収益の取り分バー */
+  .share{margin:24px 0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px 16px;box-shadow:var(--shadow)}
+  .share .sh-t{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:1rem;margin:0 0 4px}
+  .share .sh-s{margin:0 0 15px;font-size:.8rem;color:#8a8475;line-height:1.7}
+  .sbar{display:flex;gap:2px;height:38px;margin:0 0 13px}
+  .sbar span{display:block}
+  .sbar .s1{flex:80 1 0;background:#3a3a44;border-radius:5px 0 0 5px}
+  .sbar .s2{flex:11 1 0;background:#b9b1a0}
+  .sbar .s3{flex:9 1 0;background:var(--accent);border-radius:0 5px 5px 0}
+  .slegend{display:flex;flex-wrap:wrap;gap:9px 22px;margin:0 0 12px}
+  .slegend .si{display:flex;align-items:center;gap:8px;font-size:.84rem;color:var(--ink-soft)}
+  .slegend .sw{width:12px;height:12px;border-radius:3px;flex:0 0 auto}
+  .slegend .sw.s1{background:#3a3a44}
+  .slegend .sw.s2{background:#b9b1a0}
+  .slegend .sw.s3{background:var(--accent)}
+  .slegend .si b{color:var(--ink);font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;margin-left:2px}
+  .share .snote{margin:0;font-size:.74rem;color:#8a8475;line-height:1.75;border-top:1px solid var(--line);padding-top:11px}
 </style>
 </head>
 <body>
@@ -460,7 +498,7 @@
   <div class="hero-inner">
     <span class="eyebrow"><b>YCA</b> 1年生 ／ 60分講義 ／ 第5回・最終回</span>
     <h1>AIを、<span class="q">使い切る</span></h1>
-    <p class="sub"><b>最新AI × エンタメ ／ 最新AI × ビジネス</b> ── <span class="hot">そして、5回分の総まとめ。</span></p>
+    <p class="sub"><b>最新AI × エンタメ ／ ビジネス ／ 中国の最前線</b> ── <span class="hot">そして、5回分の総まとめ。</span></p>
     <div class="meta-row">
       <span class="chip">⏱ <b>60分</b></span>
       <span class="chip">📅 <b>2026年9月28日（月）</b></span>
@@ -480,9 +518,10 @@
   <a href="#aim">狙い</a>
   <a href="#s1">1 4回の総まとめ</a>
   <a href="#s2">2 最新AI×エンタメ</a>
-  <a href="#s3">3 最新AI×ビジネス</a>
-  <a href="#s4">4 2つを貫く線</a>
-  <a href="#s5">5 クロージング</a>
+  <a href="#s3">3 中国とサプライチェーン</a>
+  <a href="#s4">4 最新AI×ビジネス</a>
+  <a href="#s5">5 2つを貫く線</a>
+  <a href="#s6">6 クロージング</a>
   <a href="#summary">まとめ</a>
   <a href="#faq">Q&amp;A</a>
 </nav>
@@ -495,9 +534,10 @@
       <a href="#timetable">60分タイムテーブル</a>
       <a href="#s1"><span class="n">1</span>これまでの4回を、1枚に</a>
       <a href="#s2"><span class="n">2</span>最新AI × エンタメ ── 量産が始まった</a>
-      <a href="#s3"><span class="n">3</span>最新AI × ビジネス ── 一人から、チームへ</a>
-      <a href="#s4"><span class="n">4</span>2つを貫く1本の線 ── ループ</a>
-      <a href="#s5"><span class="n">5</span>最終回クロージング</a>
+      <a href="#s3"><span class="n">3</span>中国のAIエンタメ最前線 ── どのレイヤに立つか</a>
+      <a href="#s4"><span class="n">4</span>最新AI × ビジネス ── 一人から、チームへ</a>
+      <a href="#s5"><span class="n">5</span>2つを貫く1本の線 ── ループ</a>
+      <a href="#s6"><span class="n">6</span>最終回クロージング</a>
       <a href="#summary">まとめ（持ち帰り）</a>
       <a href="#faq">よくある質問</a>
       <a href="#refs">出典</a>
@@ -514,6 +554,7 @@
         <ul class="lead">
           <li><strong>エンタメ側は「試す」から「量産する」に変わりました</strong>：動画生成はもう実験の道具ではありません。中国のショートドラマは<b>7割がAI製</b>とまで言われ、制作費は桁で落ちています。第1回で話した<b>コストの崩壊</b>は、予言ではなく現在の数字になりました。</li>
           <li><strong>ビジネス側は「一人のAI」から「AIのチーム」に変わりました</strong>：第3回で手作りしたAI会社が、いまや<b>ツール側の標準機能</b>に降りてきています。つまり、<b>君が組織を設計できること自体が価値</b>になる時代に入りました。</li>
+          <li><strong>そして、立つ場所を選び直す必要があります</strong>：中国では<b>制作費が9割下がっても、制作している人は儲かっていません</b>。売上の8割は広告（投流）に流れます。だから<b>エンタメ産業の7つのレイヤ</b>を見て、<b>自分がどこに立つか</b>を決めてください。今日の核心です。</li>
           <li><strong>それでも、変わらないものが1つだけあります</strong>：<b>目的を書くのは人間</b>です。道具は半年で入れ替わりますが、<b>ループを回す型</b>と<b>IPを持つという発想</b>は残ります。今日はそこだけ持ち帰ってください。</li>
         </ul>
         <div class="message">
@@ -534,11 +575,12 @@
               <tr><th>区切り</th><th>時間</th><th>内容</th><th>キーワード</th></tr>
             </thead>
             <tbody>
-              <tr><td class="tno">1</td><td class="ttime">0–10分</td><td>これまでの4回を、1枚に</td><td class="tkw">作る／売る／会社にする／動かす</td></tr>
-              <tr><td class="tno">2</td><td class="ttime">10–28分</td><td>★ 最新AI × エンタメ ── 量産フェーズに入った</td><td class="tkw">7割がAI製・動画生成の現在地・IPを育てる・収益化の新ルール</td></tr>
-              <tr><td class="tno">3</td><td class="ttime">28–46分</td><td>★ 最新AI × ビジネス ── 一人から、チームへ</td><td class="tkw">エージェントのチーム化・社内導入の実数・3つの稼ぎ方</td></tr>
-              <tr><td class="tno">4</td><td class="ttime">46–55分</td><td>2つを貫く1本の線 ── ループと、人間に残る仕事</td><td class="tkw">出力を直すな、ループを直せ</td></tr>
-              <tr><td class="tno">5</td><td class="ttime">55–60分</td><td>最終回クロージング ── 卒業後の宿題</td><td class="tkw">1年後、何が君の代わりに働いているか</td></tr>
+              <tr><td class="tno">1</td><td class="ttime">0–8分</td><td>これまでの4回を、1枚に</td><td class="tkw">作る／売る／会社にする／動かす</td></tr>
+              <tr><td class="tno">2</td><td class="ttime">8–22分</td><td>★ 最新AI × エンタメ ── 量産フェーズに入った</td><td class="tkw">動画生成の現在地・IPを育てる・収益化の新ルール</td></tr>
+              <tr><td class="tno">3</td><td class="ttime">22–36分</td><td>★ 中国のAIエンタメ最前線 ── サプライチェーンのどこに立つか</td><td class="tkw">43万作品・9割超がAI・投流が8割・7つのレイヤ</td></tr>
+              <tr><td class="tno">4</td><td class="ttime">36–48分</td><td>★ 最新AI × ビジネス ── 一人から、チームへ</td><td class="tkw">エージェントのチーム化・社内導入の実数・3つの稼ぎ方</td></tr>
+              <tr><td class="tno">5</td><td class="ttime">48–55分</td><td>2つを貫く1本の線 ── ループと、人間に残る仕事</td><td class="tkw">出力を直すな、ループを直せ</td></tr>
+              <tr><td class="tno">6</td><td class="ttime">55–60分</td><td>最終回クロージング ── 卒業後の宿題</td><td class="tkw">1年後、何が君の代わりに働いているか</td></tr>
             </tbody>
           </table>
         </div>
@@ -552,7 +594,7 @@
 
       <!-- PART 1 -->
       <section id="s1" class="rv">
-        <div class="kicker"><span class="num acc">1</span><span class="time-pill">0–10分</span></div>
+        <div class="kicker"><span class="num acc">1</span><span class="time-pill">0–8分</span></div>
         <h2 class="sec">第1部：これまでの4回を、1枚に</h2>
         <p class="sec-aim">最終回は、まず答え合わせから始めます。<strong>この4回は、バラバラの話ではなく1本の線でした。</strong></p>
 
@@ -619,7 +661,7 @@
 
       <!-- PART 2 -->
       <section id="s2" class="rv">
-        <div class="kicker"><span class="num acc">2</span><span class="time-pill">10–28分</span></div>
+        <div class="kicker"><span class="num acc">2</span><span class="time-pill">8–22分</span></div>
         <h2 class="sec">第2部：★ 最新AI × エンタメ ── 「試す」から「量産する」へ</h2>
         <p class="sec-aim">第1回で「これから絶対に来る」と話したことが、<strong>数字として出てきました</strong>。まず現在地を3つの数字で押さえます。</p>
 
@@ -734,18 +776,246 @@
           <p><strong>「AIで量産する」ではなく「AIで、自分の企画を何本も試せるようにする」。</strong>量産するのは<b>本数</b>ではなく<b>打席</b>です。第2回で話した「70本作って当たるのは4〜5本」という確率の世界に、<strong>安く何度も挑めるようになった</strong> ── そう捉えるのが、いちばん正確で、いちばん安全です。</p>
         </div>
 
-        <p class="bridge">→ <span class="arrow">ここまでがエンタメ側。次はビジネス側 ── こちらは、もっと静かに、もっと大きく変わりました。</span></p>
+        <p class="bridge">→ <span class="arrow">では、その量産がいちばん進んでいる国では何が起きているのか。</span>ここから、産業の構造ごと見ていきます。</p>
       </section>
 
       <hr class="divider" />
 
       <!-- PART 3 -->
       <section id="s3" class="rv">
-        <div class="kicker"><span class="num acc">3</span><span class="time-pill">28–46分</span></div>
-        <h2 class="sec">第3部：★ 最新AI × ビジネス ── 一人のAIから、AIのチームへ</h2>
+        <div class="kicker"><span class="num acc">3</span><span class="time-pill">22–36分</span></div>
+        <h2 class="sec">第3部：★ 中国のAIエンタメ最前線 ── サプライチェーンの、どこに立つか</h2>
+        <p class="sec-aim">第1回から「中国はすごい」と言い続けてきました。最終回では、<strong>その"すごい"を数字で見て、産業の構造図に落とし、「じゃあ自分はどこに立つのか」</strong>まで持っていきます。今日いちばん実利のある話です。</p>
+
+        <h3 class="sub3"><span class="tag">3-1</span>まず、この数字を見てください</h3>
+
+        <div class="stats">
+          <div class="stat alt">
+            <div class="v">43<span class="u">万作品</span></div>
+            <div class="l">2026年1〜8月に公開された中国のショートドラマ本数。<b>2025年の1年間の13倍</b>で、そのうち<b>9割超がAI作品</b></div>
+            <div class="src">出典：FNNプライムオンライン（中国当局の発表）</div>
+          </div>
+          <div class="stat">
+            <div class="v">1日470<span class="u">本</span></div>
+            <div class="l">生成AIによる短編ドラマの制作ペース。<b>制作費は9割減</b>。中国は「世界の短編ドラマ工場」になったと報じられています</div>
+            <div class="src">出典：MIT Technology Review（2026年5月）</div>
+          </div>
+          <div class="stat lose">
+            <div class="v">半減<span class="u">以下</span></div>
+            <div class="l">撮影所・横店が受け入れた撮影チーム数（2026年1〜5月、前年同期比）。<b>クランクインは75%減</b>との報道も</div>
+            <div class="src">出典：FNNプライムオンライン／ビジネスジャーナル</div>
+          </div>
+          <div class="stat lose">
+            <div class="v">24万→4.7<span class="u">万円</span></div>
+            <div class="l">俳優の<b>1日あたりの報酬</b>。昨年1万元超だった人が、今年は2000元。<b>1000元（約2.3万円）</b>のケースも</div>
+            <div class="src">出典：FNNプライムオンライン</div>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">数字の幅について、正直に</p>
+          <p>「AI作品の比率」は、出典によって<strong>7割と言われたり、9割超と言われたり</strong>します。どちらかが間違いというより、<strong>数か月単位で比率が上がり続けている</strong>と読むのが正確です。第2部で挙げた7割（2026年前半の報道）と、ここでの9割超（1〜8月の当局データ）は、<strong>その変化のスピードそのもの</strong>を示しています。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">3-2</span>AIドラマは、どこまで来たのか</h3>
+        <p>「AIっぽい映像」の段階はもう過ぎています。いま起きているのは、<strong>制作の中心がAIに移った</strong>という変化です。</p>
+
+        <div class="check">
+          <div class="ci"><span class="cb"></span><span><b>AIは"補助ツール"ではなく"制作の中心"に</b> ── 脚本家や撮影クルーが工程から消えるケースが出てきたと報じられています。道具として使うのではなく、<b>ラインそのものがAIで組まれています</b>。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>「AI俳優」が登場した</b> ── 実在の俳優を起用せず、AIで生成した演者で成立する作品が増えています。第2回で自分たちが話した「キャラを育てる」を、<b>国レベルの規模でやっている</b>状態です。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>制作費は実写の1/4以下〜1/10</b> ── 出典によって幅がありますが、いずれにせよ<b>桁が変わりました</b>。自分たちの600万円→150万円（1/4）も、まさに同じ動きの中にあります。</span></div>
+          <div class="ci"><span class="cb"></span><span><b>配信ペースは「36秒に1本」</b>（2026年7月時点）── 新作が出る速さがこれです。<b>1本を丁寧に当てにいく</b>という戦い方が、そもそも成立しにくくなっています。</span></div>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">日本にいると、こう見えます</p>
+          <p>「AIで作った映像なんて、まだ使い物にならない」── その会話をしている間に、<strong>隣の国では43万本が世に出ました</strong>。技術の議論はもう終わっていて、<strong>産業の構造の話</strong>に移っています。だから今日は、構造の図を見ます。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">3-3</span>★ エンタメ産業のサプライチェーン ── 7つのレイヤ</h3>
+        <p>ドラマでも、音楽でも、アニメでも、お金が流れる順番は同じです。<strong>この7つの箱のどこかに、必ず自分が立っています。</strong></p>
+
+        <div class="pipe">
+          <div class="pn"><i>01</i>IP・原作<br/>権利の源</div>
+          <div class="pa">→</div>
+          <div class="pn"><i>02</i>企画・脚本<br/>何を作るか</div>
+          <div class="pa">→</div>
+          <div class="pn"><i>03</i>制作<br/>撮影・演者</div>
+          <div class="pa">→</div>
+          <div class="pn"><i>04</i>仕上げ<br/>編集・AI生成</div>
+          <div class="pa">→</div>
+          <div class="pn"><i>05</i>配信PF<br/>棚を持つ</div>
+          <div class="pa">→</div>
+          <div class="pn"><i>06</i>投流<br/>広告で当てる</div>
+          <div class="pa">→</div>
+          <div class="pn loop"><i>07</i>マネタイズ<br/>課金・IP展開 →01へ</div>
+        </div>
+
+        <div class="concept">
+          <p class="ct">「投流（とうりゅう）」＝ 中国のショートドラマで最重要のレイヤ</p>
+          <p>作った作品を、<strong>TikTok・Google・Metaなどに広告として大量に流し、反応がいいものだけに広告費を集中させる</strong>運用のことです。<br/>コンセプトを分解して<strong>何百通りもの短尺広告を同時に流し、視聴維持率と課金への転換率で選別する</strong> ── これが中国のやり方です。第3回でやった「数字を見て次に反映する」を、<strong>広告費の配分でやっている</strong>と思ってください。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">3-4</span>★ ではお金は、どこに残っているのか</h3>
+        <p>ここが今日いちばん見てほしいところです。<strong>制作費が10分の1になっても、制作している人は儲かっていません。</strong></p>
+
+        <figure class="share">
+          <p class="sh-t">実写ショートドラマ：売上100のうち、どこに消えるか</p>
+          <p class="sh-s">中国の実写ショートドラマで指摘されてきた収益構造の例です。「制作側の取り分が1割に満たないケースも珍しくない」と報じられています。</p>
+          <div class="sbar" role="img" aria-label="売上のうち投流（広告・トラフィック獲得）が8割超、プラットフォーム手数料や原作料などがおよそ1割、制作側の取り分は1割未満">
+            <span class="s1" title="投流（広告・トラフィック獲得コスト）：8割超"></span>
+            <span class="s2" title="プラットフォーム手数料・原作料など：およそ1割"></span>
+            <span class="s3" title="制作側の取り分：1割未満のケースも"></span>
+          </div>
+          <div class="slegend">
+            <span class="si"><i class="sw s1"></i>投流（広告・獲得コスト）<b>8割超</b></span>
+            <span class="si"><i class="sw s2"></i>PF手数料・原作料など<b>約1割</b></span>
+            <span class="si"><i class="sw s3"></i>制作側の取り分<b>1割未満</b></span>
+          </div>
+          <p class="snote">※ 中央と右の内訳はおおよその目安です（出典が明示しているのは「投流が8割超」「制作の取り分が1割に満たないケースも」の2点）。収益源そのものは、広告が約半分、残りが課金と商品タイアップと言われています。<br/>出典：DIAMOND ハーバード・ビジネス・レビュー／studio15 ほか</p>
+        </figure>
+
+        <div class="reveal">
+          <p class="rv-lab">この図から読み取ってほしい一点</p>
+          <h4>コストが下がっても、<span class="hot">浮いた分は投流の競争に吸われます</span></h4>
+          <p>制作費が1/10になれば儲かる、と考えたくなります。でも実際には、<strong>安く作れる人が増えた分、同じ視聴者の奪い合いが激しくなり、広告費が上がります</strong>。下がったコストは、そのまま広告のセリ値に流れていきます。<br/>つまり ── <strong>「安く作れる」だけでは、1円も残りません。</strong>残るのは、<strong>権利を持っている人（01・07）と、当てる技術を持っている人（06）</strong>です。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">3-5</span>レイヤ別・AIで何が起きたか</h3>
+        <p>7つの箱を、1つずつ見ていきます。<strong>右端の判定は、3-1と3-4の数字をもとにした自分の見立て</strong>です。</p>
+
+        <div class="layers">
+          <div class="lay up">
+            <span class="lno">01</span>
+            <div>
+              <h4>IP・原作</h4>
+              <p>AIで何度でも展開できるようになった結果、<b>元の権利を持っていること自体がボトルネック</b>になりました。作れる人が増えるほど、素材の持ち主が強くなります。</p>
+            </div>
+            <span class="lstat">▲ 価値が上がる</span>
+          </div>
+          <div class="lay mid">
+            <span class="lno">02</span>
+            <div>
+              <h4>企画・脚本</h4>
+              <p>二極化しました。<b>量産用の下書きは実質ゼロ円</b>に。一方で「どれが当たるか」を見極める企画は、本数が増えたぶん<b>むしろ希少</b>になっています。</p>
+            </div>
+            <span class="lstat">◆ 二極化</span>
+          </div>
+          <div class="lay down">
+            <span class="lno">03</span>
+            <div>
+              <h4>制作（撮影・演者）</h4>
+              <p><b>いちばん激しく価格が崩れたレイヤ</b>です。横店の撮影チーム半減、俳優の日当24万円→4.7万円。これが数字として出てしまいました。</p>
+            </div>
+            <span class="lstat">▼ 価格が崩壊</span>
+          </div>
+          <div class="lay down">
+            <span class="lno">04</span>
+            <div>
+              <h4>仕上げ（編集・AI生成）</h4>
+              <p>ツールを触れば誰でもできるようになりました。しかも<b>そのツール自体が1年で入れ替わります</b>。ここだけを職能にすると、毎年ゼロから走り直すことになります。</p>
+            </div>
+            <span class="lstat">▼ 価格が崩壊</span>
+          </div>
+          <div class="lay up">
+            <span class="lno">05</span>
+            <div>
+              <h4>配信プラットフォーム</h4>
+              <p><b>棚を持っている側は、作品が増えるほど強くなります。</b>第2回で話した「質より棚」がそのまま効くレイヤ。ただし個人が今から入るのは現実的ではありません。</p>
+            </div>
+            <span class="lstat">▲ 価値が上がる</span>
+          </div>
+          <div class="lay up">
+            <span class="lno">06</span>
+            <div>
+              <h4>投流（広告運用・獲得）</h4>
+              <p><b>売上の8割が流れ込む場所</b>。数百通りの広告を流して当たりを選ぶ仕事で、<b>AIと数字の両方が分かる人が決定的に足りていません</b>。</p>
+            </div>
+            <span class="lstat">▲ 価値が上がる</span>
+          </div>
+          <div class="lay up">
+            <span class="lno">07</span>
+            <div>
+              <h4>マネタイズ（課金・IP展開）</h4>
+              <p>1本を<b>グッズ・ボイス・漫画・ライセンスに分解して売る</b>レイヤ。第2回でやった「1本を10個のビジネスに」がここです。作品が増えるほど、分解できる人の価値が上がります。</p>
+            </div>
+            <span class="lstat">▲ 価値が上がる</span>
+          </div>
+        </div>
+
+        <h3 class="sub3"><span class="tag">3-6</span>で、君はどこに立つのか</h3>
+        <p>結論から言います。<strong>03と04に"だけ"立ってはいけません。</strong>そこは、いま世界でいちばん速く価格が落ちている場所です。</p>
+
+        <div class="ngs">
+          <div class="ngitem">
+            <span class="x">✕</span>
+            <div>
+              <p class="ngt">「撮影ができます」「編集ができます」だけで勝負する</p>
+              <p>技能を否定しているのではありません。<b>それ単体では値段がつかなくなった</b>という話です。横店の数字が、その答え合わせです。必ず<b>01・06・07のどれかと組み合わせて</b>持ってください。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pick">
+          <div class="pcard">
+            <p class="ptype">立ち位置 A ── 本命</p>
+            <h4>権利を持つ（01 → 07）</h4>
+            <p>自分のキャラ・作品・世界観を持ち、<b>配信・グッズ・ボイス・ライセンスに分解して売る</b>。第1回からずっと話してきたOPCそのものです。</p>
+            <span class="ans"><b>強み：</b>作れる人が増えるほど、持っている人の価値が上がる。<b>弱み：</b>当たるまで時間がかかる。だから次のBと併走します。</span>
+          </div>
+          <div class="pcard best">
+            <p class="ptype">立ち位置 B ── いちばん早く食える</p>
+            <h4>数字で当てにいく（06）</h4>
+            <p>投流＝<b>広告運用と数字の分析</b>。何百本の中から当たりを見つけて予算を寄せる仕事です。<b>売上の8割が通る場所なのに、人が足りていません。</b></p>
+            <span class="ans"><b>今日までの4回が、そのまま武器になります。</b>第3回のAI会社（CMO役の分析）、第4回の4要素と分解 ── あれは全部、このレイヤの仕事です。</span>
+          </div>
+          <div class="pcard">
+            <p class="ptype">立ち位置 C ── 残るセンス</p>
+            <h4>当たりを見極める（02の上澄み）</h4>
+            <p>量産の下書きはAIがやります。残るのは<b>「どれを世に出すか」を決める目</b>。1日1000本の時代に、いちばん効く判断です。</p>
+            <span class="ans"><b>鍛え方は1つだけ：</b>たくさん見て、数字で答え合わせをする。第5部のループの話が、そのまま訓練法になります。</span>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <p class="lt">学生にとっての現実解</p>
+          <p><strong>Bで食い扶持を作りながら、AとCを自分で育てる。</strong>これが、いま21〜22歳で始める人のいちばん勝率の高い順番だと思います。<br/>Bは<b>会社に入っても、フリーでも、すぐ値段がつきます</b>。そしてBをやっていると、Cの目（どの数字がどう動くか）が自然に鍛えられます。その目で、Aを当てにいく ── そういう順番です。</p>
+        </div>
+
+        <h3 class="sub3"><span class="tag">3-7</span>★ ただし ── 量産は、すでに限界が見えています</h3>
+        <p>ここまで「中国すごい」を見てきましたが、<strong>現地では逆の話も出始めています。</strong>最終回なので、そこまで含めて渡します。</p>
+
+        <div class="ba">
+          <div class="ba-card bad">
+            <p class="bl">起きていること</p>
+            <p class="pq">新作は1日数十本 → 1000本規模へ<br/>一方で、視聴者の数は限られている</p>
+            <p class="res"><b>ヒット作が生まれる確率は「宝くじ並み」</b>になったと報じられています。「AIで量産すれば当たる」というフェーズは、もう終わりかけています。</p>
+          </div>
+          <div class="ba-card good">
+            <p class="bl">つまり、次の勝負は</p>
+            <p class="pq">量ではなく、<b>当てる</b>。<br/>安く大量に作れるほど、<b>本当に価値のあるものが求められる</b></p>
+            <p class="res">中国が証明したのは「安く作れる」ところまでです。<b>「当てる」ところは、まだ誰も勝っていません。</b>ここが、日本の作り手にとってのチャンスだと自分は見ています。</p>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <p class="rv-lab">第3部の結論</p>
+          <h4>コストの戦争は終わりました。次は<span class="hot">「当てる」戦争</span>です</h4>
+          <p>だから立つべき場所は、<strong>安く作れるレイヤ（03・04）ではなく、当てる・持つレイヤ（06・01・07）</strong>です。<br/>そして「当てる」に必要なのは、才能ではなく<strong>数字を見て次に反映する回し方</strong> ── 第5部で話すループです。中国の43万本は、その練習相手だと思ってください。</p>
+        </div>
+
+        <p class="bridge">→ <span class="arrow">ここまでがエンタメ産業の構造の話。次はビジネス側 ── こちらは、もっと静かに、もっと大きく変わりました。</span></p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PART 4 -->
+      <section id="s4" class="rv">
+        <div class="kicker"><span class="num acc">4</span><span class="time-pill">36–48分</span></div>
+        <h2 class="sec">第4部：★ 最新AI × ビジネス ── 一人のAIから、AIのチームへ</h2>
         <p class="sec-aim">第3回で手作りした「AI会社」が、この数か月で<strong>ツール側の標準機能に降りてきました</strong>。何が起きたのか、そして個人にとって何を意味するのかを話します。</p>
 
-        <h3 class="sub3"><span class="tag">3-1</span>この1年で起きた、3段跳び</h3>
+        <h3 class="sub3"><span class="tag">4-1</span>この1年で起きた、3段跳び</h3>
 
         <div class="ladder">
           <div class="lv">
@@ -786,7 +1056,7 @@
           <p>チーム機能が標準になったということは、<strong>「誰でもAIのチームを持てる」</strong>ということです。全員が同じ道具を持ったとき、差がつくのは<strong>どんな役割を置き、何をミッションにし、どこで承認するかという設計</strong>だけです。<br/>それは第3回・第4回でやったこと ── <strong>組織を文章で書く力、工程を言葉にする力</strong>です。プログラミングではありません。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">3-2</span>会社の現場では、何が起きているか</h3>
+        <h3 class="sub3"><span class="tag">4-2</span>会社の現場では、何が起きているか</h3>
         <p>「うちの会社はまだ」と思っているうちに、大きいところは数字を出し始めています。<strong>これは皆さんの就職・仕事の話に直結します。</strong></p>
 
         <div class="stats">
@@ -812,7 +1082,7 @@
           <p>第3回でも話しましたが、<strong>いま「若い人にお願いしていた仕事」が、いちばん先に消えています。</strong>調べる、まとめる、体裁を整える、議事録を書く、切り抜く ── 全部AIの担当になりました。<br/>だから戦い方は1つです。<strong>「作業ができる人」ではなく「AIに作業をさせられる人」として入ること。</strong>今日までの4回でやったことは、そのまま<b>その職務経歴</b>になります。</p>
         </div>
 
-        <h3 class="sub3"><span class="tag">3-3</span>個人としての使い道は、結局この3つ</h3>
+        <h3 class="sub3"><span class="tag">4-3</span>個人としての使い道は、結局この3つ</h3>
         <p>第3回の最後にも言いました。最終回なので、もう一度きれいに並べます。<strong>この3つ以外はありません。</strong></p>
 
         <div class="pick">
@@ -836,7 +1106,7 @@
           </div>
         </div>
 
-        <h3 class="sub3"><span class="tag">3-4</span>明日から動かすための、4ステップ</h3>
+        <h3 class="sub3"><span class="tag">4-4</span>明日から動かすための、4ステップ</h3>
         <p>今日の話を、手順に落とします。<strong>今夜、1つの業務で試してください。</strong></p>
 
         <div class="pipe">
@@ -898,13 +1168,13 @@ CEO・COO・CFO・CMO の4名が必要です。
 
       <hr class="divider" />
 
-      <!-- PART 4 -->
-      <section id="s4" class="rv">
-        <div class="kicker"><span class="num acc">4</span><span class="time-pill">46–55分</span></div>
-        <h2 class="sec">第4部：2つを貫く1本の線 ── ループと、人間に残る仕事</h2>
+      <!-- PART 5 -->
+      <section id="s5" class="rv">
+        <div class="kicker"><span class="num acc">5</span><span class="time-pill">48–55分</span></div>
+        <h2 class="sec">第5部：2つを貫く1本の線 ── ループと、人間に残る仕事</h2>
         <p class="sec-aim">第4回の最後に「次回はループエンジニアリングを扱う」と予告しました。<strong>最終回なので、いちばん大事なところだけ濃縮して渡します。</strong></p>
 
-        <h3 class="sub3"><span class="tag">4-1</span>ループは2つある</h3>
+        <h3 class="sub3"><span class="tag">5-1</span>ループは2つある</h3>
         <p>第4回で描いた輪は、<strong>業務のループ</strong>でした。週や月の単位で回るものです。</p>
 
         <div class="cycle">
@@ -941,7 +1211,7 @@ CEO・COO・CFO・CMO の4名が必要です。
           <p>返ってきたものが違ったとき、ほとんどの人は<strong>その場で出力を手直しします</strong>。それをやると、同じズレが次も、その次も起きます。<strong>直すべきは指示のほうです。</strong><br/>第3回で「オーナーの指示は1行で済む」と言いました。あれは、<strong>ズレるたびに指示を直してきた結果、書かなくていいことが全部スキル側に移ったから</strong>です。魔法ではありません。<strong>周回数です。</strong></p>
         </div>
 
-        <h3 class="sub3"><span class="tag">4-2</span>エンタメもビジネスも、同じ形だった</h3>
+        <h3 class="sub3"><span class="tag">5-2</span>エンタメもビジネスも、同じ形だった</h3>
         <div class="ba">
           <div class="ba-card good">
             <p class="bl">エンタメでの回り方</p>
@@ -955,7 +1225,7 @@ CEO・COO・CFO・CMO の4名が必要です。
           </div>
         </div>
 
-        <h3 class="sub3"><span class="tag">4-3</span>それでも、人間に残る仕事は3つ</h3>
+        <h3 class="sub3"><span class="tag">5-3</span>それでも、人間に残る仕事は3つ</h3>
         <p>5回を通して繰り返してきた話です。最後にもう一度。</p>
 
         <div class="three">
@@ -1006,20 +1276,20 @@ CEO・COO・CFO・CMO の4名が必要です。
 
       <hr class="divider" />
 
-      <!-- PART 5 -->
-      <section id="s5" class="rv">
-        <div class="kicker"><span class="num acc">5</span><span class="time-pill">55–60分</span></div>
-        <h2 class="sec">第5部：最終回クロージング</h2>
+      <!-- PART 6 -->
+      <section id="s6" class="rv">
+        <div class="kicker"><span class="num acc">6</span><span class="time-pill">55–60分</span></div>
+        <h2 class="sec">第6部：最終回クロージング</h2>
         <p class="sec-aim">最後の5分です。<strong>教室を出たあと、何をするか</strong>だけ決めて終わりましょう。</p>
 
-        <h3 class="sub3"><span class="tag">5-1</span>今夜やること ── 1つだけ選んでください</h3>
+        <h3 class="sub3"><span class="tag">6-1</span>今夜やること ── 1つだけ選んでください</h3>
         <div class="check">
-          <div class="ci"><span class="cb"></span><span><b>① AI会社を立てる</b> ── 第3部のプロンプト②をコピーして投げるだけ。5分で組織図と権限が返ってきます。<b>まずは箱を見てください。</b></span></div>
-          <div class="ci"><span class="cb"></span><span><b>② 業務を1つ棚卸しする</b> ── 第3部のプロンプト①。バイトでも、課題でも、サークルでも構いません。<b>自分の実際の仕事で試すのが条件です。</b></span></div>
+          <div class="ci"><span class="cb"></span><span><b>① AI会社を立てる</b> ── 第4部のプロンプト②をコピーして投げるだけ。5分で組織図と権限が返ってきます。<b>まずは箱を見てください。</b></span></div>
+          <div class="ci"><span class="cb"></span><span><b>② 業務を1つ棚卸しする</b> ── 第4部のプロンプト①。バイトでも、課題でも、サークルでも構いません。<b>自分の実際の仕事で試すのが条件です。</b></span></div>
           <div class="ci"><span class="cb"></span><span><b>③ 作品を1本、権利に分解する</b> ── 好きな作品を1つ選び、「この1本から売れる権利を10個挙げて」と頼んでみる。第2回の演習の最新版です。</span></div>
         </div>
 
-        <h3 class="sub3"><span class="tag">5-2</span>卒業後まで持っていく宿題</h3>
+        <h3 class="sub3"><span class="tag">6-2</span>卒業後まで持っていく宿題</h3>
         <div class="kit">
           <div class="kitcard">
             <p class="kn">HOMEWORK 01</p>
@@ -1039,7 +1309,7 @@ CEO・COO・CFO・CMO の4名が必要です。
           </div>
         </div>
 
-        <h3 class="sub3"><span class="tag">5-3</span>5回の旅を、1枚に</h3>
+        <h3 class="sub3"><span class="tag">6-3</span>5回の旅を、1枚に</h3>
         <div class="tt-wrap">
           <table class="tt">
             <thead><tr><th>回</th><th>キーワード</th><th>これだけは覚えて帰る</th></tr></thead>
@@ -1079,6 +1349,7 @@ CEO・COO・CFO・CMO の4名が必要です。
           <div class="ta-list">
             <p class="ti"><b>エンタメ ── 量産フェーズに入りました</b>：中国のショートドラマは<b>7割がAI製</b>とされ、制作費は桁で落ちました。自分たちも30分尺で<b>600万円 → 150万円</b>。作れることの価値は下がり、<b>権利＝IPを持っている人</b>だけが残ります。</p>
             <p class="ti"><b>ただし、量産には線が引かれました</b>：YouTubeの2026年ポリシーの線引きは<b>「AIを使ったか」ではなく「量産的・非独自的か」</b>。テンプレに流すのは落ち、<b>企画に独自性があればAI制作でも通ります</b>。量産するのは本数ではなく<b>打席</b>です。</p>
+            <p class="ti"><b>中国の最前線 ── 立つレイヤを間違えないでください</b>：2026年1〜8月で<b>43万作品・9割超がAI</b>、横店の撮影チームは半減、俳優の日当は24万円→4.7万円。一方で<b>売上の8割は投流（広告）に流れ、制作側の取り分は1割未満</b>。<b>安く作れるレイヤ（制作・仕上げ）ではなく、持つレイヤ（IP・IP展開）と当てるレイヤ（投流）に立つ</b>こと。</p>
             <p class="ti"><b>ビジネス ── 一人のAIから、AIのチームへ</b>：第3回で手作りしたAI会社が、<b>ツール側の標準機能</b>になりました。全員が同じ道具を持つ以上、差がつくのは<b>組織を設計する力・工程を言葉にする力</b>だけです。</p>
             <p class="ti"><b>稼ぎ方は3つしかありません</b>：<b>①請け負って速く返す ②仕組み（スキル）を売る ③自分で作って自分で売る＝OPC</b>。①で実績を作り、②で効率を上げ、③で資産にする ── 順番はこれが現実的です。</p>
             <p class="ti"><b>そして、これだけは残ります</b>：<b>出力を直すな。ループを直せ。</b>人間に残る仕事は<b>ミッションを決める／どの瞬間を選ぶか／責任を取る</b>の3つ。<b>目的を書くのは、最後まで君の仕事</b>です。</p>
@@ -1105,6 +1376,18 @@ CEO・COO・CFO・CMO の4名が必要です。
           <div class="ans">できます。<b>線引きは「AIを使ったか」ではなく「量産的・非独自的か」</b>です。企画・構成・編集に自分の独自性があれば、制作工程でAIを使っていても収益化資格は維持されるという整理になっています。落ちるのは、テンプレートに素材を差し替えただけのもの、AI音声の読み上げだけのものです。<b>また、実在の人物と誤認させる合成には開示（ラベル付け）が必要</b>です。</div>
         </details>
         <details class="faq">
+          <summary><span class="qm">Q.</span>中国みたいに量産すれば、日本でも勝てますか？</summary>
+          <div class="ans">いまから量で勝ちにいくのは、いちばん分の悪い勝負です。現地でも<b>新作が1日1000本規模まで増え、ヒットは「宝くじ並み」</b>と言われ始めました。量産すれば当たるフェーズは終わりかけています。<b>次の勝負は「当てる」</b>で、そこはまだ誰も勝っていません。日本の作り手にとってのチャンスは量ではなく、<b>企画の目と、数字を見て回す力</b>のほうにあります。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>撮影や編集を勉強してきました。それは無駄になりますか？</summary>
+          <div class="ans">無駄にはなりませんが、<b>それ単体では値段がつきにくくなった</b>のは事実です（横店の撮影チーム半減、俳優の日当24万円→4.7万円が、その答え合わせです）。技能を捨てる必要はまったくなくて、<b>01（IP）・06（投流）・07（IP展開）のどれかと必ずセットで持ってください</b>。「撮れる×当てられる」「編集できる×権利を持っている」は、いまいちばん強い組み合わせです。</div>
+        </details>
+        <details class="faq">
+          <summary><span class="qm">Q.</span>「投流」のレイヤは、経験がなくても入れますか？</summary>
+          <div class="ans">入れます。むしろ<b>いちばん人が足りていないので、若い人にチャンスがあります</b>。やることは「何百通りの入口（サムネ・冒頭1.5秒・タイトル）を試して、数字がいいものに予算を寄せる」だけで、これは第3回のAI会社のCMO役と、第4回の4要素・タスク分解そのものです。<b>自分のチャンネルで小さく回した実績が、そのまま職務経歴になります。</b></div>
+        </details>
+        <details class="faq">
           <summary><span class="qm">Q.</span>絵も描けない、脚本も書けない。それでもOPCはできますか？</summary>
           <div class="ans">できます。というより、<b>それが前提の話</b>でした。第4回で言ったとおり、企画は「考える」のではなく<b>「集める」</b>ものです。当たっている型を集め、自分の素材で組み替える。必要なのは画力ではなく、<b>何を作るかを決める力と、工程を言葉にする力</b>です。</div>
         </details>
@@ -1114,7 +1397,7 @@ CEO・COO・CFO・CMO の4名が必要です。
         </details>
         <details class="faq">
           <summary><span class="qm">Q.</span>就職するのと、OPCをやるの、どちらがいいですか？</summary>
-          <div class="ans">どちらか一方を選ぶ話ではありません。<b>就職して、会社の中でAIを回せる人になる</b>のがいちばん早く実績が溜まります。そのうえで、<b>自分の権利のものを1つ持っておく</b>。第3部の①で信用を作り、③で資産を作る ── 併走が現実的です。<b>会社を辞めないと始められない、というのは思い込みです。</b></div>
+          <div class="ans">どちらか一方を選ぶ話ではありません。<b>就職して、会社の中でAIを回せる人になる</b>のがいちばん早く実績が溜まります。そのうえで、<b>自分の権利のものを1つ持っておく</b>。第4部の①で信用を作り、③で資産を作る ── 併走が現実的です。<b>会社を辞めないと始められない、というのは思い込みです。</b></div>
         </details>
         <details class="faq">
           <summary><span class="qm">Q.</span>ツールが終了したら、作った仕組みは無駄になりませんか？</summary>
@@ -1148,6 +1431,15 @@ CEO・COO・CFO・CMO の4名が必要です。
             <li>動画生成ツールの現況（Veo／Kling／Runway の位置づけ、SoraのAPI廃止予定）── <a href="https://jp.ext.hp.com/techdevice/ai/ai_explained_46/" target="_blank" rel="noopener">HP Tech&amp;Device TV</a>／<a href="https://uravation.com/media/kling-ai-complete-guide-2026/" target="_blank" rel="noopener">Kling AI 3.0ガイド（2026年9月）</a></li>
           </ul>
 
+          <h4>第3部：中国のAIエンタメ最前線・サプライチェーン</h4>
+          <ul>
+            <li>43万作品（2026年1〜8月、2025年通年の13倍）・9割超がAI作品／制作費は実写の1/4以下／横店の撮影チーム半減／俳優の日当1万元超→2000元 ── FNNプライムオンライン「中国で『AI俳優』が急成長 中国ドラマ制作の最前線とは」<a href="https://news.yahoo.co.jp/articles/242f9d93d9c70f63b3a2be7313f294213ce6a363" target="_blank" rel="noopener">（Yahoo!ニュース）</a></li>
+            <li>1日470本・制作費9割減／2024年に映画興行収入を上回る／数十〜数百のパイロットを同時配信し、視聴維持率と転換率で広告費を集中 ── <a href="https://www.technologyreview.jp/s/383135/how-chinese-short-dramas-became-ai-content-machines/" target="_blank" rel="noopener">MIT Technology Review（2026年5月）</a></li>
+            <li>7割超がAI製・AI俳優の広がり ── <a href="https://www.nikkei.com/article/DGXZQOGM02ARB0S6A400C2000000/" target="_blank" rel="noopener">日本経済新聞</a>／<a href="https://biz-journal.jp/company/post_395721.html" target="_blank" rel="noopener">ビジネスジャーナル（横店クランクイン75%減）</a></li>
+            <li>収益構造：売上の8割超が広告・トラフィック獲得コスト（投流）、制作側の取り分が1割に満たないケースも／収益は広告が約半分＋課金＋タイアップ ── <a href="https://dhbr.diamond.jp/articles/-/13761" target="_blank" rel="noopener">DIAMOND ハーバード・ビジネス・レビュー</a>／<a href="https://studio15.co.jp/column/china-minidrama-market" target="_blank" rel="noopener">studio15</a></li>
+            <li>量産の限界（新作1日1000本規模、ヒットは「宝くじ並み」）── <a href="https://news.yahoo.co.jp/expert/articles/85260d65102152be11e0e8b1e0d207caea12fa2f" target="_blank" rel="noopener">塚越健司「AIでドラマを量産しても、ヒットするとは限らない」</a>／<a href="https://www.afpbb.com/articles/-/3640638" target="_blank" rel="noopener">AFPBB News</a></li>
+          </ul>
+
           <h4>第2部：YouTubeの収益化ポリシー</h4>
           <ul>
             <li>2026年7月改訂：「満足度の低い、または不快なコンテンツ」「一般的で繰り返しの多いコンテンツ」を収益化不可と明文化 ── <a href="https://kai-you.net/article/95994" target="_blank" rel="noopener">KAI-YOU</a></li>
@@ -1155,7 +1447,7 @@ CEO・COO・CFO・CMO の4名が必要です。
             <li>YouTube CEO レター「2026年の展望」（AI生成コンテンツへの言及）── <a href="https://www.phileweb.com/news/hobby/202601/22/8074.html" target="_blank" rel="noopener">PHILE WEB（2026年1月22日）</a></li>
           </ul>
 
-          <h4>第3部：ビジネス側の出典（2026年9月時点）</h4>
+          <h4>第4部：ビジネス側の出典（2026年9月時点）</h4>
           <ul>
             <li>エージェントのチーム編成・長時間タスク向けの文脈圧縮 ── <a href="https://www.anthropic.com/news/claude-opus-4-6" target="_blank" rel="noopener">Anthropic「Claude Opus 4.6」</a></li>
             <li>チャットとCoworkの統合（2026年9月16日）── <a href="https://techcrunch.com/2026/09/16/anthropic-merges-claude-chat-and-cowork-in-one-interface/" target="_blank" rel="noopener">TechCrunch</a></li>
@@ -1170,7 +1462,7 @@ CEO・COO・CFO・CMO の4名が必要です。
             <li>JDrama Shorts（<a href="https://www.youtube.com/@JDramaShorts" target="_blank" rel="noopener">youtube.com/@JDramaShorts</a>）── 本文中の数字は各講義時点のものです</li>
           </ul>
 
-          <p class="note">※ 市場規模・導入実績の数字は各出典の公表値をそのまま引用しています（<b>2026年9月時点</b>）。業界まとめ記事を出典とするものは一次情報ではないため、実務で使う際は必ず元データをご確認ください。<br/>※ ツール名・モデル名・料金体系は数か月単位で変わります。本ページは<b>その時点のスナップショット</b>として残します。</p>
+          <p class="note">※ 第3部「レイヤ別・AIで何が起きたか」の▲▼◆の判定は、出典の数字をもとにした<b>講師の見立て</b>であり、出典にそう書かれているわけではありません。<br/>※ 市場規模・導入実績の数字は各出典の公表値をそのまま引用しています（<b>2026年9月時点</b>）。業界まとめ記事を出典とするものは一次情報ではないため、実務で使う際は必ず元データをご確認ください。<br/>※ ツール名・モデル名・料金体系は数か月単位で変わります。本ページは<b>その時点のスナップショット</b>として残します。</p>
         </div>
       </section>
 
@@ -1205,7 +1497,7 @@ CEO・COO・CFO・CMO の4名が必要です。
 
   // TOC active state
   const tocLinks = document.querySelectorAll('.toc a, #mnav a');
-  const sections = ['aim','timetable','s1','s2','s3','s4','s5','summary','faq','refs']
+  const sections = ['aim','timetable','s1','s2','s3','s4','s5','s6','summary','faq','refs']
     .map(id => document.getElementById(id)).filter(Boolean);
   const setActive = () => {
     let curr = sections[0]?.id;
